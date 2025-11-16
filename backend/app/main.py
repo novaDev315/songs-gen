@@ -13,6 +13,7 @@ from app.database import init_db
 from app.services.backup import schedule_backups
 from app.services.file_watcher import get_file_watcher
 from app.services.init_admin import create_admin_user
+from app.services.suno_client import cleanup_suno_client
 from app.services.worker import get_worker_pool
 
 settings = get_settings()
@@ -66,6 +67,10 @@ async def lifespan(app: FastAPI) -> AsyncIterator[None]:
     # Stop background workers
     await worker_pool.stop()
     logger.info("Background workers stopped")
+
+    # Cleanup Suno client (close browser)
+    await cleanup_suno_client()
+    logger.info("Suno client cleaned up")
 
 
 app = FastAPI(
