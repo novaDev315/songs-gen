@@ -7,11 +7,13 @@ from typing import AsyncIterator
 from fastapi import FastAPI
 from fastapi.middleware.cors import CORSMiddleware
 
-from app.api import auth, evaluation, queue, songs, youtube
+from app.api import auth, evaluation, queue, songs, system, youtube
 from app.config import get_settings
 from app.database import init_db
 from app.services.backup import schedule_backups
+from app.services.file_watcher import get_file_watcher
 from app.services.init_admin import create_admin_user
+from app.services.worker import get_worker_pool
 
 settings = get_settings()
 
@@ -40,12 +42,30 @@ async def lifespan(app: FastAPI) -> AsyncIterator[None]:
     # Schedule backups
     schedule_backups()
 
+    # Start file watcher
+    file_watcher = get_file_watcher()
+    file_watcher.start()
+    logger.info("File watcher started")
+
+    # Start background workers
+    worker_pool = get_worker_pool()
+    await worker_pool.start()
+    logger.info("Background workers started")
+
     logger.info("Application startup complete")
 
     yield
 
     # Shutdown
     logger.info("Shutting down Song Automation API...")
+
+    # Stop file watcher
+    file_watcher.stop()
+    logger.info("File watcher stopped")
+
+    # Stop background workers
+    await worker_pool.stop()
+    logger.info("Background workers stopped")
 
 
 app = FastAPI(
@@ -85,5 +105,6 @@ app.include_router(songs.router, prefix="/api/v1", tags=["Songs"])
 app.include_router(queue.router, prefix="/api/v1", tags=["Queue"])
 app.include_router(evaluation.router, prefix="/api/v1", tags=["Evaluation"])
 app.include_router(youtube.router, prefix="/api/v1", tags=["YouTube"])
+app.include_router(system.router, prefix="/api/v1", tags=["System"])
 
 logger.info("Routes registered successfully")

@@ -40,8 +40,10 @@ class Settings(BaseSettings):
     YOUTUBE_REDIRECT_URI: str = "http://localhost:8501/oauth/callback"
 
     # Workers
-    WORKER_CHECK_INTERVAL: int = 60
+    WORKER_COUNT: int = 2  # Number of background workers
+    WORKER_CHECK_INTERVAL: int = 60  # Seconds between task checks
     WORKER_MAX_RETRIES: int = 3
+    AUTO_UPLOAD_TO_SUNO: bool = False  # Auto-queue new songs for Suno upload
 
     # Admin
     ADMIN_USERNAME: str = "admin"
