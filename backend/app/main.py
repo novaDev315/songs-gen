@@ -7,7 +7,7 @@ from typing import AsyncIterator
 from fastapi import FastAPI
 from fastapi.middleware.cors import CORSMiddleware
 
-from app.api import auth
+from app.api import auth, evaluation, queue, songs, youtube
 from app.config import get_settings
 from app.database import init_db
 from app.services.backup import schedule_backups
@@ -81,5 +81,9 @@ async def health_check() -> dict:
 
 # Include routers
 app.include_router(auth.router, prefix="/api/v1", tags=["Authentication"])
+app.include_router(songs.router, prefix="/api/v1", tags=["Songs"])
+app.include_router(queue.router, prefix="/api/v1", tags=["Queue"])
+app.include_router(evaluation.router, prefix="/api/v1", tags=["Evaluation"])
+app.include_router(youtube.router, prefix="/api/v1", tags=["YouTube"])
 
 logger.info("Routes registered successfully")
