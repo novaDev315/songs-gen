@@ -11,7 +11,10 @@ from sqlalchemy.ext.asyncio import AsyncSession
 from app.config import get_settings
 from app.database import AsyncSessionLocal
 from app.models.song import Song
+from app.models.suno_job import SunoJob
 from app.models.task_queue import TaskQueue
+from app.services.download_manager import get_download_manager
+from app.services.evaluator import get_evaluator
 
 logger = logging.getLogger(__name__)
 settings = get_settings()
@@ -169,45 +172,74 @@ class BackgroundWorker:
         # - Queue suno_download task
 
     async def execute_suno_download(self, task: TaskQueue, db: AsyncSession) -> None:
-        """Execute Suno download task (Phase 3 placeholder).
+        """Execute Suno download task.
 
         Args:
             task: Task containing song_id to download
             db: Database session
+
+        Raises:
+            ValueError: If no completed Suno job found for song
         """
-        logger.info(f"[PLACEHOLDER] Suno download for song {task.song_id}")
+        logger.info(f"Downloading audio for song {task.song_id}")
 
-        # Simulate work
-        await asyncio.sleep(2)
+        # Get Suno job for this song
+        result = await db.execute(
+            select(SunoJob)
+            .where(SunoJob.song_id == task.song_id)
+            .where(SunoJob.status == "completed")
+            .order_by(SunoJob.completed_at.desc())
+            .limit(1)
+        )
+        suno_job = result.scalar_one_or_none()
 
-        # Real implementation will be added in Phase 3:
-        # - Poll Suno for generation status
-        # - When ready, download audio file
-        # - Save to downloads folder
-        # - Update SunoJob record
-        # - Update song status to 'downloaded'
-        # - Queue evaluation task
+        if not suno_job:
+            raise ValueError(f"No completed Suno job found for song {task.song_id}")
+
+        # Download using download manager
+        download_manager = get_download_manager()
+        file_path = await download_manager.download_from_suno_job(suno_job.id)
+
+        logger.info(f"Download complete: {file_path}")
+
+        # Create evaluation task
+        eval_task = TaskQueue(
+            task_type="evaluate",
+            song_id=task.song_id,
+            priority=task.priority,
+            status="pending",
+        )
+        db.add(eval_task)
+        await db.commit()
 
     async def execute_evaluation(self, task: TaskQueue, db: AsyncSession) -> None:
-        """Execute evaluation task (Phase 4 placeholder).
+        """Execute evaluation task.
 
         Args:
             task: Task containing song_id to evaluate
             db: Database session
         """
-        logger.info(f"[PLACEHOLDER] Evaluation for song {task.song_id}")
+        logger.info(f"Evaluating song {task.song_id}")
 
-        # Simulate work
-        await asyncio.sleep(1)
+        # Evaluate using evaluator service
+        evaluator = get_evaluator()
+        evaluation = await evaluator.evaluate_song(task.song_id)
 
-        # Real implementation will be added in Phase 4:
-        # - Load audio file
-        # - Check audio quality metrics
-        # - Verify lyrics match (if possible)
-        # - Calculate quality score
-        # - Create Evaluation record
-        # - Update song status to 'evaluated'
-        # - If score is high enough, queue YouTube upload
+        logger.info(
+            f"Evaluation complete: {task.song_id} (score: {evaluation.audio_quality_score})"
+        )
+
+        # If auto-approved, create YouTube upload task
+        if evaluation.approved:
+            youtube_task = TaskQueue(
+                task_type="youtube_upload",
+                song_id=task.song_id,
+                priority=task.priority,
+                status="pending",
+            )
+            db.add(youtube_task)
+            await db.commit()
+            logger.info(f"Song approved, YouTube upload task created: {task.song_id}")
 
     async def execute_youtube_upload(self, task: TaskQueue, db: AsyncSession) -> None:
         """Execute YouTube upload task (Phase 5 placeholder).

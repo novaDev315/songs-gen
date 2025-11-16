@@ -45,6 +45,9 @@ class Settings(BaseSettings):
     WORKER_MAX_RETRIES: int = 3
     AUTO_UPLOAD_TO_SUNO: bool = False  # Auto-queue new songs for Suno upload
 
+    # Evaluation
+    MIN_QUALITY_SCORE: float = 70.0  # Auto-approve threshold for quality score
+
     # Admin
     ADMIN_USERNAME: str = "admin"
     ADMIN_PASSWORD: str = "changeme"  # Will be hashed on first run
