@@ -23,6 +23,7 @@ from app.schemas.youtube import (
     YouTubeUploadListMeta,
     YouTubeUploadResponse,
 )
+from app.services.youtube_uploader import get_youtube_uploader
 
 logger = logging.getLogger(__name__)
 router = APIRouter()
@@ -220,22 +221,41 @@ async def get_oauth_url(
     """
     Get YouTube OAuth authorization URL.
 
-    NOTE: This is a placeholder for Phase 5 implementation.
-    Returns a sample URL for now.
+    Generates a Google OAuth2 authorization URL for YouTube Data API access.
+    User should be redirected to this URL to grant permissions.
 
     Returns:
     - **authorization_url**: URL to redirect user for OAuth authorization
-    - **state**: CSRF protection state parameter
+    - **state**: CSRF protection state parameter (optional)
+
+    Raises:
+    - **500**: If OAuth credentials not configured or URL generation fails
     """
     logger.info(f"User {current_user.username} requested YouTube OAuth URL")
 
-    # TODO: Phase 5 - Implement actual YouTube OAuth flow
-    # This will use google-auth-oauthlib to generate the real URL
+    try:
+        uploader = get_youtube_uploader()
+        auth_url = uploader.get_auth_url()
 
-    return OAuthURL(
-        authorization_url="https://accounts.google.com/o/oauth2/v2/auth?placeholder=true",
-        state="placeholder_state_token",
-    )
+        logger.info(f"Generated YouTube OAuth URL for user {current_user.username}")
+
+        return OAuthURL(
+            authorization_url=auth_url,
+            state=None  # State is handled internally by google-auth-oauthlib
+        )
+
+    except ValueError as e:
+        logger.error(f"Error generating OAuth URL: {e}")
+        raise HTTPException(
+            status_code=status.HTTP_500_INTERNAL_SERVER_ERROR,
+            detail=f"Failed to generate OAuth URL: {str(e)}"
+        )
+    except Exception as e:
+        logger.error(f"Unexpected error generating OAuth URL: {e}")
+        raise HTTPException(
+            status_code=status.HTTP_500_INTERNAL_SERVER_ERROR,
+            detail="Internal server error generating OAuth URL"
+        )
 
 
 @router.post("/youtube/oauth-callback")
@@ -247,26 +267,46 @@ async def oauth_callback(
     """
     Handle YouTube OAuth callback.
 
-    NOTE: This is a placeholder for Phase 5 implementation.
+    Exchanges the authorization code for access/refresh tokens and stores them
+    securely for future YouTube uploads.
 
-    - **callback_data**: OAuth authorization code and state
+    - **callback_data**: OAuth authorization code and optional state
 
-    In Phase 5, this will:
-    1. Exchange code for access/refresh tokens
-    2. Store tokens securely in database
-    3. Associate tokens with current user
+    Returns:
+    - Success message with authentication status
+
+    Raises:
+    - **400**: If OAuth authentication fails (invalid code)
+    - **500**: If token storage fails
     """
     logger.info(f"User {current_user.username} completed YouTube OAuth callback")
 
-    # TODO: Phase 5 - Implement actual OAuth token exchange
-    # This will use google-auth-oauthlib to exchange the code for tokens
-    # and store them encrypted in the database
+    try:
+        uploader = get_youtube_uploader()
+        success = uploader.handle_oauth_callback(callback_data.code)
 
-    return {
-        "message": "OAuth callback received (placeholder - Phase 5 implementation pending)",
-        "code_received": len(callback_data.code) > 0,
-        "state_received": callback_data.state is not None,
-    }
+        if success:
+            logger.info(f"YouTube OAuth successful for user {current_user.username}")
+            return {
+                "message": "YouTube authentication successful",
+                "status": "authenticated",
+                "user": current_user.username
+            }
+        else:
+            logger.warning(f"YouTube OAuth failed for user {current_user.username}")
+            raise HTTPException(
+                status_code=status.HTTP_400_BAD_REQUEST,
+                detail="OAuth authentication failed - invalid authorization code"
+            )
+
+    except HTTPException:
+        raise
+    except Exception as e:
+        logger.error(f"OAuth callback error for user {current_user.username}: {e}")
+        raise HTTPException(
+            status_code=status.HTTP_500_INTERNAL_SERVER_ERROR,
+            detail=f"OAuth callback failed: {str(e)}"
+        )
 
 
 @router.delete("/youtube/uploads/{upload_id}")

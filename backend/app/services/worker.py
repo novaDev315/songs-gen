@@ -13,9 +13,13 @@ from app.database import AsyncSessionLocal
 from app.models.song import Song
 from app.models.suno_job import SunoJob
 from app.models.task_queue import TaskQueue
+from app.models.evaluation import Evaluation
+from app.models.youtube_upload import YouTubeUpload
 from app.services.download_manager import get_download_manager
 from app.services.evaluator import get_evaluator
 from app.services.suno_client import get_suno_client, SunoClientError
+from app.services.youtube_uploader import get_youtube_uploader
+from app.services.video_generator import get_video_generator
 
 logger = logging.getLogger(__name__)
 settings = get_settings()
@@ -399,24 +403,148 @@ class BackgroundWorker:
             logger.info(f"Song approved, YouTube upload task created: {task.song_id}")
 
     async def execute_youtube_upload(self, task: TaskQueue, db: AsyncSession) -> None:
-        """Execute YouTube upload task (Phase 5 placeholder).
+        """Execute YouTube upload task.
+
+        Generates video from audio file and uploads to YouTube.
 
         Args:
             task: Task containing song_id to upload
             db: Database session
+
+        Raises:
+            ValueError: If song not found or not approved
+            FileNotFoundError: If audio file not found
+            Exception: If video generation or upload fails
         """
-        logger.info(f"[PLACEHOLDER] YouTube upload for song {task.song_id}")
+        logger.info(f"Uploading song {task.song_id} to YouTube")
 
-        # Simulate work
-        await asyncio.sleep(2)
+        # Get song
+        result = await db.execute(
+            select(Song).where(Song.id == task.song_id)
+        )
+        song = result.scalar_one_or_none()
 
-        # Real implementation will be added in Phase 5:
-        # - Get OAuth2 credentials
-        # - Prepare video from audio + static image
-        # - Upload to YouTube with metadata
-        # - Get video URL
-        # - Create YouTubeUpload record
-        # - Update song status to 'uploaded'
+        if not song:
+            raise ValueError(f"Song not found: {task.song_id}")
+
+        # Get evaluation (verify song is approved)
+        result = await db.execute(
+            select(Evaluation)
+            .where(Evaluation.song_id == task.song_id)
+            .where(Evaluation.approved == True)
+        )
+        evaluation = result.scalar_one_or_none()
+
+        if not evaluation:
+            raise ValueError(f"Song not approved for upload: {task.song_id}")
+
+        # Get audio file
+        download_folder = Path(settings.DOWNLOAD_FOLDER)
+        audio_file = download_folder / f"{song.id}.mp3"
+
+        if not audio_file.exists():
+            raise FileNotFoundError(f"Audio file not found: {audio_file}")
+
+        try:
+            # Generate video from audio
+            video_generator = get_video_generator()
+            video_file = download_folder / f"{song.id}.mp4"
+
+            logger.info(f"Generating video for song {task.song_id}")
+            video_generator.generate_video(
+                audio_file=audio_file,
+                output_file=video_file,
+                thumbnail=None,  # Use waveform visualization
+                title=song.title
+            )
+
+            # Prepare metadata
+            title = song.title or song.id
+            description = f"""
+{song.style_prompt or 'AI-generated music'}
+
+Generated with Suno AI
+Uploaded automatically via automation pipeline
+
+Lyrics:
+{song.lyrics[:500] if song.lyrics else 'N/A'}...
+""".strip()
+
+            tags = []
+            if song.genre:
+                tags.append(song.genre.lower())
+            tags.extend(['ai music', 'suno ai', 'ai generated'])
+
+            # Upload to YouTube
+            youtube_uploader = get_youtube_uploader()
+
+            logger.info(f"Uploading video to YouTube: {title}")
+            result = await youtube_uploader.upload_video(
+                video_file=video_file,
+                title=title,
+                description=description,
+                tags=tags,
+                privacy_status=settings.YOUTUBE_DEFAULT_PRIVACY
+            )
+
+            # Create or update YouTubeUpload record
+            yt_result = await db.execute(
+                select(YouTubeUpload).where(YouTubeUpload.song_id == task.song_id)
+            )
+            yt_upload = yt_result.scalar_one_or_none()
+
+            if yt_upload:
+                # Update existing record
+                yt_upload.video_id = result['video_id']
+                yt_upload.video_url = result['video_url']
+                yt_upload.upload_status = 'completed'
+                yt_upload.uploaded_at = datetime.utcnow()
+                yt_upload.error_message = None
+            else:
+                # Create new record
+                yt_upload = YouTubeUpload(
+                    song_id=task.song_id,
+                    video_id=result['video_id'],
+                    video_url=result['video_url'],
+                    upload_status='completed',
+                    title=title,
+                    description=description,
+                    tags=','.join(tags),
+                    privacy=settings.YOUTUBE_DEFAULT_PRIVACY,
+                    uploaded_at=datetime.utcnow()
+                )
+                db.add(yt_upload)
+
+            await db.commit()
+
+            # Update song status
+            song.status = 'uploaded'
+            await db.commit()
+
+            # Cleanup video file
+            video_file.unlink(missing_ok=True)
+
+            logger.info(f"YouTube upload successful: {result['video_url']}")
+
+        except Exception as e:
+            logger.error(f"YouTube upload failed for {task.song_id}: {e}")
+
+            # Update song status to failed
+            song.status = 'failed'
+
+            # Update YouTubeUpload record if exists
+            yt_result = await db.execute(
+                select(YouTubeUpload).where(YouTubeUpload.song_id == task.song_id)
+            )
+            yt_upload = yt_result.scalar_one_or_none()
+
+            if yt_upload:
+                yt_upload.upload_status = 'failed'
+                yt_upload.error_message = str(e)
+
+            await db.commit()
+
+            raise
 
 
 class WorkerPool:

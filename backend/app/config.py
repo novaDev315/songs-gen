@@ -34,10 +34,11 @@ class Settings(BaseSettings):
     SUNO_EMAIL: str = ""
     SUNO_PASSWORD: str = ""
 
-    # YouTube (placeholders for Phase 5)
+    # YouTube (Phase 5)
     YOUTUBE_CLIENT_ID: str = ""
     YOUTUBE_CLIENT_SECRET: str = ""
     YOUTUBE_REDIRECT_URI: str = "http://localhost:8501/oauth/callback"
+    YOUTUBE_DEFAULT_PRIVACY: str = "public"  # public, unlisted, private
 
     # Workers
     WORKER_COUNT: int = 2  # Number of background workers
