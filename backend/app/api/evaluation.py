@@ -1,7 +1,7 @@
 """Evaluation API endpoints for song quality assessment."""
 
 import logging
-from datetime import datetime
+from datetime import datetime, timezone
 from typing import Optional
 
 from fastapi import APIRouter, Depends, HTTPException, status
@@ -168,7 +168,7 @@ async def create_evaluation(
         sample_rate=evaluation_data.sample_rate,
         bitrate=evaluation_data.bitrate,
         evaluated_by=current_user.id,
-        evaluated_at=datetime.utcnow(),
+        evaluated_at=datetime.now(timezone.utc),
     )
 
     db.add(evaluation)
@@ -222,7 +222,7 @@ async def update_evaluation(
 
     # Update evaluator and timestamp
     evaluation.evaluated_by = current_user.id
-    evaluation.evaluated_at = datetime.utcnow()
+    evaluation.evaluated_at = datetime.now(timezone.utc)
 
     await db.commit()
     await db.refresh(evaluation)
@@ -277,12 +277,12 @@ async def approve_song(
     # Approve evaluation
     evaluation.approved = True
     evaluation.evaluated_by = current_user.id
-    evaluation.evaluated_at = datetime.utcnow()
+    evaluation.evaluated_at = datetime.now(timezone.utc)
 
     # Update song status
     song = evaluation.song
     song.status = "evaluated"
-    song.updated_at = datetime.utcnow()
+    song.updated_at = datetime.now(timezone.utc)
 
     # Create YouTube upload task
     task = TaskQueue(
@@ -340,12 +340,12 @@ async def reject_song(
     evaluation.approved = False
     evaluation.notes = notes
     evaluation.evaluated_by = current_user.id
-    evaluation.evaluated_at = datetime.utcnow()
+    evaluation.evaluated_at = datetime.now(timezone.utc)
 
     # Update song status
     song = evaluation.song
     song.status = "failed"
-    song.updated_at = datetime.utcnow()
+    song.updated_at = datetime.now(timezone.utc)
 
     await db.commit()
 
@@ -407,7 +407,7 @@ async def batch_approve(
                 evaluation = Evaluation(
                     song_id=song_id,
                     evaluated_by=current_user.id,
-                    evaluated_at=datetime.utcnow(),
+                    evaluated_at=datetime.now(timezone.utc),
                 )
                 db.add(evaluation)
 
@@ -415,11 +415,11 @@ async def batch_approve(
             evaluation.approved = True
             evaluation.notes = batch.notes
             evaluation.evaluated_by = current_user.id
-            evaluation.evaluated_at = datetime.utcnow()
+            evaluation.evaluated_at = datetime.now(timezone.utc)
 
             # Update song status
             song.status = "evaluated"
-            song.updated_at = datetime.utcnow()
+            song.updated_at = datetime.now(timezone.utc)
 
             # Create YouTube upload task
             task = TaskQueue(

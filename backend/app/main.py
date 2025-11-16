@@ -4,12 +4,16 @@ import logging
 from contextlib import asynccontextmanager
 from typing import AsyncIterator
 
-from fastapi import FastAPI
+from fastapi import FastAPI, Request
 from fastapi.middleware.cors import CORSMiddleware
+from slowapi import Limiter, _rate_limit_exceeded_handler
+from slowapi.errors import RateLimitExceeded
+from slowapi.util import get_remote_address
 
 from app.api import auth, evaluation, queue, songs, system, youtube
 from app.config import get_settings
 from app.database import init_db
+from app.middleware.security import SecurityHeadersMiddleware
 from app.services.backup import schedule_backups
 from app.services.file_watcher import get_file_watcher
 from app.services.init_admin import create_admin_user
@@ -78,9 +82,19 @@ app = FastAPI(
     version="1.0.0",
     description="Backend API for song generation automation pipeline",
     lifespan=lifespan,
+    docs_url="/api/docs" if settings.DEBUG else None,  # Disable docs in production
+    redoc_url="/api/redoc" if settings.DEBUG else None,
 )
 
-# CORS middleware
+# Rate limiting
+limiter = Limiter(key_func=get_remote_address)
+app.state.limiter = limiter
+app.add_exception_handler(RateLimitExceeded, _rate_limit_exceeded_handler)
+
+# Security headers middleware
+app.add_middleware(SecurityHeadersMiddleware)
+
+# CORS middleware (more restrictive)
 app.add_middleware(
     CORSMiddleware,
     allow_origins=[
@@ -88,8 +102,8 @@ app.add_middleware(
         "http://frontend:8501",  # Docker network
     ],
     allow_credentials=True,
-    allow_methods=["*"],
-    allow_headers=["*"],
+    allow_methods=["GET", "POST", "PUT", "DELETE", "PATCH"],  # Explicit methods only
+    allow_headers=["Content-Type", "Authorization"],  # Explicit headers only
 )
 
 

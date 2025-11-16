@@ -1,7 +1,7 @@
 """YouTube upload API endpoints."""
 
 import logging
-from datetime import datetime
+from datetime import datetime, timezone
 from typing import Optional
 
 from fastapi import APIRouter, Depends, HTTPException, status
@@ -184,7 +184,7 @@ async def upload_to_youtube(
         privacy=upload_data.privacy,
         upload_status="pending",
         uploaded_by=current_user.id,
-        uploaded_at=datetime.utcnow(),
+        uploaded_at=datetime.now(timezone.utc),
     )
 
     db.add(youtube_upload)

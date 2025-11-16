@@ -2,7 +2,7 @@
 
 import asyncio
 import logging
-from datetime import datetime
+from datetime import datetime, timezone
 from typing import Any
 
 from sqlalchemy import select
@@ -81,7 +81,7 @@ class BackgroundWorker:
 
             # Mark task as running
             task.status = "running"
-            task.started_at = datetime.utcnow()
+            task.started_at = datetime.now(timezone.utc)
             await db.commit()
 
             logger.info(
@@ -94,7 +94,7 @@ class BackgroundWorker:
 
                 # Mark task as completed
                 task.status = "completed"
-                task.completed_at = datetime.utcnow()
+                task.completed_at = datetime.now(timezone.utc)
                 await db.commit()
 
                 logger.info(f"Task {task.id} completed successfully")
@@ -107,7 +107,7 @@ class BackgroundWorker:
                 if task.retry_count >= task.max_retries:
                     # Max retries reached, mark as failed
                     task.status = "failed"
-                    task.completed_at = datetime.utcnow()
+                    task.completed_at = datetime.now(timezone.utc)
                     logger.error(
                         f"Task {task.id} failed after {task.retry_count} retries: {e}"
                     )
@@ -301,7 +301,7 @@ class BackgroundWorker:
                 # Update Suno job with completion details
                 suno_job.status = "completed"
                 suno_job.audio_url = status_result.get("audio_url")
-                suno_job.completed_at = datetime.utcnow()
+                suno_job.completed_at = datetime.now(timezone.utc)
                 await db.commit()
 
                 logger.info(
@@ -343,7 +343,7 @@ class BackgroundWorker:
                 # Update Suno job
                 suno_job.status = "failed"
                 suno_job.error_message = error_msg
-                suno_job.completed_at = datetime.utcnow()
+                suno_job.completed_at = datetime.now(timezone.utc)
                 await db.commit()
 
                 # Update song status
@@ -498,7 +498,7 @@ Lyrics:
                 yt_upload.video_id = result['video_id']
                 yt_upload.video_url = result['video_url']
                 yt_upload.upload_status = 'completed'
-                yt_upload.uploaded_at = datetime.utcnow()
+                yt_upload.uploaded_at = datetime.now(timezone.utc)
                 yt_upload.error_message = None
             else:
                 # Create new record
@@ -511,7 +511,7 @@ Lyrics:
                     description=description,
                     tags=','.join(tags),
                     privacy=settings.YOUTUBE_DEFAULT_PRIVACY,
-                    uploaded_at=datetime.utcnow()
+                    uploaded_at=datetime.now(timezone.utc)
                 )
                 db.add(yt_upload)
 

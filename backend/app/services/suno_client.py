@@ -18,7 +18,7 @@ See backend/SUNO_INTEGRATION_WARNING.md for full details.
 import logging
 import asyncio
 from typing import Optional, Dict, Any
-from datetime import datetime, timedelta
+from datetime import datetime, timedelta, timezone
 
 from playwright.async_api import (
     async_playwright,
@@ -204,7 +204,7 @@ class SunoClient:
         if self.is_logged_in and not force:
             # Check if session is still valid (e.g., < 1 hour old)
             if self.last_login_time:
-                age = datetime.utcnow() - self.last_login_time
+                age = datetime.now(timezone.utc) - self.last_login_time
                 if age < timedelta(hours=1):
                     logger.debug("Already logged in and session is fresh")
                     return True
@@ -271,7 +271,7 @@ class SunoClient:
                 await asyncio.sleep(1)  # Simulate network delay
 
                 self.is_logged_in = True
-                self.last_login_time = datetime.utcnow()
+                self.last_login_time = datetime.now(timezone.utc)
                 logger.info("[PLACEHOLDER] Login successful")
                 return True
 
@@ -403,7 +403,7 @@ class SunoClient:
                 await asyncio.sleep(2)  # Simulate network delay
 
                 # Generate mock job ID
-                job_id = f"suno_{int(datetime.utcnow().timestamp())}_{hash(lyrics) % 10000:04d}"
+                job_id = f"suno_{int(datetime.now(timezone.utc).timestamp())}_{hash(lyrics) % 10000:04d}"
 
                 # Increment operations counter
                 self.operations_count += 1

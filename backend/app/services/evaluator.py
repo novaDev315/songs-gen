@@ -2,7 +2,7 @@
 
 import logging
 from pathlib import Path
-from datetime import datetime
+from datetime import datetime, timezone
 from sqlalchemy import select
 from sqlalchemy.ext.asyncio import AsyncSession
 
@@ -68,7 +68,7 @@ class EvaluatorService:
                     evaluation.file_size_mb = metrics["file_size_mb"]
                     evaluation.sample_rate = metrics["sample_rate"]
                     evaluation.bitrate = metrics["bitrate"]
-                    evaluation.evaluated_at = datetime.utcnow()
+                    evaluation.evaluated_at = datetime.now(timezone.utc)
                 else:
                     # Create new
                     evaluation = Evaluation(
@@ -78,7 +78,7 @@ class EvaluatorService:
                         file_size_mb=metrics["file_size_mb"],
                         sample_rate=metrics["sample_rate"],
                         bitrate=metrics["bitrate"],
-                        evaluated_at=datetime.utcnow(),
+                        evaluated_at=datetime.now(timezone.utc),
                     )
                     db.add(evaluation)
 

@@ -2,7 +2,7 @@
 
 import logging
 import uuid
-from datetime import datetime
+from datetime import datetime, timezone
 from typing import Annotated, Optional
 
 from fastapi import APIRouter, Depends, HTTPException, status
@@ -176,7 +176,7 @@ async def update_song(
         setattr(song, field, value)
 
     # Update timestamp
-    song.updated_at = datetime.utcnow()
+    song.updated_at = datetime.now(timezone.utc)
 
     await db.commit()
     await db.refresh(song)
@@ -356,7 +356,7 @@ async def upload_to_suno(
 
     # Update song status
     song.status = "uploading"
-    song.updated_at = datetime.utcnow()
+    song.updated_at = datetime.now(timezone.utc)
 
     await db.commit()
     await db.refresh(task)

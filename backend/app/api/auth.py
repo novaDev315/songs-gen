@@ -1,13 +1,15 @@
 """Authentication API endpoints."""
 
 import logging
-from datetime import datetime, timedelta
+from datetime import datetime, timedelta, timezone
 from typing import Annotated
 
-from fastapi import APIRouter, Depends, HTTPException, status
+from fastapi import APIRouter, Depends, HTTPException, Request, status
 from fastapi.security import HTTPAuthorizationCredentials, HTTPBearer
 from jose import JWTError, jwt
 from passlib.context import CryptContext
+from slowapi import Limiter
+from slowapi.util import get_remote_address
 from sqlalchemy import select
 from sqlalchemy.ext.asyncio import AsyncSession
 
@@ -25,6 +27,9 @@ pwd_context = CryptContext(schemes=["bcrypt"], deprecated="auto")
 # HTTP Bearer token scheme
 security = HTTPBearer()
 
+# Rate limiter
+limiter = Limiter(key_func=get_remote_address)
+
 router = APIRouter()
 
 
@@ -41,7 +46,7 @@ def hash_password(password: str) -> str:
 def create_access_token(data: dict) -> str:
     """Create a short-lived access token (15 minutes)."""
     to_encode = data.copy()
-    expire = datetime.utcnow() + timedelta(minutes=settings.JWT_EXPIRE_MINUTES)
+    expire = datetime.now(timezone.utc) + timedelta(minutes=settings.JWT_EXPIRE_MINUTES)
     to_encode.update({"exp": expire, "type": "access"})
 
     return jwt.encode(to_encode, settings.SECRET_KEY, algorithm=settings.JWT_ALGORITHM)
@@ -50,7 +55,7 @@ def create_access_token(data: dict) -> str:
 def create_refresh_token(data: dict) -> str:
     """Create a long-lived refresh token (7 days)."""
     to_encode = data.copy()
-    expire = datetime.utcnow() + timedelta(days=settings.JWT_REFRESH_EXPIRE_DAYS)
+    expire = datetime.now(timezone.utc) + timedelta(days=settings.JWT_REFRESH_EXPIRE_DAYS)
     to_encode.update({"exp": expire, "type": "refresh"})
 
     return jwt.encode(to_encode, settings.SECRET_KEY, algorithm=settings.JWT_ALGORITHM)
@@ -98,7 +103,10 @@ async def get_current_user(
 
 
 @router.post("/auth/login", response_model=TokenResponse)
-async def login(request: LoginRequest, db: AsyncSession = Depends(get_db)) -> TokenResponse:
+@limiter.limit("5/minute")  # Prevent brute force attacks
+async def login(
+    req: Request, request: LoginRequest, db: AsyncSession = Depends(get_db)
+) -> TokenResponse:
     """Login with username and password, return access and refresh tokens."""
     # Find user
     result = await db.execute(select(User).where(User.username == request.username))
@@ -117,10 +125,10 @@ async def login(request: LoginRequest, db: AsyncSession = Depends(get_db)) -> To
 
     # Store refresh token hash in database
     user.refresh_token_hash = hash_password(refresh_token)
-    user.refresh_token_expires_at = datetime.utcnow() + timedelta(
+    user.refresh_token_expires_at = datetime.now(timezone.utc) + timedelta(
         days=settings.JWT_REFRESH_EXPIRE_DAYS
     )
-    user.last_login = datetime.utcnow()
+    user.last_login = datetime.now(timezone.utc)
 
     await db.commit()
 
@@ -130,8 +138,9 @@ async def login(request: LoginRequest, db: AsyncSession = Depends(get_db)) -> To
 
 
 @router.post("/auth/refresh", response_model=TokenResponse)
+@limiter.limit("10/minute")  # Prevent token abuse
 async def refresh_token(
-    request: RefreshRequest, db: AsyncSession = Depends(get_db)
+    req: Request, request: RefreshRequest, db: AsyncSession = Depends(get_db)
 ) -> TokenResponse:
     """Exchange refresh token for new access and refresh tokens."""
     try:
@@ -174,7 +183,7 @@ async def refresh_token(
         )
 
     # Check if refresh token is expired
-    if user.refresh_token_expires_at and user.refresh_token_expires_at < datetime.utcnow():
+    if user.refresh_token_expires_at and user.refresh_token_expires_at < datetime.now(timezone.utc):
         raise HTTPException(
             status_code=status.HTTP_401_UNAUTHORIZED,
             detail="Refresh token expired",
@@ -186,7 +195,7 @@ async def refresh_token(
 
     # Update refresh token hash in database
     user.refresh_token_hash = hash_password(new_refresh_token)
-    user.refresh_token_expires_at = datetime.utcnow() + timedelta(
+    user.refresh_token_expires_at = datetime.now(timezone.utc) + timedelta(
         days=settings.JWT_REFRESH_EXPIRE_DAYS
     )
 

@@ -1,7 +1,12 @@
 """Pytest configuration and fixtures."""
 
+import json
 import os
-from typing import AsyncGenerator, Generator
+import tempfile
+from datetime import datetime, timedelta
+from pathlib import Path
+from typing import AsyncGenerator, Callable, Generator
+from unittest.mock import AsyncMock, MagicMock, Mock, patch
 
 import pytest
 from fastapi.testclient import TestClient
@@ -9,12 +14,24 @@ from sqlalchemy import create_engine, event
 from sqlalchemy.ext.asyncio import AsyncSession, async_sessionmaker, create_async_engine
 from sqlalchemy.orm import Session, sessionmaker
 
+from app.api.auth import create_access_token, create_refresh_token, hash_password
 from app.database import Base, get_db
 from app.main import app
+from app.models.evaluation import Evaluation
+from app.models.song import Song
+from app.models.suno_job import SunoJob
+from app.models.task_queue import TaskQueue
+from app.models.user import User
+from app.models.youtube_upload import YouTubeUpload
 
 # Test database URL
 TEST_DATABASE_URL = "sqlite+aiosqlite:///./test.db"
 TEST_DATABASE_URL_SYNC = "sqlite:///./test.db"
+
+
+# =============================================================================
+# Database Fixtures
+# =============================================================================
 
 
 @pytest.fixture(scope="function")
@@ -105,3 +122,401 @@ def client(test_db: Session) -> Generator[TestClient, None, None]:
         yield test_client
 
     app.dependency_overrides.clear()
+
+
+# =============================================================================
+# Authentication Fixtures
+# =============================================================================
+
+
+@pytest.fixture
+def test_user(test_db: Session) -> User:
+    """Create a test user."""
+    user = User(
+        username="testuser",
+        password_hash=hash_password("testpassword123"),
+        role="user",
+        created_at=datetime.utcnow(),
+    )
+    test_db.add(user)
+    test_db.commit()
+    test_db.refresh(user)
+    return user
+
+
+@pytest.fixture
+def test_admin(test_db: Session) -> User:
+    """Create a test admin user."""
+    admin = User(
+        username="admin",
+        password_hash=hash_password("adminpassword123"),
+        role="admin",
+        created_at=datetime.utcnow(),
+    )
+    test_db.add(admin)
+    test_db.commit()
+    test_db.refresh(admin)
+    return admin
+
+
+@pytest.fixture
+def auth_headers(test_user: User) -> dict:
+    """Create authentication headers with valid access token."""
+    access_token = create_access_token(data={"sub": test_user.username})
+    return {"Authorization": f"Bearer {access_token}"}
+
+
+@pytest.fixture
+def admin_auth_headers(test_admin: User) -> dict:
+    """Create authentication headers with admin access token."""
+    access_token = create_access_token(data={"sub": test_admin.username})
+    return {"Authorization": f"Bearer {access_token}"}
+
+
+@pytest.fixture
+def expired_token() -> str:
+    """Create an expired access token."""
+    # Create token that expired 1 hour ago
+    from jose import jwt
+    from app.config import get_settings
+
+    settings = get_settings()
+    payload = {
+        "sub": "testuser",
+        "exp": datetime.utcnow() - timedelta(hours=1),
+        "type": "access",
+    }
+    return jwt.encode(payload, settings.SECRET_KEY, algorithm=settings.JWT_ALGORITHM)
+
+
+# =============================================================================
+# Model Factory Fixtures
+# =============================================================================
+
+
+@pytest.fixture
+def song_factory(test_db: Session) -> Callable:
+    """Factory for creating test songs."""
+
+    def create_song(
+        song_id: str = "test-song-001",
+        title: str = "Test Song",
+        genre: str = "Pop",
+        status: str = "pending",
+        **kwargs,
+    ) -> Song:
+        song = Song(
+            id=song_id,
+            title=title,
+            genre=genre,
+            style_prompt=kwargs.get(
+                "style_prompt",
+                "Pop song with upbeat energy, catchy hooks, modern production",
+            ),
+            lyrics=kwargs.get("lyrics", "[Verse 1]\nTest lyrics\n\n[Chorus]\nTest chorus"),
+            file_path=kwargs.get("file_path", f"/generated/songs/{song_id}.md"),
+            status=status,
+            metadata_json=kwargs.get("metadata_json"),
+            created_at=kwargs.get("created_at", datetime.utcnow()),
+        )
+        test_db.add(song)
+        test_db.commit()
+        test_db.refresh(song)
+        return song
+
+    return create_song
+
+
+@pytest.fixture
+def suno_job_factory(test_db: Session) -> Callable:
+    """Factory for creating test Suno jobs."""
+
+    def create_suno_job(
+        song_id: str,
+        job_id: str = "suno-job-001",
+        status: str = "pending",
+        **kwargs,
+    ) -> SunoJob:
+        job = SunoJob(
+            id=job_id,
+            song_id=song_id,
+            status=status,
+            suno_song_id=kwargs.get("suno_song_id"),
+            suno_url=kwargs.get("suno_url"),
+            audio_url=kwargs.get("audio_url"),
+            video_url=kwargs.get("video_url"),
+            download_path=kwargs.get("download_path"),
+            error_message=kwargs.get("error_message"),
+            created_at=kwargs.get("created_at", datetime.utcnow()),
+        )
+        test_db.add(job)
+        test_db.commit()
+        test_db.refresh(job)
+        return job
+
+    return create_suno_job
+
+
+@pytest.fixture
+def evaluation_factory(test_db: Session, test_user: User) -> Callable:
+    """Factory for creating test evaluations."""
+
+    def create_evaluation(
+        song_id: str,
+        is_approved: bool = True,
+        **kwargs,
+    ) -> Evaluation:
+        evaluation = Evaluation(
+            song_id=song_id,
+            evaluated_by=test_user.id,
+            is_approved=is_approved,
+            audio_quality_score=kwargs.get("audio_quality_score", 85.5),
+            manual_score=kwargs.get("manual_score"),
+            notes=kwargs.get("notes", "Test evaluation"),
+            created_at=kwargs.get("created_at", datetime.utcnow()),
+        )
+        test_db.add(evaluation)
+        test_db.commit()
+        test_db.refresh(evaluation)
+        return evaluation
+
+    return create_evaluation
+
+
+@pytest.fixture
+def youtube_upload_factory(test_db: Session, test_user: User) -> Callable:
+    """Factory for creating test YouTube uploads."""
+
+    def create_youtube_upload(
+        song_id: str,
+        status: str = "pending",
+        **kwargs,
+    ) -> YouTubeUpload:
+        upload = YouTubeUpload(
+            song_id=song_id,
+            uploaded_by=test_user.id,
+            status=status,
+            youtube_video_id=kwargs.get("youtube_video_id"),
+            youtube_url=kwargs.get("youtube_url"),
+            video_file_path=kwargs.get("video_file_path"),
+            error_message=kwargs.get("error_message"),
+            created_at=kwargs.get("created_at", datetime.utcnow()),
+        )
+        test_db.add(upload)
+        test_db.commit()
+        test_db.refresh(upload)
+        return upload
+
+    return create_youtube_upload
+
+
+@pytest.fixture
+def task_factory(test_db: Session) -> Callable:
+    """Factory for creating test tasks."""
+
+    def create_task(
+        song_id: str,
+        task_type: str = "generate",
+        status: str = "pending",
+        **kwargs,
+    ) -> TaskQueue:
+        task = TaskQueue(
+            song_id=song_id,
+            task_type=task_type,
+            status=status,
+            priority=kwargs.get("priority", 5),
+            error_message=kwargs.get("error_message"),
+            created_at=kwargs.get("created_at", datetime.utcnow()),
+        )
+        test_db.add(task)
+        test_db.commit()
+        test_db.refresh(task)
+        return task
+
+    return create_task
+
+
+# =============================================================================
+# File System Fixtures
+# =============================================================================
+
+
+@pytest.fixture
+def temp_dir() -> Generator[Path, None, None]:
+    """Create a temporary directory for testing."""
+    with tempfile.TemporaryDirectory() as tmpdir:
+        yield Path(tmpdir)
+
+
+@pytest.fixture
+def temp_audio_file(temp_dir: Path) -> Path:
+    """Create a temporary audio file for testing."""
+    audio_file = temp_dir / "test_audio.mp3"
+    # Create a minimal MP3 file (just for path testing, not actual audio)
+    audio_file.write_bytes(b"ID3" + b"\x00" * 100)
+    return audio_file
+
+
+@pytest.fixture
+def temp_video_file(temp_dir: Path) -> Path:
+    """Create a temporary video file for testing."""
+    video_file = temp_dir / "test_video.mp4"
+    # Create a minimal MP4 file (just for path testing)
+    video_file.write_bytes(b"\x00\x00\x00\x20ftypisom" + b"\x00" * 100)
+    return video_file
+
+
+@pytest.fixture
+def sample_song_file(temp_dir: Path) -> Path:
+    """Create a sample song .md file for testing."""
+    song_content = """# Test Song
+
+## Style Prompt
+Pop song, upbeat, catchy hooks, 120 BPM, modern production
+
+## Lyrics
+[Verse 1]
+This is a test song
+Testing all day long
+
+[Chorus]
+TEST TEST TEST
+This is just a test
+
+[Outro]
+*fade out*
+"""
+    song_file = temp_dir / "test-song-001.md"
+    song_file.write_text(song_content)
+
+    # Create metadata file
+    metadata = {
+        "id": "test-song-001",
+        "title": "Test Song",
+        "genre": "Pop",
+        "created_at": datetime.utcnow().isoformat(),
+    }
+    meta_file = temp_dir / "test-song-001.meta.json"
+    meta_file.write_text(json.dumps(metadata, indent=2))
+
+    return song_file
+
+
+# =============================================================================
+# Mock Service Fixtures
+# =============================================================================
+
+
+@pytest.fixture
+def mock_suno_client():
+    """Mock Suno client for testing."""
+    mock = MagicMock()
+    mock.upload_song = AsyncMock(
+        return_value={
+            "song_id": "suno-123",
+            "url": "https://suno.com/song/suno-123",
+        }
+    )
+    mock.check_status = AsyncMock(
+        return_value={
+            "status": "completed",
+            "audio_url": "https://cdn.suno.com/audio/suno-123.mp3",
+        }
+    )
+    mock.download_audio = AsyncMock(return_value="/downloads/suno-123.mp3")
+    return mock
+
+
+@pytest.fixture
+def mock_youtube_client():
+    """Mock YouTube client for testing."""
+    mock = MagicMock()
+    mock.upload_video = AsyncMock(
+        return_value={
+            "video_id": "yt-123",
+            "url": "https://youtube.com/watch?v=yt-123",
+        }
+    )
+    mock.update_metadata = AsyncMock(return_value=True)
+    return mock
+
+
+@pytest.fixture
+def mock_audio_analyzer():
+    """Mock audio analyzer for testing."""
+    mock = MagicMock()
+    mock.analyze_audio = Mock(
+        return_value={
+            "duration_seconds": 180.5,
+            "file_size_mb": 4.2,
+            "sample_rate": 44100,
+            "bitrate": 192000,
+            "channels": 2,
+            "rms_energy": 0.25,
+            "spectral_centroid": 2500.0,
+            "zero_crossing_rate": 0.15,
+            "tempo": 120.0,
+            "audio_quality_score": 85.5,
+        }
+    )
+    return mock
+
+
+@pytest.fixture
+def mock_video_generator():
+    """Mock video generator for testing."""
+    mock = MagicMock()
+    mock.generate_video = Mock(return_value=Path("/videos/test.mp4"))
+    mock.generate_video_with_text_overlay = Mock(return_value=Path("/videos/test_text.mp4"))
+    return mock
+
+
+@pytest.fixture
+def mock_file_watcher():
+    """Mock file watcher for testing."""
+    mock = MagicMock()
+    mock.start = Mock()
+    mock.stop = Mock()
+    mock.is_running = Mock(return_value=True)
+    return mock
+
+
+@pytest.fixture
+def mock_worker():
+    """Mock background worker for testing."""
+    mock = MagicMock()
+    mock.start = Mock()
+    mock.stop = Mock()
+    mock.is_running = Mock(return_value=True)
+    mock.queue_size = Mock(return_value=0)
+    return mock
+
+
+# =============================================================================
+# Sample Data Fixtures
+# =============================================================================
+
+
+@pytest.fixture
+def sample_song_data() -> dict:
+    """Sample song data for testing."""
+    return {
+        "id": "test-song-001",
+        "title": "Test Song",
+        "genre": "Pop",
+        "style_prompt": "Pop song with upbeat energy, catchy hooks, modern production",
+        "lyrics": "[Verse 1]\nTest lyrics\n\n[Chorus]\nTest chorus",
+        "file_path": "/generated/songs/test-song-001.md",
+        "status": "pending",
+    }
+
+
+@pytest.fixture
+def sample_evaluation_data() -> dict:
+    """Sample evaluation data for testing."""
+    return {
+        "is_approved": True,
+        "audio_quality_score": 85.5,
+        "manual_score": 90,
+        "notes": "Great quality, approved for upload",
+    }

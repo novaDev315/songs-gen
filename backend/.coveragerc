@@ -1,0 +1,94 @@
+# Coverage.py configuration for Songs-Gen automation pipeline
+
+[run]
+# Source code to measure
+source = app
+
+# Files to omit from coverage
+omit =
+    */tests/*
+    */test_*.py
+    */__pycache__/*
+    */venv/*
+    */env/*
+    */migrations/*
+    */alembic/*
+    # Config files
+    */config.py
+    # Init files
+    */__init__.py
+
+# Run branch coverage
+branch = True
+
+# Save coverage data
+data_file = .coverage
+
+# Parallel mode for concurrent test execution
+parallel = False
+
+[report]
+# Reporting precision
+precision = 2
+
+# Show missing lines
+show_missing = True
+
+# Skip fully covered files in report
+skip_covered = False
+
+# Skip empty files
+skip_empty = True
+
+# Sort results
+sort = Cover
+
+# Exclude lines from coverage
+exclude_lines =
+    # Standard pragma
+    pragma: no cover
+
+    # Don't complain about missing debug code
+    def __repr__
+    def __str__
+
+    # Don't complain if tests don't hit defensive assertion code
+    raise AssertionError
+    raise NotImplementedError
+
+    # Don't complain if non-runnable code isn't run
+    if __name__ == .__main__.:
+    if TYPE_CHECKING:
+
+    # Don't complain about abstract methods
+    @abstractmethod
+    @abc.abstractmethod
+
+    # Don't complain about protocol methods
+    @protocol
+
+    # Don't complain about pass statements
+    pass
+
+    # Don't complain about ellipsis
+    \.\.\.
+
+[html]
+# HTML report directory
+directory = htmlcov
+
+# Title for HTML report
+title = Songs-Gen Test Coverage Report
+
+[xml]
+# XML output file
+output = coverage.xml
+
+[json]
+# JSON output file
+output = coverage.json
+pretty_print = True
+
+# Fail if coverage is below threshold
+[coverage:report]
+fail_under = 80.0
