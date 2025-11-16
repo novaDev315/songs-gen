@@ -1,0 +1,18 @@
+{
+  "id": "1524af33e286",
+  "title": "Parallel Worlds",
+  "genre": "pop",
+  "file_path": "songs/pop/12-parallel-worlds.md",
+  "created": "2025-10-16T17:06:04.802962",
+  "updated": "2025-10-16T17:06:04.802972",
+  "collections": [],
+  "genre_detail": "Alt-Pop / Indie Pop",
+  "mood": "Wistful, Curious, Dreamy",
+  "personas": [
+    "NEON",
+    "PHOENIX",
+    "REBEL"
+  ],
+  "style_prompt_length": 747,
+  "lyrics_length": 2259
+}

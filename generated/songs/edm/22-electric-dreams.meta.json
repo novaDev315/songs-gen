@@ -1,0 +1,22 @@
+{
+  "id": "46dadfb2743d",
+  "title": "Electric Dreams",
+  "genre": "edm",
+  "file_path": "songs/edm/22-electric-dreams.md",
+  "created": "2025-10-16T17:06:04.980661",
+  "updated": "2025-10-16T17:06:04.980675",
+  "collections": [
+    "triumph-collection"
+  ],
+  "genre_detail": "Progressive House (Melodic)",
+  "themes": [
+    "Euphoria",
+    "Dreamscape"
+  ],
+  "personas": [
+    "NEON",
+    "PHOENIX"
+  ],
+  "style_prompt_length": 15,
+  "lyrics_length": 9
+}

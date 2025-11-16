@@ -1,0 +1,22 @@
+{
+  "id": "ed8322a8a7b9",
+  "title": "Highway to Better Days",
+  "genre": "country",
+  "file_path": "songs/country/33-highway-to-better-days.md",
+  "created": "2025-10-16T17:06:05.252143",
+  "updated": "2025-10-16T17:06:05.252157",
+  "collections": [
+    "triumph-collection"
+  ],
+  "genre_detail": "Optimistic Country",
+  "themes": [
+    "Journey",
+    "Hope"
+  ],
+  "personas": [
+    "NEON",
+    "PHOENIX"
+  ],
+  "style_prompt_length": 15,
+  "lyrics_length": 9
+}

@@ -1,0 +1,21 @@
+{
+  "id": "d82ac7dd6853",
+  "title": "Hustle Hard",
+  "genre": "hip-hop",
+  "file_path": "songs/hip-hop/12-hustle-hard.md",
+  "created": "2025-10-16T17:06:04.545344",
+  "updated": "2025-10-16T17:06:04.545364",
+  "collections": [
+    "triumph-collection"
+  ],
+  "genre_detail": "Atlanta Trap",
+  "themes": [
+    "Hustle Culture",
+    "Hard Work"
+  ],
+  "personas": [
+    "REBEL"
+  ],
+  "style_prompt_length": 15,
+  "lyrics_length": 9
+}

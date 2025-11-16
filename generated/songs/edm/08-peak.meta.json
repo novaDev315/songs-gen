@@ -1,0 +1,22 @@
+{
+  "id": "ee269e557452",
+  "title": "Peak",
+  "genre": "edm",
+  "file_path": "songs/edm/08-peak.md",
+  "created": "2025-10-16T17:06:04.959829",
+  "updated": "2025-10-16T17:06:04.959843",
+  "collections": [
+    "triumph-collection"
+  ],
+  "genre_detail": "Progressive House",
+  "themes": [
+    "Reaching the Summit"
+  ],
+  "personas": [
+    "NEON",
+    "PHOENIX",
+    "REBEL"
+  ],
+  "style_prompt_length": 15,
+  "lyrics_length": 9
+}

@@ -1,0 +1,22 @@
+{
+  "id": "a87058d62b5d",
+  "title": "Blessed",
+  "genre": "r-b",
+  "file_path": "songs/r-b/36-blessed.md",
+  "created": "2025-10-16T17:06:05.299767",
+  "updated": "2025-10-16T17:06:05.299782",
+  "collections": [
+    "triumph-collection"
+  ],
+  "genre_detail": "Neo-Soul",
+  "themes": [
+    "Gratitude",
+    "Abundance"
+  ],
+  "personas": [
+    "NEON",
+    "PHOENIX"
+  ],
+  "style_prompt_length": 15,
+  "lyrics_length": 9
+}

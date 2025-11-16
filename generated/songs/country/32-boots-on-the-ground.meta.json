@@ -1,0 +1,21 @@
+{
+  "id": "245f88448463",
+  "title": "Boots on the Ground",
+  "genre": "country",
+  "file_path": "songs/country/32-boots-on-the-ground.md",
+  "created": "2025-10-16T17:06:05.241221",
+  "updated": "2025-10-16T17:06:05.241232",
+  "collections": [
+    "triumph-collection"
+  ],
+  "genre_detail": "Country Rock",
+  "themes": [
+    "Work Ethic",
+    "Blue Collar Pride"
+  ],
+  "personas": [
+    "PHOENIX"
+  ],
+  "style_prompt_length": 15,
+  "lyrics_length": 9
+}

@@ -1,0 +1,21 @@
+{
+  "id": "157f6c2cfb80",
+  "title": "Shine",
+  "genre": "pop",
+  "file_path": "songs/pop/18-shine.md",
+  "created": "2025-10-16T17:06:04.885648",
+  "updated": "2025-10-16T17:06:04.885663",
+  "collections": [
+    "triumph-collection"
+  ],
+  "genre_detail": "Pop Ballad Build",
+  "themes": [
+    "Empowerment Through Darkness"
+  ],
+  "personas": [
+    "NEON",
+    "PHOENIX"
+  ],
+  "style_prompt_length": 15,
+  "lyrics_length": 9
+}

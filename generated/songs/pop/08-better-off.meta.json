@@ -1,0 +1,20 @@
+{
+  "id": "eca746d34832",
+  "title": "Better Off",
+  "genre": "pop",
+  "file_path": "songs/pop/08-better-off.md",
+  "created": "2025-10-16T17:06:04.780874",
+  "updated": "2025-10-16T17:06:04.780890",
+  "collections": [
+    "triumph-collection"
+  ],
+  "genre_detail": "Dance-Pop",
+  "mood": "Empowering, Uplifting, Confident",
+  "personas": [
+    "NEON",
+    "PHOENIX",
+    "REBEL"
+  ],
+  "style_prompt_length": 888,
+  "lyrics_length": 9
+}

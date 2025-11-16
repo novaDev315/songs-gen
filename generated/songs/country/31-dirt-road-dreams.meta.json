@@ -1,0 +1,22 @@
+{
+  "id": "ac7881da2d69",
+  "title": "Dirt Road Dreams",
+  "genre": "country",
+  "file_path": "songs/country/31-dirt-road-dreams.md",
+  "created": "2025-10-16T17:06:05.229469",
+  "updated": "2025-10-16T17:06:05.229489",
+  "collections": [
+    "triumph-collection"
+  ],
+  "genre_detail": "Modern Country",
+  "themes": [
+    "Determination",
+    "Rural Roots"
+  ],
+  "personas": [
+    "NEON",
+    "PHOENIX"
+  ],
+  "style_prompt_length": 15,
+  "lyrics_length": 9
+}

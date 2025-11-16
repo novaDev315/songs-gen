@@ -1,0 +1,22 @@
+{
+  "id": "85ca5433d33d",
+  "title": "No Looking Back",
+  "genre": "hip-hop",
+  "file_path": "songs/hip-hop/01-no-looking-back.md",
+  "created": "2025-10-16T17:06:04.364171",
+  "updated": "2025-10-16T17:06:04.364185",
+  "collections": [
+    "triumph-collection"
+  ],
+  "genre_detail": "Atlanta Trap / Dark Hip-Hop",
+  "themes": [
+    "Victory",
+    "No Regrets"
+  ],
+  "personas": [
+    "NEON",
+    "REBEL"
+  ],
+  "style_prompt_length": 15,
+  "lyrics_length": 9
+}

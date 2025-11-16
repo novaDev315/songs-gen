@@ -1,0 +1,22 @@
+{
+  "id": "9e679a9bc64f",
+  "title": "Made It",
+  "genre": "fusion",
+  "file_path": "songs/fusion/06-made-it.md",
+  "created": "2025-10-16T17:06:05.373525",
+  "updated": "2025-10-16T17:06:05.373540",
+  "collections": [
+    "triumph-collection"
+  ],
+  "genre_detail": "Pop-Trap Fusion",
+  "themes": [
+    "Celebration",
+    "Achievement"
+  ],
+  "personas": [
+    "NEON",
+    "PHOENIX"
+  ],
+  "style_prompt_length": 15,
+  "lyrics_length": 9
+}

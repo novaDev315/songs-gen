@@ -1,0 +1,22 @@
+{
+  "id": "e0a4b517f222",
+  "title": "Pulse",
+  "genre": "edm",
+  "file_path": "songs/edm/25-pulse.md",
+  "created": "2025-10-16T17:06:05.015056",
+  "updated": "2025-10-16T17:06:05.015066",
+  "collections": [
+    "triumph-collection"
+  ],
+  "genre_detail": "Techno",
+  "themes": [
+    "Relentless Drive",
+    "Heartbeat"
+  ],
+  "personas": [
+    "PHOENIX",
+    "REBEL"
+  ],
+  "style_prompt_length": 15,
+  "lyrics_length": 9
+}

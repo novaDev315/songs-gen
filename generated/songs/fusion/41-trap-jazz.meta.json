@@ -1,0 +1,20 @@
+{
+  "id": "5d278e1bac42",
+  "title": "Trap Jazz",
+  "genre": "fusion",
+  "file_path": "songs/fusion/41-trap-jazz.md",
+  "created": "2025-10-16T17:06:05.415268",
+  "updated": "2025-10-16T17:06:05.415279",
+  "collections": [
+    "triumph-collection"
+  ],
+  "genre_detail": "Jazz-Trap Fusion",
+  "themes": [
+    "Sophisticated Hustle"
+  ],
+  "personas": [
+    "NEON"
+  ],
+  "style_prompt_length": 15,
+  "lyrics_length": 9
+}

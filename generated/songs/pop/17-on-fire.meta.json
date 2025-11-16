@@ -1,0 +1,22 @@
+{
+  "id": "ab3379c53682",
+  "title": "On Fire",
+  "genre": "pop",
+  "file_path": "songs/pop/17-on-fire.md",
+  "created": "2025-10-16T17:06:04.860163",
+  "updated": "2025-10-16T17:06:04.860178",
+  "collections": [
+    "triumph-collection"
+  ],
+  "genre_detail": "Uptempo Pop",
+  "themes": [
+    "High Energy",
+    "Unstoppable Force"
+  ],
+  "personas": [
+    "NEON",
+    "PHOENIX"
+  ],
+  "style_prompt_length": 15,
+  "lyrics_length": 9
+}

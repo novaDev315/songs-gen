@@ -1,0 +1,17 @@
+{
+  "id": "fa9b5b775719",
+  "title": "Self Made",
+  "genre": "hip-hop",
+  "file_path": "songs/hip-hop/05-self-made.md",
+  "created": "2025-10-16T17:06:04.422157",
+  "updated": "2025-10-16T17:06:04.422169",
+  "collections": [
+    "triumph-collection"
+  ],
+  "personas": [
+    "NEON",
+    "REBEL"
+  ],
+  "style_prompt_length": 428,
+  "lyrics_length": 2299
+}

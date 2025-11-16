@@ -1,0 +1,21 @@
+{
+  "id": "3a4d407fa3b3",
+  "title": "Unbreakable",
+  "genre": "rock",
+  "file_path": "songs/rock/26-unbreakable.md",
+  "created": "2025-10-16T17:06:05.149515",
+  "updated": "2025-10-16T17:06:05.149531",
+  "collections": [
+    "triumph-collection"
+  ],
+  "genre_detail": "Alternative Rock",
+  "themes": [
+    "Resilience",
+    "Inner Strength"
+  ],
+  "personas": [
+    "PHOENIX"
+  ],
+  "style_prompt_length": 15,
+  "lyrics_length": 9
+}

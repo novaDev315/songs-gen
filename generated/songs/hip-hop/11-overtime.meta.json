@@ -1,0 +1,22 @@
+{
+  "id": "a0538d903f9c",
+  "title": "Overtime",
+  "genre": "hip-hop",
+  "file_path": "songs/hip-hop/11-overtime.md",
+  "created": "2025-10-16T17:06:04.533493",
+  "updated": "2025-10-16T17:06:04.533507",
+  "collections": [
+    "triumph-collection"
+  ],
+  "genre_detail": "Modern Trap",
+  "themes": [
+    "Hustle",
+    "Non-Stop Work"
+  ],
+  "personas": [
+    "NEON",
+    "REBEL"
+  ],
+  "style_prompt_length": 15,
+  "lyrics_length": 9
+}

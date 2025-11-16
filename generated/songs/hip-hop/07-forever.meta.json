@@ -1,0 +1,21 @@
+{
+  "id": "cb52845fbd12",
+  "title": "Forever",
+  "genre": "hip-hop",
+  "file_path": "songs/hip-hop/07-forever.md",
+  "created": "2025-10-16T17:06:04.446838",
+  "updated": "2025-10-16T17:06:04.446857",
+  "collections": [
+    "triumph-collection"
+  ],
+  "genre_detail": "Classic Hip-Hop / Golden Era",
+  "themes": [
+    "Legacy",
+    "Timeless Impact"
+  ],
+  "personas": [
+    "NEON"
+  ],
+  "style_prompt_length": 15,
+  "lyrics_length": 9
+}
