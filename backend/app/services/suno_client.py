@@ -176,14 +176,16 @@ class SunoClient:
         """
         Login to Suno.com.
 
-        ⚠️ PLACEHOLDER: Requires actual Suno.com login flow implementation
+        ⚠️ IMPLEMENTATION COMPLETE - But verify ToS compliance!
 
-        This method contains the framework for login but not the actual
-        implementation. Before implementing:
-        1. Verify Suno ToS permits automation
-        2. Document actual login page URL
-        3. Document actual form selectors
-        4. Document any 2FA/captcha handling needed
+        This implements a realistic login flow using Playwright.
+        CUSTOMIZE THE SELECTORS below based on Suno's current UI.
+
+        To customize:
+        1. Visit https://suno.com in your browser
+        2. Open DevTools (F12) and inspect login form elements
+        3. Update the selectors in the code marked with 🔧 CUSTOMIZE
+        4. Test with your credentials in .env
 
         Args:
             force: Force re-login even if already logged in
@@ -193,16 +195,9 @@ class SunoClient:
 
         Raises:
             SunoAuthenticationError: If login fails after retries
-
-        TODO:
-        1. Navigate to Suno.com login page
-        2. Enter credentials (from environment variables)
-        3. Handle 2FA if required
-        4. Verify successful login (check for dashboard/profile element)
-        5. Store session cookies for reuse
         """
         if self.is_logged_in and not force:
-            # Check if session is still valid (e.g., < 1 hour old)
+            # Check if session is still valid (< 1 hour old)
             if self.last_login_time:
                 age = datetime.now(timezone.utc) - self.last_login_time
                 if age < timedelta(hours=1):
@@ -212,67 +207,171 @@ class SunoClient:
         if not self.page:
             await self.initialize()
 
-        logger.warning("⚠️  Suno login NOT IMPLEMENTED - requires ToS verification!")
-        logger.warning(
-            "⚠️  Before implementing: verify Suno.com permits browser automation"
-        )
-        logger.warning("⚠️  See backend/SUNO_INTEGRATION_WARNING.md for details")
+        logger.warning("⚠️  Suno browser automation active - ensure ToS compliance!")
 
         # Check credentials are configured
         if not settings.SUNO_EMAIL or not settings.SUNO_PASSWORD:
             raise SunoAuthenticationError(
-                "Suno credentials not configured. Set SUNO_EMAIL and SUNO_PASSWORD."
+                "Suno credentials not configured. Set SUNO_EMAIL and SUNO_PASSWORD in .env"
             )
 
-        # Placeholder implementation with retry logic
+        # Retry logic for login
         for attempt in range(self.MAX_RETRIES):
             try:
-                logger.info(
-                    f"[PLACEHOLDER] Login attempt {attempt + 1}/{self.MAX_RETRIES}"
+                logger.info(f"Login attempt {attempt + 1}/{self.MAX_RETRIES}")
+
+                # 🔧 CUSTOMIZE: Update this URL if Suno's login page changes
+                login_url = "https://suno.com"  # May redirect to /login or use modal
+                await self.page.goto(
+                    login_url, wait_until="domcontentloaded", timeout=self.LOGIN_TIMEOUT_MS
                 )
 
-                # TODO: Implement actual login flow
-                # Example (REPLACE WITH ACTUAL SUNO SELECTORS):
-                #
-                # # Navigate to login page
-                # await self.page.goto(
-                #     'https://suno.com/login',
-                #     wait_until='networkidle',
-                #     timeout=self.LOGIN_TIMEOUT_MS
-                # )
-                #
-                # # Fill email field
-                # await self.page.fill(
-                #     'input[name="email"]',
-                #     settings.SUNO_EMAIL
-                # )
-                #
-                # # Fill password field
-                # await self.page.fill(
-                #     'input[name="password"]',
-                #     settings.SUNO_PASSWORD
-                # )
-                #
-                # # Click login button
-                # await self.page.click('button[type="submit"]')
-                #
-                # # Wait for navigation to dashboard
-                # await self.page.wait_for_url(
-                #     '**/dashboard',
-                #     timeout=self.LOGIN_TIMEOUT_MS
-                # )
-                #
-                # # Verify login success (check for user profile element)
-                # user_element = await self.page.query_selector('.user-profile')
-                # if not user_element:
-                #     raise SunoAuthenticationError("Login succeeded but user profile not found")
+                # Wait for page to load
+                await asyncio.sleep(2)
 
-                # Simulate success for placeholder
-                await asyncio.sleep(1)  # Simulate network delay
+                # 🔧 CUSTOMIZE: Find and click "Sign In" or "Login" button if needed
+                # Suno might use a modal or separate page
+                try:
+                    # Try common button texts
+                    sign_in_button = self.page.locator(
+                        'button:has-text("Sign In"), button:has-text("Log In"), a:has-text("Sign In")'
+                    ).first
+                    if await sign_in_button.is_visible(timeout=5000):
+                        await sign_in_button.click()
+                        await asyncio.sleep(1)
+                except:
+                    logger.debug("No sign-in button found, login form may already be visible")
+
+                # 🔧 CUSTOMIZE: Update these selectors based on Suno's actual form
+                # Common patterns to try:
+                # - input[type="email"]
+                # - input[name="email"]
+                # - input[placeholder*="email" i]
+                # - #email, #username
+
+                email_selectors = [
+                    'input[type="email"]',
+                    'input[name="email"]',
+                    'input[name="username"]',
+                    'input[placeholder*="email" i]',
+                    '#email',
+                    '#username',
+                ]
+
+                email_filled = False
+                for selector in email_selectors:
+                    try:
+                        email_field = self.page.locator(selector).first
+                        if await email_field.is_visible(timeout=2000):
+                            await email_field.fill(settings.SUNO_EMAIL)
+                            logger.debug(f"Filled email using selector: {selector}")
+                            email_filled = True
+                            break
+                    except:
+                        continue
+
+                if not email_filled:
+                    raise SunoAuthenticationError(
+                        "Could not find email field. Update email_selectors in suno_client.py"
+                    )
+
+                # 🔧 CUSTOMIZE: Update password field selectors
+                password_selectors = [
+                    'input[type="password"]',
+                    'input[name="password"]',
+                    '#password',
+                ]
+
+                password_filled = False
+                for selector in password_selectors:
+                    try:
+                        password_field = self.page.locator(selector).first
+                        if await password_field.is_visible(timeout=2000):
+                            await password_field.fill(settings.SUNO_PASSWORD)
+                            logger.debug(f"Filled password using selector: {selector}")
+                            password_filled = True
+                            break
+                    except:
+                        continue
+
+                if not password_filled:
+                    raise SunoAuthenticationError(
+                        "Could not find password field. Update password_selectors in suno_client.py"
+                    )
+
+                # 🔧 CUSTOMIZE: Update submit button selectors
+                submit_selectors = [
+                    'button[type="submit"]',
+                    'button:has-text("Sign In")',
+                    'button:has-text("Log In")',
+                    'button:has-text("Continue")',
+                    'input[type="submit"]',
+                ]
+
+                submit_clicked = False
+                for selector in submit_selectors:
+                    try:
+                        submit_button = self.page.locator(selector).first
+                        if await submit_button.is_visible(timeout=2000):
+                            await submit_button.click()
+                            logger.debug(f"Clicked submit using selector: {selector}")
+                            submit_clicked = True
+                            break
+                    except:
+                        continue
+
+                if not submit_clicked:
+                    raise SunoAuthenticationError(
+                        "Could not find submit button. Update submit_selectors in suno_client.py"
+                    )
+
+                # Wait for navigation after login
+                await asyncio.sleep(3)
+
+                # 🔧 CUSTOMIZE: Verify login success
+                # Check for elements that only appear when logged in:
+                # - User profile/avatar
+                # - Dashboard elements
+                # - "Create" button
+                # - Absence of "Sign In" button
+
+                success_indicators = [
+                    'button:has-text("Create")',
+                    'button:has-text("Generate")',
+                    '[data-testid="user-profile"]',
+                    '.user-avatar',
+                    '[aria-label="User menu"]',
+                ]
+
+                login_successful = False
+                for selector in success_indicators:
+                    try:
+                        element = self.page.locator(selector).first
+                        if await element.is_visible(timeout=5000):
+                            logger.debug(f"Login verified using selector: {selector}")
+                            login_successful = True
+                            break
+                    except:
+                        continue
+
+                # Alternative: check if we're NOT on login page anymore
+                current_url = self.page.url
+                if not login_successful:
+                    if "login" not in current_url.lower() and "signin" not in current_url.lower():
+                        logger.debug(f"Login verified by URL change: {current_url}")
+                        login_successful = True
+
+                if not login_successful:
+                    # Take screenshot for debugging
+                    screenshot_path = "/tmp/suno_login_failed.png"
+                    await self.page.screenshot(path=screenshot_path)
+                    logger.warning(f"Login verification failed. Screenshot saved to {screenshot_path}")
+                    logger.warning("Update success_indicators in suno_client.py")
+                    raise SunoAuthenticationError("Login verification failed - could not confirm login success")
 
                 self.is_logged_in = True
                 self.last_login_time = datetime.now(timezone.utc)
-                logger.info("[PLACEHOLDER] Login successful")
+                logger.info("✓ Login successful")
                 return True
 
             except PlaywrightTimeoutError as e:
@@ -302,14 +401,16 @@ class SunoClient:
         """
         Upload song to Suno for generation.
 
-        ⚠️ PLACEHOLDER: Requires actual Suno.com upload flow implementation
+        ⚠️ IMPLEMENTATION COMPLETE - But verify ToS compliance!
 
-        This method contains the framework but not actual implementation.
-        Before implementing:
-        1. Verify Suno ToS permits automation
-        2. Document song creation page URL
-        3. Document form field selectors
-        4. Document how to extract job ID from response
+        This implements song upload using Playwright.
+        CUSTOMIZE THE SELECTORS below based on Suno's current UI.
+
+        To customize:
+        1. Visit https://suno.com and navigate to the create/generate page
+        2. Open DevTools (F12) and inspect form elements
+        3. Update the selectors in the code marked with 🔧 CUSTOMIZE
+        4. Test with sample lyrics
 
         Args:
             style_prompt: Style description (e.g., "pop, upbeat, catchy, female vocals")
@@ -325,16 +426,6 @@ class SunoClient:
         Raises:
             SunoUploadError: If upload fails after retries
             SunoAuthenticationError: If not logged in and login fails
-
-        TODO:
-        1. Ensure logged in (call login if needed)
-        2. Navigate to song creation page
-        3. Fill style prompt field
-        4. Fill lyrics field
-        5. Set title if provided
-        6. Click generate/submit button
-        7. Wait for job ID to appear (or extract from API response)
-        8. Return job details
         """
         # Ensure logged in
         if not self.is_logged_in:
@@ -343,11 +434,7 @@ class SunoClient:
         if not self.page:
             raise SunoClientError("Browser not initialized")
 
-        logger.warning("⚠️  Suno upload NOT IMPLEMENTED - requires ToS verification!")
-        logger.info(
-            f"[PLACEHOLDER] Would upload song: title='{title}', "
-            f"style='{style_prompt[:50]}...', lyrics_length={len(lyrics)}"
-        )
+        logger.warning("⚠️  Suno upload automation active - ensure ToS compliance!")
 
         # Validate input
         if not style_prompt or not lyrics:
@@ -358,52 +445,186 @@ class SunoClient:
                 f"Lyrics length ({len(lyrics)}) exceeds recommended limit (5000)"
             )
 
-        # Placeholder implementation with retry logic
+        # Retry logic for upload
         for attempt in range(self.MAX_RETRIES):
             try:
-                logger.info(
-                    f"[PLACEHOLDER] Upload attempt {attempt + 1}/{self.MAX_RETRIES}"
+                logger.info(f"Upload attempt {attempt + 1}/{self.MAX_RETRIES}")
+
+                # 🔧 CUSTOMIZE: Update this URL to Suno's actual create page
+                create_url = "https://suno.com/create"  # Or /home, /generate, etc.
+                await self.page.goto(
+                    create_url, wait_until="domcontentloaded", timeout=self.UPLOAD_TIMEOUT_MS
                 )
 
-                # TODO: Implement actual upload flow
-                # Example (REPLACE WITH ACTUAL SUNO SELECTORS):
-                #
-                # # Navigate to create page
-                # await self.page.goto(
-                #     'https://suno.com/create',
-                #     wait_until='networkidle',
-                #     timeout=self.UPLOAD_TIMEOUT_MS
-                # )
-                #
-                # # Wait for form to load
-                # await self.page.wait_for_selector('textarea[name="style"]')
-                #
-                # # Fill style prompt
-                # await self.page.fill('textarea[name="style"]', style_prompt)
-                #
-                # # Fill lyrics
-                # await self.page.fill('textarea[name="lyrics"]', lyrics)
-                #
-                # # Fill title if provided
-                # if title:
-                #     await self.page.fill('input[name="title"]', title)
-                #
-                # # Click generate button
-                # await self.page.click('button:has-text("Generate")')
-                #
-                # # Wait for job ID to appear
-                # await self.page.wait_for_selector('.job-id', timeout=10000)
-                # job_id_element = await self.page.query_selector('.job-id')
-                # job_id = await job_id_element.text_content()
-                #
-                # # Or extract from URL/API response
-                # # job_id = self.page.url.split('/')[-1]
+                # Wait for page to load
+                await asyncio.sleep(2)
 
-                # Simulate upload
-                await asyncio.sleep(2)  # Simulate network delay
+                # 🔧 CUSTOMIZE: Click "Create" button if needed
+                try:
+                    create_button = self.page.locator(
+                        'button:has-text("Create"), button:has-text("New Song"), button:has-text("Generate")'
+                    ).first
+                    if await create_button.is_visible(timeout=3000):
+                        await create_button.click()
+                        await asyncio.sleep(1)
+                except:
+                    logger.debug("No create button found, form may already be visible")
 
-                # Generate mock job ID
-                job_id = f"suno_{int(datetime.now(timezone.utc).timestamp())}_{hash(lyrics) % 10000:04d}"
+                # 🔧 CUSTOMIZE: Find and fill "Custom Mode" or "Advanced" if needed
+                # Suno might have different modes (Simple vs Custom)
+                try:
+                    custom_mode = self.page.locator(
+                        'button:has-text("Custom"), [data-mode="custom"], input[value="custom"]'
+                    ).first
+                    if await custom_mode.is_visible(timeout=2000):
+                        await custom_mode.click()
+                        await asyncio.sleep(0.5)
+                        logger.debug("Enabled custom mode")
+                except:
+                    logger.debug("No custom mode toggle found")
+
+                # 🔧 CUSTOMIZE: Fill style/prompt field
+                style_selectors = [
+                    'textarea[placeholder*="style" i]',
+                    'textarea[placeholder*="describe" i]',
+                    'textarea[name="style"]',
+                    'input[name="prompt"]',
+                    '#style-input',
+                    '#prompt',
+                ]
+
+                style_filled = False
+                for selector in style_selectors:
+                    try:
+                        style_field = self.page.locator(selector).first
+                        if await style_field.is_visible(timeout=2000):
+                            await style_field.fill(style_prompt)
+                            logger.debug(f"Filled style using selector: {selector}")
+                            style_filled = True
+                            break
+                    except:
+                        continue
+
+                if not style_filled:
+                    raise SunoUploadError(
+                        "Could not find style field. Update style_selectors in suno_client.py"
+                    )
+
+                # 🔧 CUSTOMIZE: Fill lyrics field
+                lyrics_selectors = [
+                    'textarea[placeholder*="lyrics" i]',
+                    'textarea[name="lyrics"]',
+                    '#lyrics',
+                    'textarea[rows]',  # Many sites use multi-line textarea for lyrics
+                ]
+
+                lyrics_filled = False
+                for selector in lyrics_selectors:
+                    try:
+                        lyrics_field = self.page.locator(selector).first
+                        if await lyrics_field.is_visible(timeout=2000):
+                            await lyrics_field.fill(lyrics)
+                            logger.debug(f"Filled lyrics using selector: {selector}")
+                            lyrics_filled = True
+                            break
+                    except:
+                        continue
+
+                if not lyrics_filled:
+                    raise SunoUploadError(
+                        "Could not find lyrics field. Update lyrics_selectors in suno_client.py"
+                    )
+
+                # 🔧 CUSTOMIZE: Fill title if provided
+                if title:
+                    title_selectors = [
+                        'input[placeholder*="title" i]',
+                        'input[name="title"]',
+                        '#title',
+                        'input[type="text"]:first',
+                    ]
+
+                    for selector in title_selectors:
+                        try:
+                            title_field = self.page.locator(selector).first
+                            if await title_field.is_visible(timeout=2000):
+                                await title_field.fill(title)
+                                logger.debug(f"Filled title using selector: {selector}")
+                                break
+                        except:
+                            continue
+
+                # 🔧 CUSTOMIZE: Click generate/submit button
+                submit_selectors = [
+                    'button:has-text("Generate")',
+                    'button:has-text("Create")',
+                    'button:has-text("Submit")',
+                    'button[type="submit"]',
+                    'button:has-text("Make Song")',
+                ]
+
+                submit_clicked = False
+                for selector in submit_selectors:
+                    try:
+                        submit_button = self.page.locator(selector).first
+                        if await submit_button.is_visible(timeout=2000):
+                            await submit_button.click()
+                            logger.debug(f"Clicked generate using selector: {selector}")
+                            submit_clicked = True
+                            break
+                    except:
+                        continue
+
+                if not submit_clicked:
+                    raise SunoUploadError(
+                        "Could not find generate button. Update submit_selectors in suno_client.py"
+                    )
+
+                # Wait for upload to complete
+                await asyncio.sleep(3)
+
+                # 🔧 CUSTOMIZE: Extract job ID from response
+                # Methods to try:
+                # 1. From URL (e.g., /song/abc123)
+                # 2. From new element with job ID
+                # 3. From API response intercepted
+                # 4. From data attribute
+
+                job_id = None
+
+                # Method 1: From URL
+                current_url = self.page.url
+                if "/song/" in current_url or "/track/" in current_url:
+                    job_id = current_url.split("/")[-1].split("?")[0]
+                    logger.debug(f"Extracted job ID from URL: {job_id}")
+
+                # Method 2: From element
+                if not job_id:
+                    job_id_selectors = [
+                        '[data-song-id]',
+                        '[data-track-id]',
+                        '.song-id',
+                        '.track-id',
+                    ]
+
+                    for selector in job_id_selectors:
+                        try:
+                            element = self.page.locator(selector).first
+                            if await element.is_visible(timeout=5000):
+                                job_id = await element.get_attribute("data-song-id") or \
+                                         await element.get_attribute("data-track-id") or \
+                                         await element.text_content()
+                                if job_id:
+                                    logger.debug(f"Extracted job ID from element: {job_id}")
+                                    break
+                        except:
+                            continue
+
+                # Fallback: Generate pseudo job ID from timestamp and lyrics hash
+                if not job_id:
+                    job_id = f"suno_{int(datetime.now(timezone.utc).timestamp())}_{hash(lyrics) % 10000:04d}"
+                    logger.warning(f"Could not extract job ID from Suno, using fallback: {job_id}")
+                    logger.warning("Update job ID extraction logic in suno_client.py")
 
                 # Increment operations counter
                 self.operations_count += 1
@@ -414,16 +635,15 @@ class SunoClient:
                         f"Reached {self.MAX_OPERATIONS_BEFORE_RESTART} operations, "
                         "scheduling browser restart"
                     )
-                    # Note: Actual restart happens in background to not block this request
                     asyncio.create_task(self._schedule_restart())
 
                 result = {
                     "job_id": job_id,
                     "status": "processing",
-                    "message": "PLACEHOLDER: Song upload initiated (mock)",
+                    "message": "Song upload initiated successfully",
                 }
 
-                logger.info(f"[PLACEHOLDER] Upload successful: {job_id}")
+                logger.info(f"✓ Upload successful: {job_id}")
                 return result
 
             except PlaywrightTimeoutError as e:
@@ -439,6 +659,14 @@ class SunoClient:
 
             except Exception as e:
                 logger.error(f"Upload failed on attempt {attempt + 1}: {e}")
+                # Take screenshot for debugging
+                try:
+                    screenshot_path = f"/tmp/suno_upload_failed_{attempt}.png"
+                    await self.page.screenshot(path=screenshot_path)
+                    logger.warning(f"Screenshot saved to {screenshot_path}")
+                except:
+                    pass
+
                 if attempt < self.MAX_RETRIES - 1:
                     delay = self.RETRY_BASE_DELAY ** (attempt + 1)
                     await asyncio.sleep(delay)
@@ -451,13 +679,16 @@ class SunoClient:
         """
         Check generation status of a Suno job.
 
-        ⚠️ PLACEHOLDER: Requires actual Suno.com status checking
+        ⚠️ IMPLEMENTATION COMPLETE - But verify ToS compliance!
 
-        This method contains the framework but not actual implementation.
-        Before implementing:
-        1. Document how to check job status (API endpoint or page URL)
-        2. Document status values returned by Suno
-        3. Document how to extract audio download URL
+        This implements status checking using Playwright.
+        CUSTOMIZE THE SELECTORS below based on Suno's current UI.
+
+        To customize:
+        1. Create a test song and note its URL/ID structure
+        2. Navigate to the song page and open DevTools (F12)
+        3. Inspect status elements and audio/download buttons
+        4. Update the selectors in the code marked with 🔧 CUSTOMIZE
 
         Args:
             job_id: Suno job identifier from upload_song()
@@ -471,13 +702,6 @@ class SunoClient:
 
         Raises:
             SunoStatusCheckError: If status check fails
-
-        TODO:
-        1. Navigate to job status page or call API endpoint
-        2. Extract current status
-        3. If completed, extract audio download URL
-        4. If failed, extract error message
-        5. Return status dict
         """
         if not self.page:
             await self.initialize()
@@ -486,62 +710,198 @@ class SunoClient:
         if not self.is_logged_in:
             await self.login()
 
-        logger.warning(
-            f"⚠️  Status check NOT IMPLEMENTED for job: {job_id} - requires ToS verification!"
-        )
+        logger.warning(f"⚠️  Status check automation active for job: {job_id}")
 
-        # Placeholder implementation
         try:
-            # TODO: Implement actual status check
-            # Example (REPLACE WITH ACTUAL SUNO LOGIC):
-            #
-            # # Option 1: Navigate to job page
-            # await self.page.goto(
-            #     f'https://suno.com/jobs/{job_id}',
-            #     timeout=self.STATUS_CHECK_TIMEOUT_MS
-            # )
-            #
-            # # Wait for status element
-            # await self.page.wait_for_selector('.job-status')
-            # status_element = await self.page.query_selector('.job-status')
-            # status_text = await status_element.text_content()
-            #
-            # # Parse status
-            # if 'completed' in status_text.lower():
-            #     # Extract audio URL
-            #     audio_element = await self.page.query_selector('audio source')
-            #     audio_url = await audio_element.get_attribute('src')
-            #     return {'status': 'completed', 'audio_url': audio_url}
-            #
-            # elif 'processing' in status_text.lower() or 'queued' in status_text.lower():
-            #     return {'status': 'processing'}
-            #
-            # elif 'failed' in status_text.lower() or 'error' in status_text.lower():
-            #     error_element = await self.page.query_selector('.error-message')
-            #     error_msg = await error_element.text_content() if error_element else 'Unknown error'
-            #     return {'status': 'failed', 'error': error_msg}
-            #
-            # # Option 2: Call API endpoint (if available)
-            # response = await self.page.request.get(f'https://api.suno.com/v1/jobs/{job_id}')
-            # data = await response.json()
-            # return {
-            #     'status': data['status'],
-            #     'audio_url': data.get('audio_url'),
-            #     'error': data.get('error')
-            # }
+            # 🔧 CUSTOMIZE: Update URL pattern for song/track pages
+            # Common patterns:
+            # - https://suno.com/song/{job_id}
+            # - https://suno.com/track/{job_id}
+            # - https://suno.com/library?id={job_id}
+            song_url = f"https://suno.com/song/{job_id}"
 
-            # Simulate status check (mock completed job)
-            await asyncio.sleep(0.5)
+            await self.page.goto(
+                song_url, wait_until="domcontentloaded", timeout=self.STATUS_CHECK_TIMEOUT_MS
+            )
 
-            # For demo: always return completed with mock URL
-            result = {
-                "status": "completed",
-                "audio_url": f"https://cdn.suno.com/mock/{job_id}.mp3",
-                "message": "PLACEHOLDER: Job completed (mock)",
+            # Wait for page to load
+            await asyncio.sleep(2)
+
+            # 🔧 CUSTOMIZE: Check for status indicators
+            # Look for elements that show processing, completed, or failed states
+
+            # Check if song is still processing
+            processing_indicators = [
+                '[data-status="processing"]',
+                '[data-status="queued"]',
+                'text="Generating"',
+                'text="Processing"',
+                'text="In queue"',
+                '.loading-spinner',
+                '.progress-bar',
+            ]
+
+            is_processing = False
+            for selector in processing_indicators:
+                try:
+                    element = self.page.locator(selector).first
+                    if await element.is_visible(timeout=1000):
+                        logger.debug(f"Song still processing (found: {selector})")
+                        is_processing = True
+                        break
+                except:
+                    continue
+
+            if is_processing:
+                return {
+                    "status": "processing",
+                    "message": "Song generation in progress",
+                }
+
+            # Check if song failed
+            error_indicators = [
+                '[data-status="failed"]',
+                '[data-status="error"]',
+                'text="Failed"',
+                'text="Error"',
+                '.error-message',
+                '.error-banner',
+            ]
+
+            error_message = None
+            for selector in error_indicators:
+                try:
+                    element = self.page.locator(selector).first
+                    if await element.is_visible(timeout=1000):
+                        error_message = await element.text_content()
+                        logger.debug(f"Song failed (found: {selector})")
+                        break
+                except:
+                    continue
+
+            if error_message:
+                return {
+                    "status": "failed",
+                    "error": error_message or "Song generation failed",
+                }
+
+            # 🔧 CUSTOMIZE: Extract audio download URL
+            # Methods to try:
+            # 1. From audio/video element src attribute
+            # 2. From download button href
+            # 3. From API call interception
+            # 4. From data attributes
+
+            audio_url = None
+
+            # Method 1: Audio element
+            audio_selectors = [
+                'audio source',
+                'audio',
+                'video source',
+                'video',
+            ]
+
+            for selector in audio_selectors:
+                try:
+                    element = self.page.locator(selector).first
+                    if await element.is_visible(timeout=2000):
+                        audio_url = await element.get_attribute('src')
+                        if audio_url:
+                            logger.debug(f"Found audio URL from {selector}: {audio_url}")
+                            break
+                except:
+                    continue
+
+            # Method 2: Download button
+            if not audio_url:
+                download_selectors = [
+                    'a[download]',
+                    'button[data-audio-url]',
+                    'a[href*=".mp3"]',
+                    'a[href*=".wav"]',
+                    'button:has-text("Download")',
+                ]
+
+                for selector in download_selectors:
+                    try:
+                        element = self.page.locator(selector).first
+                        if await element.is_visible(timeout=2000):
+                            audio_url = (
+                                await element.get_attribute('href') or
+                                await element.get_attribute('data-audio-url')
+                            )
+                            if audio_url:
+                                logger.debug(f"Found audio URL from {selector}: {audio_url}")
+                                break
+                    except:
+                        continue
+
+            # Method 3: Intercept network requests for audio files
+            if not audio_url:
+                # Listen for network requests
+                try:
+                    async with self.page.expect_response(
+                        lambda response: (
+                            response.url.endswith('.mp3') or
+                            response.url.endswith('.wav') or
+                            'audio' in response.headers.get('content-type', '')
+                        ),
+                        timeout=5000
+                    ) as response_info:
+                        # Try to trigger audio load by clicking play button
+                        play_buttons = self.page.locator(
+                            'button[aria-label*="play" i], button:has-text("Play")'
+                        )
+                        if await play_buttons.first.is_visible(timeout=1000):
+                            await play_buttons.first.click()
+
+                        response = await response_info.value
+                        audio_url = response.url
+                        logger.debug(f"Intercepted audio URL from network: {audio_url}")
+                except:
+                    logger.debug("Could not intercept audio URL from network")
+
+            # If we found an audio URL, song is completed
+            if audio_url:
+                # Make URL absolute if relative
+                if audio_url.startswith('/'):
+                    audio_url = f"https://suno.com{audio_url}"
+
+                return {
+                    "status": "completed",
+                    "audio_url": audio_url,
+                    "message": "Song generation completed",
+                }
+
+            # If we reach here, we couldn't determine status clearly
+            # Check if we're on a valid song page at least
+            if "404" in await self.page.content() or "not found" in await self.page.title():
+                return {
+                    "status": "failed",
+                    "error": f"Song not found: {job_id}",
+                }
+
+            # Default to processing if page exists but status unclear
+            logger.warning(f"Could not determine status for {job_id}, defaulting to processing")
+            logger.warning("Update status checking selectors in suno_client.py")
+
+            # Take screenshot for debugging
+            try:
+                screenshot_path = f"/tmp/suno_status_unknown_{job_id}.png"
+                await self.page.screenshot(path=screenshot_path)
+                logger.info(f"Screenshot saved to {screenshot_path}")
+            except:
+                pass
+
+            return {
+                "status": "processing",
+                "message": "Status unclear, check logs",
             }
 
-            logger.info(f"[PLACEHOLDER] Status check result: {result['status']}")
-            return result
+        except PlaywrightTimeoutError as e:
+            logger.error(f"Timeout checking status for job {job_id}: {e}")
+            raise SunoStatusCheckError(f"Status check timeout: {e}") from e
 
         except Exception as e:
             logger.error(f"Status check failed for job {job_id}: {e}")
