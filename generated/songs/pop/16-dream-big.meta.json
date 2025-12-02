@@ -1,0 +1,22 @@
+{
+  "id": "a3d9b60b9cf5",
+  "title": "Dream Big",
+  "genre": "pop",
+  "file_path": "songs/pop/16-dream-big.md",
+  "created": "2025-10-16T17:06:04.824026",
+  "updated": "2025-10-16T17:06:04.824044",
+  "collections": [
+    "triumph-collection"
+  ],
+  "genre_detail": "Power Pop",
+  "themes": [
+    "Inspiration",
+    "Limitless Potential"
+  ],
+  "personas": [
+    "NEON",
+    "PHOENIX"
+  ],
+  "style_prompt_length": 15,
+  "lyrics_length": 9
+}

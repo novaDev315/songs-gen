@@ -1,0 +1,22 @@
+{
+  "id": "285b89b0d260",
+  "title": "Rebel Soul",
+  "genre": "rock",
+  "file_path": "songs/rock/27-rebel-soul.md",
+  "created": "2025-10-16T17:06:05.165828",
+  "updated": "2025-10-16T17:06:05.165844",
+  "collections": [
+    "triumph-collection"
+  ],
+  "genre_detail": "Rock Anthem",
+  "themes": [
+    "Defiance",
+    "Authenticity"
+  ],
+  "personas": [
+    "PHOENIX",
+    "REBEL"
+  ],
+  "style_prompt_length": 15,
+  "lyrics_length": 9
+}

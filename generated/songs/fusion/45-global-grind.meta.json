@@ -1,0 +1,21 @@
+{
+  "id": "03b7fc3dcf8c",
+  "title": "Global Grind",
+  "genre": "fusion",
+  "file_path": "songs/fusion/45-global-grind.md",
+  "created": "2025-10-16T17:06:05.465762",
+  "updated": "2025-10-16T17:06:05.465776",
+  "collections": [
+    "triumph-collection"
+  ],
+  "genre_detail": "World-Trap Fusion",
+  "themes": [
+    "International Hustle"
+  ],
+  "personas": [
+    "NEON",
+    "PHOENIX"
+  ],
+  "style_prompt_length": 15,
+  "lyrics_length": 9
+}

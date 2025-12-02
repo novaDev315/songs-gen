@@ -1,0 +1,17 @@
+{
+  "id": "91c6110d699f",
+  "title": "Ghost Mode",
+  "genre": "hip-hop",
+  "file_path": "songs/hip-hop/10-ghost-mode.md",
+  "created": "2025-10-16T17:06:04.507423",
+  "updated": "2025-10-16T17:06:04.507437",
+  "collections": [
+    "triumph-collection"
+  ],
+  "personas": [
+    "NEON",
+    "REBEL"
+  ],
+  "style_prompt_length": 428,
+  "lyrics_length": 2426
+}

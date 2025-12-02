@@ -1,0 +1,22 @@
+{
+  "id": "c1a52a26a91b",
+  "title": "Rise and Shine",
+  "genre": "r-b",
+  "file_path": "songs/r-b/40-rise-and-shine.md",
+  "created": "2025-10-16T17:06:05.354856",
+  "updated": "2025-10-16T17:06:05.354867",
+  "collections": [
+    "triumph-collection"
+  ],
+  "genre_detail": "Gospel R&B",
+  "themes": [
+    "Morning Motivation",
+    "New Day"
+  ],
+  "personas": [
+    "NEON",
+    "PHOENIX"
+  ],
+  "style_prompt_length": 15,
+  "lyrics_length": 9
+}

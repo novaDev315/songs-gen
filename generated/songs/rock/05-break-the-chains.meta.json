@@ -1,0 +1,22 @@
+{
+  "id": "750c7af72436",
+  "title": "Break the Chains",
+  "genre": "rock",
+  "file_path": "songs/rock/05-break-the-chains.md",
+  "created": "2025-10-16T17:06:05.094027",
+  "updated": "2025-10-16T17:06:05.094039",
+  "collections": [
+    "triumph-collection"
+  ],
+  "genre_detail": "Nu-Metal Hip-Hop Fusion",
+  "themes": [
+    "Rebellion",
+    "Breaking Free"
+  ],
+  "personas": [
+    "PHOENIX",
+    "REBEL"
+  ],
+  "style_prompt_length": 15,
+  "lyrics_length": 9
+}

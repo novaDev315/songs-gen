@@ -1,0 +1,22 @@
+{
+  "id": "702659fb28e3",
+  "title": "Champion Heart",
+  "genre": "pop",
+  "file_path": "songs/pop/19-champion-heart.md",
+  "created": "2025-10-16T17:06:04.898193",
+  "updated": "2025-10-16T17:06:04.898206",
+  "collections": [
+    "triumph-collection"
+  ],
+  "genre_detail": "Pop Rock",
+  "themes": [
+    "Victory",
+    "Perseverance"
+  ],
+  "personas": [
+    "NEON",
+    "PHOENIX"
+  ],
+  "style_prompt_length": 15,
+  "lyrics_length": 9
+}

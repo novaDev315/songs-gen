@@ -1,0 +1,23 @@
+{
+  "id": "ad0771a41c63",
+  "title": "Unstoppable",
+  "genre": "pop",
+  "file_path": "songs/pop/03-unstoppable.md",
+  "created": "2025-10-16T17:06:04.732405",
+  "updated": "2025-10-16T17:06:04.732418",
+  "collections": [
+    "triumph-collection"
+  ],
+  "genre_detail": "Power Pop / Anthemic",
+  "themes": [
+    "Empowerment",
+    "Breaking Through"
+  ],
+  "personas": [
+    "NEON",
+    "PHOENIX",
+    "REBEL"
+  ],
+  "style_prompt_length": 15,
+  "lyrics_length": 9
+}

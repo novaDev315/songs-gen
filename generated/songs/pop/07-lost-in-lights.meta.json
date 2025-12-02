@@ -1,0 +1,18 @@
+{
+  "id": "d75426f12c6b",
+  "title": "Lost in Lights",
+  "genre": "pop",
+  "file_path": "songs/pop/07-lost-in-lights.md",
+  "created": "2025-10-16T17:06:04.769332",
+  "updated": "2025-10-16T17:06:04.769348",
+  "collections": [],
+  "genre_detail": "Electro-Pop",
+  "mood": "Euphoric, Mesmerizing, Nocturnal",
+  "personas": [
+    "NEON",
+    "PHOENIX",
+    "REBEL"
+  ],
+  "style_prompt_length": 944,
+  "lyrics_length": 9
+}

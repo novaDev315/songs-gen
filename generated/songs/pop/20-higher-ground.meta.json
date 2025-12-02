@@ -1,0 +1,22 @@
+{
+  "id": "7e59ceb07ecd",
+  "title": "Higher Ground",
+  "genre": "pop",
+  "file_path": "songs/pop/20-higher-ground.md",
+  "created": "2025-10-16T17:06:04.933851",
+  "updated": "2025-10-16T17:06:04.933864",
+  "collections": [
+    "triumph-collection"
+  ],
+  "genre_detail": "Uplifting Pop",
+  "themes": [
+    "Elevation",
+    "Rising Above"
+  ],
+  "personas": [
+    "NEON",
+    "PHOENIX"
+  ],
+  "style_prompt_length": 15,
+  "lyrics_length": 9
+}

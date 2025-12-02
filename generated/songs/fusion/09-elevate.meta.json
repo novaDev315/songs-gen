@@ -1,0 +1,22 @@
+{
+  "id": "2246f6e010c0",
+  "title": "Elevate",
+  "genre": "fusion",
+  "file_path": "songs/fusion/09-elevate.md",
+  "created": "2025-10-16T17:06:05.391245",
+  "updated": "2025-10-16T17:06:05.391258",
+  "collections": [
+    "triumph-collection"
+  ],
+  "genre_detail": "Modern Trap",
+  "themes": [
+    "Rising",
+    "Ambition"
+  ],
+  "personas": [
+    "NEON",
+    "REBEL"
+  ],
+  "style_prompt_length": 15,
+  "lyrics_length": 9
+}

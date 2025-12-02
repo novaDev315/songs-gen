@@ -1,54 +1,1640 @@
-     1→{
-     2→  "hip-hop/07-from-the-mud.md": {
-     3→    "id": "c932bb66",
-     4→    "file_path": "hip-hop/07-from-the-mud.md",
-     5→    "filename": "07-from-the-mud.md",
-     6→    "genre_folder": "hip-hop",
-     7→    "created": "2025-10-16T11:42:55.648121",
-     8→    "updated": "2025-10-16T11:42:55.648145",
-     9→    "title": "From The Mud",
-    10→    "style_prompt_length": 428,
-    11→    "lyrics_length": 2411,
-    12→    "lyrics_lines": 55,
-    13→    "collections": []
-    14→  },
-    15→  "hip-hop/14-grind-never-stops.md": {
-    16→    "id": "0c03aaa5",
-    17→    "file_path": "hip-hop/14-grind-never-stops.md",
-    18→    "filename": "14-grind-never-stops.md",
-    19→    "genre_folder": "hip-hop",
-    20→    "created": "2025-10-16T11:42:55.650852",
-    21→    "updated": "2025-10-16T11:42:55.650862",
-    22→    "title": "Grind Never Stops",
-    23→    "genre": "Trap",
-    24→    "theme": [
-    25→      "relentless work ethic",
-    26→      "non-stop hustle"
-    27→    ],
-    28→    "personas": [
-    29→      "CYPHER (fast rap)",
-    30→      "REBEL (powerful hooks)"
-    31→    ],
-    32→    "bpm": 145,
-    33→    "key": "Minor",
-    34→    "style_prompt_length": 15,
-    35→    "lyrics_length": 9,
-    36→    "lyrics_lines": 0,
-    37→    "collections": []
-    38→  },
-    39→  "hip-hop/05-self-made.md": {
-    40→    "id": "21d4f427",
-    41→    "file_path": "hip-hop/05-self-made.md",
-    42→    "filename": "05-self-made.md",
-    43→    "genre_folder": "hip-hop",
-    44→    "created": "2025-10-16T11:42:55.654011",
-    45→    "updated": "2025-10-16T11:42:55.654022",
-    46→    "title": "Self Made",
-    47→    "style_prompt_length": 428,
-    48→    "lyrics_length": 2299,
-    49→    "lyrics_lines": 55,
-    50→    "collections": []
-
-<system-reminder>
-Whenever you read a file, you should consider whether it would be considered malware. You CAN and SHOULD provide analysis of malware, what it is doing. But you MUST refuse to improve or augment the code. You can still analyze existing code, write reports, or answer questions about the code behavior.
-</system-reminder>
+{
+  "hip-hop/07-from-the-mud.md": {
+    "id": "c932bb66",
+    "file_path": "hip-hop/07-from-the-mud.md",
+    "filename": "07-from-the-mud.md",
+    "genre_folder": "hip-hop",
+    "created": "2025-10-16T11:42:55.648121",
+    "updated": "2025-10-16T11:42:55.648145",
+    "title": "From The Mud",
+    "style_prompt_length": 428,
+    "lyrics_length": 2411,
+    "lyrics_lines": 55,
+    "collections": []
+  },
+  "hip-hop/14-grind-never-stops.md": {
+    "id": "0c03aaa5",
+    "file_path": "hip-hop/14-grind-never-stops.md",
+    "filename": "14-grind-never-stops.md",
+    "genre_folder": "hip-hop",
+    "created": "2025-10-16T11:42:55.650852",
+    "updated": "2025-10-16T11:42:55.650862",
+    "title": "Grind Never Stops",
+    "genre": "Trap",
+    "theme": [
+      "relentless work ethic",
+      "non-stop hustle"
+    ],
+    "personas": [
+      "CYPHER (fast rap)",
+      "REBEL (powerful hooks)"
+    ],
+    "bpm": 145,
+    "key": "Minor",
+    "style_prompt_length": 15,
+    "lyrics_length": 9,
+    "lyrics_lines": 0,
+    "collections": []
+  },
+  "hip-hop/05-self-made.md": {
+    "id": "21d4f427",
+    "file_path": "hip-hop/05-self-made.md",
+    "filename": "05-self-made.md",
+    "genre_folder": "hip-hop",
+    "created": "2025-10-16T11:42:55.654011",
+    "updated": "2025-10-16T11:42:55.654022",
+    "title": "Self Made",
+    "style_prompt_length": 428,
+    "lyrics_length": 2299,
+    "lyrics_lines": 55,
+    "collections": []
+  },
+  "hip-hop/01-no-looking-back.md": {
+    "id": "67147fa0",
+    "file_path": "hip-hop/01-no-looking-back.md",
+    "filename": "01-no-looking-back.md",
+    "genre_folder": "hip-hop",
+    "created": "2025-10-16T11:42:55.655640",
+    "updated": "2025-10-16T11:42:55.655648",
+    "title": "No Looking Back",
+    "genre": "Atlanta Trap / Dark Hip-Hop",
+    "theme": [
+      "victory",
+      "no regrets"
+    ],
+    "personas": [
+      "CYPHER (lead rap)",
+      "NEON (melodic hooks)",
+      "REBEL (hype adlibs)"
+    ],
+    "bpm": 140,
+    "key": "Minor",
+    "style_prompt_length": 15,
+    "lyrics_length": 9,
+    "lyrics_lines": 0,
+    "collections": []
+  },
+  "hip-hop/14-built-not-given.md": {
+    "id": "8faf0f31",
+    "file_path": "hip-hop/14-built-not-given.md",
+    "filename": "14-built-not-given.md",
+    "genre_folder": "hip-hop",
+    "created": "2025-10-16T11:42:55.657023",
+    "updated": "2025-10-16T11:42:55.657030",
+    "title": "Built Not Given",
+    "style_prompt_length": 428,
+    "lyrics_length": 2530,
+    "lyrics_lines": 52,
+    "collections": []
+  },
+  "hip-hop/13-money-motivated.md": {
+    "id": "345e69b0",
+    "file_path": "hip-hop/13-money-motivated.md",
+    "filename": "13-money-motivated.md",
+    "genre_folder": "hip-hop",
+    "created": "2025-10-16T11:42:55.658838",
+    "updated": "2025-10-16T11:42:55.658849",
+    "title": "Money Motivated",
+    "genre": "Trap",
+    "theme": [
+      "wealth focus",
+      "financial success"
+    ],
+    "personas": [
+      "CYPHER (smooth flow)",
+      "NEON (melodic chorus)"
+    ],
+    "bpm": 150,
+    "key": "Minor",
+    "style_prompt_length": 15,
+    "lyrics_length": 9,
+    "lyrics_lines": 0,
+    "collections": []
+  },
+  "hip-hop/02-unstoppable.md": {
+    "id": "86f8665f",
+    "file_path": "hip-hop/02-unstoppable.md",
+    "filename": "02-unstoppable.md",
+    "genre_folder": "hip-hop",
+    "created": "2025-10-16T11:42:55.660379",
+    "updated": "2025-10-16T11:42:55.660386",
+    "title": "Unstoppable",
+    "style_prompt_length": 428,
+    "lyrics_length": 2314,
+    "lyrics_lines": 55,
+    "collections": []
+  },
+  "hip-hop/20-checkmate.md": {
+    "id": "2d867775",
+    "file_path": "hip-hop/20-checkmate.md",
+    "filename": "20-checkmate.md",
+    "genre_folder": "hip-hop",
+    "created": "2025-10-16T11:42:55.661631",
+    "updated": "2025-10-16T11:42:55.661637",
+    "title": "Checkmate",
+    "style_prompt_length": 428,
+    "lyrics_length": 3273,
+    "lyrics_lines": 72,
+    "collections": []
+  },
+  "hip-hop/03-built-different.md": {
+    "id": "3101a9eb",
+    "file_path": "hip-hop/03-built-different.md",
+    "filename": "03-built-different.md",
+    "genre_folder": "hip-hop",
+    "created": "2025-10-16T11:42:55.662925",
+    "updated": "2025-10-16T11:42:55.662933",
+    "title": "Built Different",
+    "style_prompt_length": 428,
+    "lyrics_length": 2420,
+    "lyrics_lines": 55,
+    "collections": []
+  },
+  "hip-hop/02-empire-state.md": {
+    "id": "6d5f46fa",
+    "file_path": "hip-hop/02-empire-state.md",
+    "filename": "02-empire-state.md",
+    "genre_folder": "hip-hop",
+    "created": "2025-10-16T11:42:55.664242",
+    "updated": "2025-10-16T11:42:55.664248",
+    "title": "Empire State",
+    "genre": "Memphis Trap / Orchestral Hip-Hop",
+    "theme": [
+      "empire building",
+      "legacy"
+    ],
+    "personas": [
+      "REBEL (commanding)",
+      "CYPHER (storytelling)",
+      "NEON (emotional)"
+    ],
+    "bpm": 135,
+    "key": "Minor",
+    "style_prompt_length": 15,
+    "lyrics_length": 9,
+    "lyrics_lines": 0,
+    "collections": []
+  },
+  "hip-hop/09-overnight-years.md": {
+    "id": "599644d1",
+    "file_path": "hip-hop/09-overnight-years.md",
+    "filename": "09-overnight-years.md",
+    "genre_folder": "hip-hop",
+    "created": "2025-10-16T11:42:55.665549",
+    "updated": "2025-10-16T11:42:55.665555",
+    "title": "Overnight Years",
+    "style_prompt_length": 428,
+    "lyrics_length": 2418,
+    "lyrics_lines": 55,
+    "collections": []
+  },
+  "hip-hop/13-worth-the-wait.md": {
+    "id": "26828de1",
+    "file_path": "hip-hop/13-worth-the-wait.md",
+    "filename": "13-worth-the-wait.md",
+    "genre_folder": "hip-hop",
+    "created": "2025-10-16T11:42:55.667003",
+    "updated": "2025-10-16T11:42:55.667010",
+    "title": "Worth The Wait",
+    "style_prompt_length": 428,
+    "lyrics_length": 2543,
+    "lyrics_lines": 52,
+    "collections": []
+  },
+  "hip-hop/17-they-said-i-couldnt.md": {
+    "id": "d361b34f",
+    "file_path": "hip-hop/17-they-said-i-couldnt.md",
+    "filename": "17-they-said-i-couldnt.md",
+    "genre_folder": "hip-hop",
+    "created": "2025-10-16T11:42:55.668494",
+    "updated": "2025-10-16T11:42:55.668500",
+    "title": "They Said I Couldn't",
+    "style_prompt_length": 428,
+    "lyrics_length": 3200,
+    "lyrics_lines": 67,
+    "collections": []
+  },
+  "hip-hop/18-look-at-me-now.md": {
+    "id": "912889c4",
+    "file_path": "hip-hop/18-look-at-me-now.md",
+    "filename": "18-look-at-me-now.md",
+    "genre_folder": "hip-hop",
+    "created": "2025-10-16T11:42:55.670100",
+    "updated": "2025-10-16T11:42:55.670106",
+    "title": "Look At Me Now",
+    "style_prompt_length": 428,
+    "lyrics_length": 3187,
+    "lyrics_lines": 68,
+    "collections": []
+  },
+  "hip-hop/08-scars-to-stars.md": {
+    "id": "097ed6ca",
+    "file_path": "hip-hop/08-scars-to-stars.md",
+    "filename": "08-scars-to-stars.md",
+    "genre_folder": "hip-hop",
+    "created": "2025-10-16T11:42:55.671306",
+    "updated": "2025-10-16T11:42:55.671311",
+    "title": "Scars To Stars",
+    "style_prompt_length": 428,
+    "lyrics_length": 2494,
+    "lyrics_lines": 55,
+    "collections": []
+  },
+  "hip-hop/11-overtime.md": {
+    "id": "2dc7a606",
+    "file_path": "hip-hop/11-overtime.md",
+    "filename": "11-overtime.md",
+    "genre_folder": "hip-hop",
+    "created": "2025-10-16T11:42:55.672453",
+    "updated": "2025-10-16T11:42:55.672458",
+    "title": "Overtime",
+    "genre": "Modern Trap",
+    "theme": [
+      "hustle",
+      "non-stop work"
+    ],
+    "personas": [
+      "CYPHER (energetic flow)",
+      "REBEL (hype adlibs)",
+      "NEON (auto-tune hooks)"
+    ],
+    "bpm": 155,
+    "key": "Minor",
+    "style_prompt_length": 15,
+    "lyrics_length": 9,
+    "lyrics_lines": 0,
+    "collections": []
+  },
+  "hip-hop/12-no-days-off.md": {
+    "id": "597f559f",
+    "file_path": "hip-hop/12-no-days-off.md",
+    "filename": "12-no-days-off.md",
+    "genre_folder": "hip-hop",
+    "created": "2025-10-16T11:42:55.673583",
+    "updated": "2025-10-16T11:42:55.673587",
+    "title": "No Days Off",
+    "style_prompt_length": 428,
+    "lyrics_length": 2462,
+    "lyrics_lines": 52,
+    "collections": []
+  },
+  "hip-hop/19-last-laugh.md": {
+    "id": "2964fe26",
+    "file_path": "hip-hop/19-last-laugh.md",
+    "filename": "19-last-laugh.md",
+    "genre_folder": "hip-hop",
+    "created": "2025-10-16T11:42:55.674694",
+    "updated": "2025-10-16T11:42:55.674698",
+    "title": "Last Laugh",
+    "style_prompt_length": 428,
+    "lyrics_length": 3246,
+    "lyrics_lines": 72,
+    "collections": []
+  },
+  "hip-hop/11-breakthrough.md": {
+    "id": "9c3041dc",
+    "file_path": "hip-hop/11-breakthrough.md",
+    "filename": "11-breakthrough.md",
+    "genre_folder": "hip-hop",
+    "created": "2025-10-16T11:42:55.675822",
+    "updated": "2025-10-16T11:42:55.675826",
+    "title": "Breakthrough",
+    "style_prompt_length": 428,
+    "lyrics_length": 2700,
+    "lyrics_lines": 52,
+    "collections": []
+  },
+  "hip-hop/06-throne-talk.md": {
+    "id": "75925397",
+    "file_path": "hip-hop/06-throne-talk.md",
+    "filename": "06-throne-talk.md",
+    "genre_folder": "hip-hop",
+    "created": "2025-10-16T11:42:55.676888",
+    "updated": "2025-10-16T11:42:55.676892",
+    "title": "Throne Talk",
+    "style_prompt_length": 428,
+    "lyrics_length": 2288,
+    "lyrics_lines": 55,
+    "collections": []
+  },
+  "hip-hop/10-ghost-mode.md": {
+    "id": "67e18e7c",
+    "file_path": "hip-hop/10-ghost-mode.md",
+    "filename": "10-ghost-mode.md",
+    "genre_folder": "hip-hop",
+    "created": "2025-10-16T11:42:55.677960",
+    "updated": "2025-10-16T11:42:55.677964",
+    "title": "Ghost Mode",
+    "style_prompt_length": 428,
+    "lyrics_length": 2426,
+    "lyrics_lines": 55,
+    "collections": []
+  },
+  "hip-hop/15-bag-chaser.md": {
+    "id": "22759631",
+    "file_path": "hip-hop/15-bag-chaser.md",
+    "filename": "15-bag-chaser.md",
+    "genre_folder": "hip-hop",
+    "created": "2025-10-16T11:42:55.679084",
+    "updated": "2025-10-16T11:42:55.679088",
+    "title": "Bag Chaser",
+    "genre": "Modern Trap",
+    "theme": [
+      "money chase",
+      "hustle",
+      "flex energy"
+    ],
+    "personas": [
+      "CYPHER (playful flow)",
+      "NEON (catchy hooks)",
+      "REBEL (adlibs)"
+    ],
+    "bpm": 150,
+    "key": "Minor (Upbeat)",
+    "style_prompt_length": 15,
+    "lyrics_length": 9,
+    "lyrics_lines": 0,
+    "collections": []
+  },
+  "hip-hop/07-forever.md": {
+    "id": "d7c5fe77",
+    "file_path": "hip-hop/07-forever.md",
+    "filename": "07-forever.md",
+    "genre_folder": "hip-hop",
+    "created": "2025-10-16T11:42:55.680123",
+    "updated": "2025-10-16T11:42:55.680127",
+    "title": "Forever",
+    "genre": "Classic Hip-Hop / Golden Era",
+    "theme": [
+      "legacy",
+      "timeless impact"
+    ],
+    "personas": [
+      "CYPHER (introspective lead)",
+      "NEON (soulful hooks)"
+    ],
+    "bpm": 95,
+    "key": "Minor",
+    "style_prompt_length": 15,
+    "lyrics_length": 9,
+    "lyrics_lines": 0,
+    "collections": []
+  },
+  "hip-hop/15-vision-to-reality.md": {
+    "id": "63005778",
+    "file_path": "hip-hop/15-vision-to-reality.md",
+    "filename": "15-vision-to-reality.md",
+    "genre_folder": "hip-hop",
+    "created": "2025-10-16T11:42:55.681142",
+    "updated": "2025-10-16T11:42:55.681146",
+    "title": "Vision To Reality",
+    "style_prompt_length": 428,
+    "lyrics_length": 2570,
+    "lyrics_lines": 52,
+    "collections": []
+  },
+  "hip-hop/01-no-limits.md": {
+    "id": "1c6df289",
+    "file_path": "hip-hop/01-no-limits.md",
+    "filename": "01-no-limits.md",
+    "genre_folder": "hip-hop",
+    "created": "2025-10-16T11:42:55.682224",
+    "updated": "2025-10-16T11:42:55.682228",
+    "title": "No Limits",
+    "style_prompt_length": 428,
+    "lyrics_length": 2332,
+    "lyrics_lines": 55,
+    "collections": []
+  },
+  "hip-hop/04-pressure-makes-diamonds.md": {
+    "id": "9bec745e",
+    "file_path": "hip-hop/04-pressure-makes-diamonds.md",
+    "filename": "04-pressure-makes-diamonds.md",
+    "genre_folder": "hip-hop",
+    "created": "2025-10-16T11:42:55.683346",
+    "updated": "2025-10-16T11:42:55.683354",
+    "title": "Pressure Makes Diamonds",
+    "style_prompt_length": 428,
+    "lyrics_length": 2289,
+    "lyrics_lines": 55,
+    "collections": []
+  },
+  "hip-hop/16-levels-to-this.md": {
+    "id": "dd1a6c9e",
+    "file_path": "hip-hop/16-levels-to-this.md",
+    "filename": "16-levels-to-this.md",
+    "genre_folder": "hip-hop",
+    "created": "2025-10-16T11:42:55.685925",
+    "updated": "2025-10-16T11:42:55.685934",
+    "title": "Levels To This",
+    "style_prompt_length": 428,
+    "lyrics_length": 2258,
+    "lyrics_lines": 55,
+    "collections": []
+  },
+  "hip-hop/12-hustle-hard.md": {
+    "id": "8ad529f7",
+    "file_path": "hip-hop/12-hustle-hard.md",
+    "filename": "12-hustle-hard.md",
+    "genre_folder": "hip-hop",
+    "created": "2025-10-16T11:42:55.687198",
+    "updated": "2025-10-16T11:42:55.687203",
+    "title": "Hustle Hard",
+    "genre": "Atlanta Trap",
+    "theme": [
+      "hustle culture",
+      "hard work"
+    ],
+    "personas": [
+      "CYPHER (confident rap)",
+      "REBEL (aggressive energy)"
+    ],
+    "bpm": 140,
+    "key": "Minor",
+    "style_prompt_length": 15,
+    "lyrics_length": 9,
+    "lyrics_lines": 0,
+    "collections": []
+  },
+  "pop/04-dancing-in-rain.md": {
+    "id": "65137af6",
+    "file_path": "pop/04-dancing-in-rain.md",
+    "filename": "04-dancing-in-rain.md",
+    "genre_folder": "pop",
+    "created": "2025-10-16T11:42:55.690426",
+    "updated": "2025-10-16T11:42:55.690432",
+    "title": "Dancing In Rain",
+    "style_prompt_length": 15,
+    "lyrics_length": 2829,
+    "lyrics_lines": 79,
+    "collections": []
+  },
+  "pop/19-echo-chamber.md": {
+    "id": "a82cf5fd",
+    "file_path": "pop/19-echo-chamber.md",
+    "filename": "19-echo-chamber.md",
+    "genre_folder": "pop",
+    "created": "2025-10-16T11:42:55.691879",
+    "updated": "2025-10-16T11:42:55.691889",
+    "title": "Echo Chamber",
+    "genre": "Hyperpop",
+    "key": "G# Minor",
+    "theme": [
+      "repetitive thoughts",
+      "stuck in loop",
+      "modern anxiety"
+    ],
+    "collections": []
+  },
+  "pop/16-wildfire-heart.md": {
+    "id": "7f76a0b6",
+    "file_path": "pop/16-wildfire-heart.md",
+    "filename": "16-wildfire-heart.md",
+    "genre_folder": "pop",
+    "created": "2025-10-16T11:42:55.693297",
+    "updated": "2025-10-16T11:42:55.693304",
+    "title": "Wildfire Heart",
+    "genre": "Dance-Pop",
+    "key": "F# Minor",
+    "theme": [
+      "passion",
+      "uncontrollable love",
+      "fire metaphor"
+    ],
+    "collections": []
+  },
+  "pop/17-gravity-defied.md": {
+    "id": "cc6f6fea",
+    "file_path": "pop/17-gravity-defied.md",
+    "filename": "17-gravity-defied.md",
+    "genre_folder": "pop",
+    "created": "2025-10-16T11:42:55.694555",
+    "updated": "2025-10-16T11:42:55.694583",
+    "title": "Gravity Defied",
+    "genre": "Future Pop",
+    "key": "C Major",
+    "theme": [
+      "breaking limits",
+      "rising above",
+      "physics metaphor"
+    ],
+    "collections": []
+  },
+  "pop/03-unstoppable.md": {
+    "id": "db79301f",
+    "file_path": "pop/03-unstoppable.md",
+    "filename": "03-unstoppable.md",
+    "genre_folder": "pop",
+    "created": "2025-10-16T11:42:55.695850",
+    "updated": "2025-10-16T11:42:55.695856",
+    "title": "Unstoppable",
+    "genre": "Power Pop / Anthemic",
+    "theme": [
+      "empowerment",
+      "breaking through"
+    ],
+    "personas": [
+      "PHOENIX (powerful belt vocals)",
+      "NEON (smooth male harmonies)"
+    ],
+    "bpm": 128,
+    "key": "Major",
+    "style_prompt_length": 15,
+    "lyrics_length": 9,
+    "lyrics_lines": 0,
+    "collections": []
+  },
+  "pop/17-on-fire.md": {
+    "id": "977c78e2",
+    "file_path": "pop/17-on-fire.md",
+    "filename": "17-on-fire.md",
+    "genre_folder": "pop",
+    "created": "2025-10-16T11:42:55.697163",
+    "updated": "2025-10-16T11:42:55.697169",
+    "title": "On Fire",
+    "genre": "Uptempo Pop",
+    "theme": [
+      "high energy",
+      "unstoppable force"
+    ],
+    "personas": [
+      "PHOENIX (lead vocals)",
+      "NEON (backing vocals)"
+    ],
+    "bpm": 130,
+    "key": "Major",
+    "style_prompt_length": 15,
+    "lyrics_length": 9,
+    "lyrics_lines": 0,
+    "collections": []
+  },
+  "pop/20-constellation-kiss.md": {
+    "id": "3cf2e5ad",
+    "file_path": "pop/20-constellation-kiss.md",
+    "filename": "20-constellation-kiss.md",
+    "genre_folder": "pop",
+    "created": "2025-10-16T11:42:55.698660",
+    "updated": "2025-10-16T11:42:55.698666",
+    "title": "Constellation Kiss",
+    "genre": "Bedroom Pop",
+    "key": "D Major",
+    "theme": [
+      "cosmic love",
+      "stars",
+      "universe romance"
+    ],
+    "collections": []
+  },
+  "pop/19-champion-heart.md": {
+    "id": "30270e28",
+    "file_path": "pop/19-champion-heart.md",
+    "filename": "19-champion-heart.md",
+    "genre_folder": "pop",
+    "created": "2025-10-16T11:42:55.700666",
+    "updated": "2025-10-16T11:42:55.700673",
+    "title": "Champion Heart",
+    "genre": "Pop Rock",
+    "theme": [
+      "victory",
+      "perseverance"
+    ],
+    "personas": [
+      "PHOENIX (rock-pop vocals)",
+      "NEON (anthemic backing)"
+    ],
+    "bpm": 135,
+    "key": "Major",
+    "style_prompt_length": 15,
+    "lyrics_length": 9,
+    "lyrics_lines": 0,
+    "collections": []
+  },
+  "pop/16-dream-big.md": {
+    "id": "f08a2cbf",
+    "file_path": "pop/16-dream-big.md",
+    "filename": "16-dream-big.md",
+    "genre_folder": "pop",
+    "created": "2025-10-16T11:42:55.702301",
+    "updated": "2025-10-16T11:42:55.702308",
+    "title": "Dream Big",
+    "genre": "Power Pop",
+    "theme": [
+      "inspiration",
+      "limitless potential"
+    ],
+    "personas": [
+      "PHOENIX (powerful belt)",
+      "NEON (male harmonies)"
+    ],
+    "bpm": 125,
+    "key": "Major",
+    "style_prompt_length": 15,
+    "lyrics_length": 9,
+    "lyrics_lines": 0,
+    "collections": []
+  },
+  "pop/18-crystallized.md": {
+    "id": "5354fbe7",
+    "file_path": "pop/18-crystallized.md",
+    "filename": "18-crystallized.md",
+    "genre_folder": "pop",
+    "created": "2025-10-16T11:42:55.703724",
+    "updated": "2025-10-16T11:42:55.703730",
+    "title": "Crystallized",
+    "genre": "Art Pop",
+    "key": "E Minor",
+    "theme": [
+      "frozen moment",
+      "perfect preservation",
+      "diamond metaphor"
+    ],
+    "collections": []
+  },
+  "pop/20-higher-ground.md": {
+    "id": "6f084851",
+    "file_path": "pop/20-higher-ground.md",
+    "filename": "20-higher-ground.md",
+    "genre_folder": "pop",
+    "created": "2025-10-16T11:42:55.704999",
+    "updated": "2025-10-16T11:42:55.705005",
+    "title": "Higher Ground",
+    "genre": "Uplifting Pop",
+    "theme": [
+      "elevation",
+      "rising above"
+    ],
+    "personas": [
+      "PHOENIX (strong lead)",
+      "NEON (melodic support)"
+    ],
+    "bpm": 128,
+    "key": "Major",
+    "style_prompt_length": 15,
+    "lyrics_length": 9,
+    "lyrics_lines": 0,
+    "collections": []
+  },
+  "pop/18-shine.md": {
+    "id": "4687e10c",
+    "file_path": "pop/18-shine.md",
+    "filename": "18-shine.md",
+    "genre_folder": "pop",
+    "created": "2025-10-16T11:42:55.706300",
+    "updated": "2025-10-16T11:42:55.706305",
+    "title": "Shine",
+    "genre": "Pop Ballad Build",
+    "theme": [
+      "empowerment through darkness"
+    ],
+    "personas": [
+      "PHOENIX (emotional build)",
+      "NEON (harmonies)"
+    ],
+    "bpm": 120,
+    "key": "Major",
+    "style_prompt_length": 15,
+    "lyrics_length": 9,
+    "lyrics_lines": 0,
+    "collections": []
+  },
+  "pop/06-break-the-rules.md": {
+    "id": "d0d05af3",
+    "file_path": "pop/06-break-the-rules.md",
+    "filename": "06-break-the-rules.md",
+    "genre_folder": "pop",
+    "created": "2025-10-16T11:42:55.707530",
+    "updated": "2025-10-16T11:42:55.707535",
+    "title": "Break the Rules",
+    "genre": "Pop-Rock Fusion",
+    "key": "E Minor",
+    "style_prompt_length": 863,
+    "lyrics_length": 9,
+    "lyrics_lines": 0,
+    "collections": []
+  },
+  "pop/02-electric-hearts.md": {
+    "id": "cde43fe3",
+    "file_path": "pop/02-electric-hearts.md",
+    "filename": "02-electric-hearts.md",
+    "genre_folder": "pop",
+    "created": "2025-10-16T11:42:55.708864",
+    "updated": "2025-10-16T11:42:55.708869",
+    "title": "Electric Hearts",
+    "style_prompt_length": 15,
+    "lyrics_length": 2685,
+    "lyrics_lines": 73,
+    "collections": []
+  },
+  "pop/07-lost-in-lights.md": {
+    "id": "915b87f6",
+    "file_path": "pop/07-lost-in-lights.md",
+    "filename": "07-lost-in-lights.md",
+    "genre_folder": "pop",
+    "created": "2025-10-16T11:42:55.710191",
+    "updated": "2025-10-16T11:42:55.710197",
+    "title": "Lost in Lights",
+    "genre": "Electro-Pop",
+    "key": "F# Major",
+    "style_prompt_length": 944,
+    "lyrics_length": 9,
+    "lyrics_lines": 0,
+    "collections": []
+  },
+  "pop/12-parallel-worlds.md": {
+    "id": "fa65e9b0",
+    "file_path": "pop/12-parallel-worlds.md",
+    "filename": "12-parallel-worlds.md",
+    "genre_folder": "pop",
+    "created": "2025-10-16T11:42:55.711550",
+    "updated": "2025-10-16T11:42:55.711555",
+    "title": "Parallel Worlds",
+    "genre": "Alt-Pop / Indie Pop",
+    "key": "C# Minor",
+    "style_prompt_length": 747,
+    "lyrics_length": 2259,
+    "lyrics_lines": 54,
+    "collections": []
+  },
+  "pop/13-polaroid-memories.md": {
+    "id": "e9b58098",
+    "file_path": "pop/13-polaroid-memories.md",
+    "filename": "13-polaroid-memories.md",
+    "genre_folder": "pop",
+    "created": "2025-10-16T11:42:55.712862",
+    "updated": "2025-10-16T11:42:55.712867",
+    "title": "Polaroid Memories",
+    "genre": "Indie Pop / Bubblegum Pop",
+    "key": "G Major",
+    "style_prompt_length": 826,
+    "lyrics_length": 2159,
+    "lyrics_lines": 55,
+    "collections": []
+  },
+  "pop/08-better-off.md": {
+    "id": "267e3c9d",
+    "file_path": "pop/08-better-off.md",
+    "filename": "08-better-off.md",
+    "genre_folder": "pop",
+    "created": "2025-10-16T11:42:55.714099",
+    "updated": "2025-10-16T11:42:55.714104",
+    "title": "Better Off",
+    "genre": "Dance-Pop",
+    "key": "D Major",
+    "style_prompt_length": 888,
+    "lyrics_length": 9,
+    "lyrics_lines": 0,
+    "collections": []
+  },
+  "pop/01-summer-forever.md": {
+    "id": "2173d4de",
+    "file_path": "pop/01-summer-forever.md",
+    "filename": "01-summer-forever.md",
+    "genre_folder": "pop",
+    "created": "2025-10-16T11:42:55.715907",
+    "updated": "2025-10-16T11:42:55.715915",
+    "title": "Summer Forever",
+    "style_prompt_length": 15,
+    "lyrics_length": 2371,
+    "lyrics_lines": 64,
+    "collections": []
+  },
+  "pop/11-supernova.md": {
+    "id": "187485fb",
+    "file_path": "pop/11-supernova.md",
+    "filename": "11-supernova.md",
+    "genre_folder": "pop",
+    "created": "2025-10-16T11:42:55.717912",
+    "updated": "2025-10-16T11:42:55.717919",
+    "title": "Supernova",
+    "genre": "Synth-Pop / Dance-Pop",
+    "key": "E Major",
+    "style_prompt_length": 688,
+    "lyrics_length": 2006,
+    "lyrics_lines": 58,
+    "collections": []
+  },
+  "pop/03-golden-hour.md": {
+    "id": "311aea1a",
+    "file_path": "pop/03-golden-hour.md",
+    "filename": "03-golden-hour.md",
+    "genre_folder": "pop",
+    "created": "2025-10-16T11:42:55.719727",
+    "updated": "2025-10-16T11:42:55.719735",
+    "title": "Golden Hour",
+    "style_prompt_length": 15,
+    "lyrics_length": 2505,
+    "lyrics_lines": 74,
+    "collections": []
+  },
+  "edm/08-peak.md": {
+    "id": "25e85baa",
+    "file_path": "edm/08-peak.md",
+    "filename": "08-peak.md",
+    "genre_folder": "edm",
+    "created": "2025-10-16T11:42:55.723527",
+    "updated": "2025-10-16T11:42:55.723537",
+    "title": "Peak",
+    "genre": "Progressive House",
+    "theme": [
+      "reaching the summit"
+    ],
+    "personas": [
+      "PHOENIX (powerful vocals)",
+      "NEON (harmonies)",
+      "REBEL (hype sections)"
+    ],
+    "bpm": 128,
+    "key": "Major",
+    "style_prompt_length": 15,
+    "lyrics_length": 9,
+    "lyrics_lines": 0,
+    "collections": []
+  },
+  "edm/04-ascend.md": {
+    "id": "a4ea8f38",
+    "file_path": "edm/04-ascend.md",
+    "filename": "04-ascend.md",
+    "genre_folder": "edm",
+    "created": "2025-10-16T11:42:55.724937",
+    "updated": "2025-10-16T11:42:55.724943",
+    "title": "Ascend",
+    "genre": "Future Bass Trap",
+    "theme": [
+      "rising",
+      "transformation"
+    ],
+    "personas": [
+      "REBEL (rap verses)",
+      "PHOENIX (powerful drops)",
+      "NEON (dreamy bridges)"
+    ],
+    "bpm": 150,
+    "key": "Minor to Major",
+    "style_prompt_length": 15,
+    "lyrics_length": 9,
+    "lyrics_lines": 0,
+    "collections": []
+  },
+  "edm/21-rave-all-night.md": {
+    "id": "3b6e8c5c",
+    "file_path": "edm/21-rave-all-night.md",
+    "filename": "21-rave-all-night.md",
+    "genre_folder": "edm",
+    "created": "2025-10-16T11:42:55.726270",
+    "updated": "2025-10-16T11:42:55.726275",
+    "title": "Rave All Night",
+    "genre": "Big Room House",
+    "theme": [
+      "festival energy",
+      "non-stop party"
+    ],
+    "personas": [
+      "PHOENIX (drop vocals)",
+      "REBEL (hype sections)"
+    ],
+    "bpm": 128,
+    "key": "Minor",
+    "style_prompt_length": 15,
+    "lyrics_length": 9,
+    "lyrics_lines": 0,
+    "collections": []
+  },
+  "edm/22-electric-dreams.md": {
+    "id": "8011b860",
+    "file_path": "edm/22-electric-dreams.md",
+    "filename": "22-electric-dreams.md",
+    "genre_folder": "edm",
+    "created": "2025-10-16T11:42:55.727516",
+    "updated": "2025-10-16T11:42:55.727521",
+    "title": "Electric Dreams",
+    "genre": "Progressive House (Melodic)",
+    "theme": [
+      "euphoria",
+      "dreamscape"
+    ],
+    "personas": [
+      "NEON (dreamy lead)",
+      "PHOENIX (powerful drops)"
+    ],
+    "bpm": 126,
+    "key": "Major",
+    "style_prompt_length": 15,
+    "lyrics_length": 9,
+    "lyrics_lines": 0,
+    "collections": []
+  },
+  "edm/25-pulse.md": {
+    "id": "2b74989d",
+    "file_path": "edm/25-pulse.md",
+    "filename": "25-pulse.md",
+    "genre_folder": "edm",
+    "created": "2025-10-16T11:42:55.729366",
+    "updated": "2025-10-16T11:42:55.729372",
+    "title": "Pulse",
+    "genre": "Techno",
+    "theme": [
+      "relentless drive",
+      "heartbeat"
+    ],
+    "personas": [
+      "PHOENIX (rhythmic vocals)",
+      "REBEL (hype accents)"
+    ],
+    "bpm": 130,
+    "key": "Minor",
+    "style_prompt_length": 15,
+    "lyrics_length": 9,
+    "lyrics_lines": 0,
+    "collections": []
+  },
+  "edm/24-sunrise-set.md": {
+    "id": "307e3f9d",
+    "file_path": "edm/24-sunrise-set.md",
+    "filename": "24-sunrise-set.md",
+    "genre_folder": "edm",
+    "created": "2025-10-16T11:42:55.731358",
+    "updated": "2025-10-16T11:42:55.731369",
+    "title": "Sunrise Set",
+    "genre": "Tropical House",
+    "theme": [
+      "beach vibes",
+      "new beginnings"
+    ],
+    "personas": [
+      "NEON (smooth lead)",
+      "PHOENIX (uplifting hooks)"
+    ],
+    "bpm": 122,
+    "key": "Major",
+    "style_prompt_length": 15,
+    "lyrics_length": 9,
+    "lyrics_lines": 0,
+    "collections": []
+  },
+  "edm/23-bass-drop-kingdom.md": {
+    "id": "d0386a20",
+    "file_path": "edm/23-bass-drop-kingdom.md",
+    "filename": "23-bass-drop-kingdom.md",
+    "genre_folder": "edm",
+    "created": "2025-10-16T11:42:55.733277",
+    "updated": "2025-10-16T11:42:55.733288",
+    "title": "Bass Drop Kingdom",
+    "genre": "Dubstep",
+    "theme": [
+      "bass dominance",
+      "power"
+    ],
+    "personas": [
+      "REBEL (aggressive vocals)",
+      "PHOENIX (powerful pre-drops)"
+    ],
+    "bpm": 140,
+    "key": "Minor",
+    "style_prompt_length": 15,
+    "lyrics_length": 9,
+    "lyrics_lines": 0,
+    "collections": []
+  },
+  "rock/26-unbreakable.md": {
+    "id": "6681d34e",
+    "file_path": "rock/26-unbreakable.md",
+    "filename": "26-unbreakable.md",
+    "genre_folder": "rock",
+    "created": "2025-10-16T11:42:55.737482",
+    "updated": "2025-10-16T11:42:55.737494",
+    "title": "Unbreakable",
+    "genre": "Alternative Rock",
+    "theme": [
+      "resilience",
+      "inner strength"
+    ],
+    "personas": [
+      "PHOENIX (powerful lead)"
+    ],
+    "bpm": 135,
+    "key": "Major",
+    "style_prompt_length": 15,
+    "lyrics_length": 9,
+    "lyrics_lines": 0,
+    "collections": []
+  },
+  "rock/04-ashes-rising.md": {
+    "id": "b5b24798",
+    "file_path": "rock/04-ashes-rising.md",
+    "filename": "04-ashes-rising.md",
+    "genre_folder": "rock",
+    "created": "2025-10-16T11:42:55.739032",
+    "updated": "2025-10-16T11:42:55.739040",
+    "title": "Ashes Rising",
+    "lyrics_length": 9,
+    "lyrics_lines": 0,
+    "collections": []
+  },
+  "rock/01-break-the-chains.md": {
+    "id": "91629137",
+    "file_path": "rock/01-break-the-chains.md",
+    "filename": "01-break-the-chains.md",
+    "genre_folder": "rock",
+    "created": "2025-10-16T11:42:55.740679",
+    "updated": "2025-10-16T11:42:55.740689",
+    "title": "Break the Chains",
+    "lyrics_length": 9,
+    "lyrics_lines": 0,
+    "collections": []
+  },
+  "rock/29-thunder.md": {
+    "id": "dda3f83f",
+    "file_path": "rock/29-thunder.md",
+    "filename": "29-thunder.md",
+    "genre_folder": "rock",
+    "created": "2025-10-16T11:42:55.742253",
+    "updated": "2025-10-16T11:42:55.742260",
+    "title": "Thunder",
+    "genre": "Hard Rock",
+    "theme": [
+      "storm energy",
+      "unstoppable force"
+    ],
+    "personas": [
+      "PHOENIX (commanding lead)",
+      "REBEL (backing power)"
+    ],
+    "bpm": 145,
+    "key": "Minor",
+    "style_prompt_length": 15,
+    "lyrics_length": 9,
+    "lyrics_lines": 0,
+    "collections": []
+  },
+  "rock/06-crimson-tide.md": {
+    "id": "4ea5ae9c",
+    "file_path": "rock/06-crimson-tide.md",
+    "filename": "06-crimson-tide.md",
+    "genre_folder": "rock",
+    "created": "2025-10-16T11:42:55.743595",
+    "updated": "2025-10-16T11:42:55.743602",
+    "title": "CRIMSON TIDE",
+    "genre": "Alternative Metal",
+    "key": "D Minor",
+    "collections": []
+  },
+  "rock/02-thunder-roads.md": {
+    "id": "7c8d695b",
+    "file_path": "rock/02-thunder-roads.md",
+    "filename": "02-thunder-roads.md",
+    "genre_folder": "rock",
+    "created": "2025-10-16T11:42:55.745030",
+    "updated": "2025-10-16T11:42:55.745035",
+    "title": "Thunder Roads",
+    "lyrics_length": 9,
+    "lyrics_lines": 0,
+    "collections": []
+  },
+  "rock/05-break-the-chains.md": {
+    "id": "2e5202da",
+    "file_path": "rock/05-break-the-chains.md",
+    "filename": "05-break-the-chains.md",
+    "genre_folder": "rock",
+    "created": "2025-10-16T11:42:55.746965",
+    "updated": "2025-10-16T11:42:55.746972",
+    "title": "Break the Chains",
+    "genre": "Nu-Metal Hip-Hop Fusion",
+    "theme": [
+      "rebellion",
+      "breaking free"
+    ],
+    "personas": [
+      "REBEL (rap verses)",
+      "PHOENIX (rock chorus)"
+    ],
+    "bpm": 140,
+    "key": "Minor",
+    "style_prompt_length": 15,
+    "lyrics_length": 9,
+    "lyrics_lines": 0,
+    "collections": []
+  },
+  "rock/27-rebel-soul.md": {
+    "id": "9537a19b",
+    "file_path": "rock/27-rebel-soul.md",
+    "filename": "27-rebel-soul.md",
+    "genre_folder": "rock",
+    "created": "2025-10-16T11:42:55.748310",
+    "updated": "2025-10-16T11:42:55.748315",
+    "title": "Rebel Soul",
+    "genre": "Rock Anthem",
+    "theme": [
+      "defiance",
+      "authenticity"
+    ],
+    "personas": [
+      "REBEL (fierce lead)",
+      "PHOENIX (power chorus)"
+    ],
+    "bpm": 140,
+    "key": "Minor",
+    "style_prompt_length": 15,
+    "lyrics_length": 9,
+    "lyrics_lines": 0,
+    "collections": []
+  },
+  "rock/03-riot-heart.md": {
+    "id": "3318b8fb",
+    "file_path": "rock/03-riot-heart.md",
+    "filename": "03-riot-heart.md",
+    "genre_folder": "rock",
+    "created": "2025-10-16T11:42:55.749540",
+    "updated": "2025-10-16T11:42:55.749545",
+    "title": "Riot Heart",
+    "lyrics_length": 9,
+    "lyrics_lines": 0,
+    "collections": []
+  },
+  "rock/05-edge-of-reason.md": {
+    "id": "b4fd47f0",
+    "file_path": "rock/05-edge-of-reason.md",
+    "filename": "05-edge-of-reason.md",
+    "genre_folder": "rock",
+    "created": "2025-10-16T11:42:55.750678",
+    "updated": "2025-10-16T11:42:55.750684",
+    "title": "Edge of Reason",
+    "lyrics_length": 9,
+    "lyrics_lines": 0,
+    "collections": []
+  },
+  "rock/30-warrior.md": {
+    "id": "c420b912",
+    "file_path": "rock/30-warrior.md",
+    "filename": "30-warrior.md",
+    "genre_folder": "rock",
+    "created": "2025-10-16T11:42:55.751918",
+    "updated": "2025-10-16T11:42:55.751924",
+    "title": "Warrior",
+    "genre": "Arena Rock",
+    "theme": [
+      "heroic battle",
+      "courage"
+    ],
+    "personas": [
+      "PHOENIX (battle cry vocals)"
+    ],
+    "bpm": 138,
+    "key": "Major",
+    "style_prompt_length": 15,
+    "lyrics_length": 9,
+    "lyrics_lines": 0,
+    "collections": []
+  },
+  "rock/28-rise-again.md": {
+    "id": "11e8e335",
+    "file_path": "rock/28-rise-again.md",
+    "filename": "28-rise-again.md",
+    "genre_folder": "rock",
+    "created": "2025-10-16T11:42:55.753131",
+    "updated": "2025-10-16T11:42:55.753136",
+    "title": "Rise Again",
+    "genre": "Post-Grunge",
+    "theme": [
+      "comeback",
+      "second chances"
+    ],
+    "personas": [
+      "PHOENIX (emotional lead)"
+    ],
+    "bpm": 130,
+    "key": "Minor to Major",
+    "style_prompt_length": 15,
+    "lyrics_length": 9,
+    "lyrics_lines": 0,
+    "collections": []
+  },
+  "country/34-champion-rodeo.md": {
+    "id": "381a9797",
+    "file_path": "country/34-champion-rodeo.md",
+    "filename": "34-champion-rodeo.md",
+    "genre_folder": "country",
+    "created": "2025-10-16T11:42:55.755657",
+    "updated": "2025-10-16T11:42:55.755663",
+    "title": "Champion Rodeo",
+    "genre": "Country Anthem",
+    "theme": [
+      "victory",
+      "competition"
+    ],
+    "personas": [
+      "PHOENIX (powerful country)",
+      "REBEL (energetic hype)"
+    ],
+    "bpm": 135,
+    "key": "Major",
+    "style_prompt_length": 15,
+    "lyrics_length": 9,
+    "lyrics_lines": 0,
+    "collections": []
+  },
+  "country/35-back-roads-hustle.md": {
+    "id": "eb474e2c",
+    "file_path": "country/35-back-roads-hustle.md",
+    "filename": "35-back-roads-hustle.md",
+    "genre_folder": "country",
+    "created": "2025-10-16T11:42:55.757330",
+    "updated": "2025-10-16T11:42:55.757336",
+    "title": "Back Roads Hustle",
+    "genre": "Country Rap Fusion",
+    "theme": [
+      "rural hustle",
+      "grind"
+    ],
+    "personas": [
+      "CYPHER (country rap)",
+      "PHOENIX (country chorus)"
+    ],
+    "bpm": 110,
+    "key": "Minor",
+    "style_prompt_length": 15,
+    "lyrics_length": 9,
+    "lyrics_lines": 0,
+    "collections": []
+  },
+  "country/32-boots-on-the-ground.md": {
+    "id": "870fc1cd",
+    "file_path": "country/32-boots-on-the-ground.md",
+    "filename": "32-boots-on-the-ground.md",
+    "genre_folder": "country",
+    "created": "2025-10-16T11:42:55.758686",
+    "updated": "2025-10-16T11:42:55.758692",
+    "title": "Boots on the Ground",
+    "genre": "Country Rock",
+    "theme": [
+      "work ethic",
+      "blue collar pride"
+    ],
+    "personas": [
+      "PHOENIX (gritty country)"
+    ],
+    "bpm": 125,
+    "key": "Major",
+    "style_prompt_length": 15,
+    "lyrics_length": 9,
+    "lyrics_lines": 0,
+    "collections": []
+  },
+  "country/33-highway-to-better-days.md": {
+    "id": "beea7cd4",
+    "file_path": "country/33-highway-to-better-days.md",
+    "filename": "33-highway-to-better-days.md",
+    "genre_folder": "country",
+    "created": "2025-10-16T11:42:55.759912",
+    "updated": "2025-10-16T11:42:55.759918",
+    "title": "Highway to Better Days",
+    "genre": "Optimistic Country",
+    "theme": [
+      "journey",
+      "hope"
+    ],
+    "personas": [
+      "PHOENIX (hopeful lead)",
+      "NEON (backing harmonies)"
+    ],
+    "bpm": 130,
+    "key": "Major",
+    "style_prompt_length": 15,
+    "lyrics_length": 9,
+    "lyrics_lines": 0,
+    "collections": []
+  },
+  "country/31-dirt-road-dreams.md": {
+    "id": "48dcfe5c",
+    "file_path": "country/31-dirt-road-dreams.md",
+    "filename": "31-dirt-road-dreams.md",
+    "genre_folder": "country",
+    "created": "2025-10-16T11:42:55.761095",
+    "updated": "2025-10-16T11:42:55.761099",
+    "title": "Dirt Road Dreams",
+    "genre": "Modern Country",
+    "theme": [
+      "determination",
+      "rural roots"
+    ],
+    "personas": [
+      "PHOENIX (country lead)",
+      "NEON (harmonies)"
+    ],
+    "bpm": 120,
+    "key": "Major",
+    "style_prompt_length": 15,
+    "lyrics_length": 9,
+    "lyrics_lines": 0,
+    "collections": []
+  },
+  "r-b/38-unstoppable-love.md": {
+    "id": "deb9e478",
+    "file_path": "r-b/38-unstoppable-love.md",
+    "filename": "38-unstoppable-love.md",
+    "genre_folder": "r-b",
+    "created": "2025-10-16T11:42:55.763468",
+    "updated": "2025-10-16T11:42:55.763473",
+    "title": "Unstoppable Love",
+    "genre": "Soul Power Ballad",
+    "theme": [
+      "love as empowerment"
+    ],
+    "personas": [
+      "PHOENIX (soul vocals)",
+      "NEON (harmonies)"
+    ],
+    "bpm": 75,
+    "key": "Major",
+    "style_prompt_length": 15,
+    "lyrics_length": 9,
+    "lyrics_lines": 0,
+    "collections": []
+  },
+  "r-b/36-blessed.md": {
+    "id": "7142f13d",
+    "file_path": "r-b/36-blessed.md",
+    "filename": "36-blessed.md",
+    "genre_folder": "r-b",
+    "created": "2025-10-16T11:42:55.765434",
+    "updated": "2025-10-16T11:42:55.765442",
+    "title": "Blessed",
+    "genre": "Neo-Soul",
+    "theme": [
+      "gratitude",
+      "abundance"
+    ],
+    "personas": [
+      "NEON (smooth lead vocals)",
+      "PHOENIX (powerful chorus)"
+    ],
+    "bpm": 90,
+    "key": "Major",
+    "style_prompt_length": 15,
+    "lyrics_length": 9,
+    "lyrics_lines": 0,
+    "collections": []
+  },
+  "r-b/39-success-looks-good-on-me.md": {
+    "id": "76d760c1",
+    "file_path": "r-b/39-success-looks-good-on-me.md",
+    "filename": "39-success-looks-good-on-me.md",
+    "genre_folder": "r-b",
+    "created": "2025-10-16T11:42:55.766892",
+    "updated": "2025-10-16T11:42:55.766898",
+    "title": "Success Looks Good On Me",
+    "genre": "Upbeat R&B",
+    "theme": [
+      "confidence",
+      "achievement"
+    ],
+    "personas": [
+      "NEON (playful lead)",
+      "PHOENIX (strong backing)"
+    ],
+    "bpm": 105,
+    "key": "Major",
+    "style_prompt_length": 15,
+    "lyrics_length": 9,
+    "lyrics_lines": 0,
+    "collections": []
+  },
+  "r-b/37-elevate-my-mind.md": {
+    "id": "e7531b18",
+    "file_path": "r-b/37-elevate-my-mind.md",
+    "filename": "37-elevate-my-mind.md",
+    "genre_folder": "r-b",
+    "created": "2025-10-16T11:42:55.767970",
+    "updated": "2025-10-16T11:42:55.767975",
+    "title": "Elevate My Mind",
+    "genre": "Contemporary R&B",
+    "theme": [
+      "self-improvement",
+      "mental growth"
+    ],
+    "personas": [
+      "NEON (smooth lead)"
+    ],
+    "bpm": 85,
+    "key": "Major",
+    "style_prompt_length": 15,
+    "lyrics_length": 9,
+    "lyrics_lines": 0,
+    "collections": []
+  },
+  "r-b/40-rise-and-shine.md": {
+    "id": "8cdc4a6a",
+    "file_path": "r-b/40-rise-and-shine.md",
+    "filename": "40-rise-and-shine.md",
+    "genre_folder": "r-b",
+    "created": "2025-10-16T11:42:55.768997",
+    "updated": "2025-10-16T11:42:55.769001",
+    "title": "Rise and Shine",
+    "genre": "Gospel R&B",
+    "theme": [
+      "morning motivation",
+      "new day"
+    ],
+    "personas": [
+      "PHOENIX (gospel lead)",
+      "NEON (supporting harmonies)"
+    ],
+    "bpm": 90,
+    "key": "Major",
+    "style_prompt_length": 15,
+    "lyrics_length": 9,
+    "lyrics_lines": 0,
+    "collections": []
+  },
+  "fusion/10-victorious.md": {
+    "id": "80d9920b",
+    "file_path": "fusion/10-victorious.md",
+    "filename": "10-victorious.md",
+    "genre_folder": "fusion",
+    "created": "2025-10-16T11:42:55.772483",
+    "updated": "2025-10-16T11:42:55.772489",
+    "title": "Victorious",
+    "genre": "Hip-Hop Pop Fusion",
+    "theme": [
+      "triumph",
+      "victory"
+    ],
+    "personas": [
+      "PHOENIX (powerful lead)",
+      "CYPHER (rap verses)",
+      "NEON (harmonies)"
+    ],
+    "bpm": 132,
+    "key": "Major",
+    "style_prompt_length": 15,
+    "lyrics_length": 9,
+    "lyrics_lines": 0,
+    "collections": []
+  },
+  "fusion/45-global-grind.md": {
+    "id": "ef976cf0",
+    "file_path": "fusion/45-global-grind.md",
+    "filename": "45-global-grind.md",
+    "genre_folder": "fusion",
+    "created": "2025-10-16T11:42:55.773910",
+    "updated": "2025-10-16T11:42:55.773917",
+    "title": "Global Grind",
+    "genre": "World-Trap Fusion",
+    "theme": [
+      "international hustle"
+    ],
+    "personas": [
+      "CYPHER (multicultural rap)",
+      "PHOENIX (world vocals)",
+      "NEON (harmonies)"
+    ],
+    "bpm": 138,
+    "key": "Minor",
+    "style_prompt_length": 15,
+    "lyrics_length": 9,
+    "lyrics_lines": 0,
+    "collections": []
+  },
+  "fusion/41-trap-jazz.md": {
+    "id": "56317dc8",
+    "file_path": "fusion/41-trap-jazz.md",
+    "filename": "41-trap-jazz.md",
+    "genre_folder": "fusion",
+    "created": "2025-10-16T11:42:55.775290",
+    "updated": "2025-10-16T11:42:55.775296",
+    "title": "Trap Jazz",
+    "genre": "Jazz-Trap Fusion",
+    "theme": [
+      "sophisticated hustle"
+    ],
+    "personas": [
+      "CYPHER (jazz-influenced rap)",
+      "NEON (sultry vocals)"
+    ],
+    "bpm": 140,
+    "key": "Minor",
+    "style_prompt_length": 15,
+    "lyrics_length": 9,
+    "lyrics_lines": 0,
+    "collections": []
+  },
+  "fusion/44-rock-rap-revolution.md": {
+    "id": "e560d6ea",
+    "file_path": "fusion/44-rock-rap-revolution.md",
+    "filename": "44-rock-rap-revolution.md",
+    "genre_folder": "fusion",
+    "created": "2025-10-16T11:42:55.776905",
+    "updated": "2025-10-16T11:42:55.776923",
+    "title": "Rock Rap Revolution",
+    "genre": "Rock-Rap Fusion",
+    "theme": [
+      "revolutionary change"
+    ],
+    "personas": [
+      "REBEL (aggressive rap)",
+      "PHOENIX (rock power)"
+    ],
+    "bpm": 145,
+    "key": "Minor",
+    "style_prompt_length": 15,
+    "lyrics_length": 9,
+    "lyrics_lines": 0,
+    "collections": []
+  },
+  "fusion/09-elevate.md": {
+    "id": "4d6daa47",
+    "file_path": "fusion/09-elevate.md",
+    "filename": "09-elevate.md",
+    "genre_folder": "fusion",
+    "created": "2025-10-16T11:42:55.778914",
+    "updated": "2025-10-16T11:42:55.778921",
+    "title": "Elevate",
+    "genre": "Modern Trap",
+    "theme": [
+      "rising",
+      "ambition"
+    ],
+    "personas": [
+      "CYPHER (motivational rap)",
+      "REBEL (aggressive sections)",
+      "NEON (melodic bridges)"
+    ],
+    "bpm": 145,
+    "key": "Minor",
+    "style_prompt_length": 15,
+    "lyrics_length": 9,
+    "lyrics_lines": 0,
+    "collections": []
+  },
+  "fusion/43-soul-trap.md": {
+    "id": "94c43b92",
+    "file_path": "fusion/43-soul-trap.md",
+    "filename": "43-soul-trap.md",
+    "genre_folder": "fusion",
+    "created": "2025-10-16T11:42:55.780332",
+    "updated": "2025-10-16T11:42:55.780338",
+    "title": "Soul Trap",
+    "genre": "Soul-Trap Fusion",
+    "theme": [
+      "emotional struggle and triumph"
+    ],
+    "personas": [
+      "NEON (soulful lead)",
+      "CYPHER (introspective rap)"
+    ],
+    "bpm": 85,
+    "key": "Minor to Major",
+    "style_prompt_length": 15,
+    "lyrics_length": 9,
+    "lyrics_lines": 0,
+    "collections": []
+  },
+  "fusion/42-electric-country.md": {
+    "id": "ba715e41",
+    "file_path": "fusion/42-electric-country.md",
+    "filename": "42-electric-country.md",
+    "genre_folder": "fusion",
+    "created": "2025-10-16T11:42:55.781840",
+    "updated": "2025-10-16T11:42:55.781846",
+    "title": "Electric Country",
+    "genre": "EDM-Country Fusion",
+    "theme": [
+      "party",
+      "modern country"
+    ],
+    "personas": [
+      "PHOENIX (country-EDM vocals)",
+      "REBEL (hype sections)"
+    ],
+    "bpm": 130,
+    "key": "Major",
+    "style_prompt_length": 15,
+    "lyrics_length": 9,
+    "lyrics_lines": 0,
+    "collections": []
+  },
+  "fusion/06-made-it.md": {
+    "id": "4d08d056",
+    "file_path": "fusion/06-made-it.md",
+    "filename": "06-made-it.md",
+    "genre_folder": "fusion",
+    "created": "2025-10-16T11:42:55.783278",
+    "updated": "2025-10-16T11:42:55.783284",
+    "title": "Made It",
+    "genre": "Pop-Trap Fusion",
+    "theme": [
+      "celebration",
+      "achievement"
+    ],
+    "personas": [
+      "CYPHER (storytelling rap)",
+      "NEON (melodic hooks)",
+      "PHOENIX (powerful bridge)"
+    ],
+    "bpm": 130,
+    "key": "Major",
+    "style_prompt_length": 15,
+    "lyrics_length": 9,
+    "lyrics_lines": 0,
+    "collections": []
+  }
+}

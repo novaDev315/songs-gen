@@ -1,0 +1,22 @@
+{
+  "id": "8bbb25bb866c",
+  "title": "Thunder",
+  "genre": "rock",
+  "file_path": "songs/rock/29-thunder.md",
+  "created": "2025-10-16T17:06:05.194933",
+  "updated": "2025-10-16T17:06:05.194954",
+  "collections": [
+    "triumph-collection"
+  ],
+  "genre_detail": "Hard Rock",
+  "themes": [
+    "Storm Energy",
+    "Unstoppable Force"
+  ],
+  "personas": [
+    "PHOENIX",
+    "REBEL"
+  ],
+  "style_prompt_length": 15,
+  "lyrics_length": 9
+}

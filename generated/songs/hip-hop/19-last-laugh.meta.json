@@ -1,0 +1,17 @@
+{
+  "id": "b3323e5604f1",
+  "title": "Last Laugh",
+  "genre": "hip-hop",
+  "file_path": "songs/hip-hop/19-last-laugh.md",
+  "created": "2025-10-16T17:06:04.672701",
+  "updated": "2025-10-16T17:06:04.672715",
+  "collections": [
+    "triumph-collection"
+  ],
+  "personas": [
+    "NEON",
+    "REBEL"
+  ],
+  "style_prompt_length": 428,
+  "lyrics_length": 3246
+}

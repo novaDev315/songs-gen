@@ -1,0 +1,21 @@
+{
+  "id": "c5156126c6f2",
+  "title": "Warrior",
+  "genre": "rock",
+  "file_path": "songs/rock/30-warrior.md",
+  "created": "2025-10-16T17:06:05.213209",
+  "updated": "2025-10-16T17:06:05.213223",
+  "collections": [
+    "triumph-collection"
+  ],
+  "genre_detail": "Arena Rock",
+  "themes": [
+    "Heroic Battle",
+    "Courage"
+  ],
+  "personas": [
+    "PHOENIX"
+  ],
+  "style_prompt_length": 15,
+  "lyrics_length": 9
+}

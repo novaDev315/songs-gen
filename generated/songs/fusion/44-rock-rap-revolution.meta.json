@@ -1,0 +1,21 @@
+{
+  "id": "b34efffc9b7b",
+  "title": "Rock Rap Revolution",
+  "genre": "fusion",
+  "file_path": "songs/fusion/44-rock-rap-revolution.md",
+  "created": "2025-10-16T17:06:05.451895",
+  "updated": "2025-10-16T17:06:05.451912",
+  "collections": [
+    "triumph-collection"
+  ],
+  "genre_detail": "Rock-Rap Fusion",
+  "themes": [
+    "Revolutionary Change"
+  ],
+  "personas": [
+    "PHOENIX",
+    "REBEL"
+  ],
+  "style_prompt_length": 15,
+  "lyrics_length": 9
+}

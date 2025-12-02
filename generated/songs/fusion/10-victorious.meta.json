@@ -1,0 +1,22 @@
+{
+  "id": "0c1985e16dcd",
+  "title": "Victorious",
+  "genre": "fusion",
+  "file_path": "songs/fusion/10-victorious.md",
+  "created": "2025-10-16T17:06:05.402391",
+  "updated": "2025-10-16T17:06:05.402403",
+  "collections": [
+    "triumph-collection"
+  ],
+  "genre_detail": "Hip-Hop Pop Fusion",
+  "themes": [
+    "Triumph",
+    "Victory"
+  ],
+  "personas": [
+    "NEON",
+    "PHOENIX"
+  ],
+  "style_prompt_length": 15,
+  "lyrics_length": 9
+}

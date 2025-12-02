@@ -1,0 +1,21 @@
+{
+  "id": "57666cc07903",
+  "title": "Rise Again",
+  "genre": "rock",
+  "file_path": "songs/rock/28-rise-again.md",
+  "created": "2025-10-16T17:06:05.180270",
+  "updated": "2025-10-16T17:06:05.180286",
+  "collections": [
+    "triumph-collection"
+  ],
+  "genre_detail": "Post-Grunge",
+  "themes": [
+    "Comeback",
+    "Second Chances"
+  ],
+  "personas": [
+    "PHOENIX"
+  ],
+  "style_prompt_length": 15,
+  "lyrics_length": 9
+}

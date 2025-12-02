@@ -1,0 +1,20 @@
+{
+  "id": "fcda3d8d833c",
+  "title": "Break the Rules",
+  "genre": "pop",
+  "file_path": "songs/pop/06-break-the-rules.md",
+  "created": "2025-10-16T17:06:04.756684",
+  "updated": "2025-10-16T17:06:04.756712",
+  "collections": [
+    "triumph-collection"
+  ],
+  "genre_detail": "Pop-Rock Fusion",
+  "mood": "Rebellious, Empowering, Defiant",
+  "personas": [
+    "NEON",
+    "PHOENIX",
+    "REBEL"
+  ],
+  "style_prompt_length": 863,
+  "lyrics_length": 9
+}

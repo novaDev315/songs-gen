@@ -1,0 +1,22 @@
+{
+  "id": "c0746637a91f",
+  "title": "Electric Country",
+  "genre": "fusion",
+  "file_path": "songs/fusion/42-electric-country.md",
+  "created": "2025-10-16T17:06:05.425487",
+  "updated": "2025-10-16T17:06:05.425500",
+  "collections": [
+    "triumph-collection"
+  ],
+  "genre_detail": "EDM-Country Fusion",
+  "themes": [
+    "Party",
+    "Modern Country"
+  ],
+  "personas": [
+    "PHOENIX",
+    "REBEL"
+  ],
+  "style_prompt_length": 15,
+  "lyrics_length": 9
+}

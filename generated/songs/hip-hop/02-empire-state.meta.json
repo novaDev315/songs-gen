@@ -1,0 +1,22 @@
+{
+  "id": "feffb2a718e7",
+  "title": "Empire State",
+  "genre": "hip-hop",
+  "file_path": "songs/hip-hop/02-empire-state.md",
+  "created": "2025-10-16T17:06:04.374958",
+  "updated": "2025-10-16T17:06:04.374970",
+  "collections": [
+    "triumph-collection"
+  ],
+  "genre_detail": "Memphis Trap / Orchestral Hip-Hop",
+  "themes": [
+    "Empire Building",
+    "Legacy"
+  ],
+  "personas": [
+    "NEON",
+    "REBEL"
+  ],
+  "style_prompt_length": 15,
+  "lyrics_length": 9
+}

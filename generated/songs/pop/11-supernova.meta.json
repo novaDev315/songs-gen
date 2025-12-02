@@ -1,0 +1,20 @@
+{
+  "id": "e2d7049da544",
+  "title": "Supernova",
+  "genre": "pop",
+  "file_path": "songs/pop/11-supernova.md",
+  "created": "2025-10-16T17:06:04.792393",
+  "updated": "2025-10-16T17:06:04.792405",
+  "collections": [
+    "triumph-collection"
+  ],
+  "genre_detail": "Synth-Pop / Dance-Pop",
+  "mood": "Explosive, Empowering, Radiant",
+  "personas": [
+    "NEON",
+    "PHOENIX",
+    "REBEL"
+  ],
+  "style_prompt_length": 688,
+  "lyrics_length": 2006
+}

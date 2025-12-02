@@ -1,0 +1,22 @@
+{
+  "id": "68cbd3abef82",
+  "title": "Champion Rodeo",
+  "genre": "country",
+  "file_path": "songs/country/34-champion-rodeo.md",
+  "created": "2025-10-16T17:06:05.265959",
+  "updated": "2025-10-16T17:06:05.265971",
+  "collections": [
+    "triumph-collection"
+  ],
+  "genre_detail": "Country Anthem",
+  "themes": [
+    "Victory",
+    "Competition"
+  ],
+  "personas": [
+    "PHOENIX",
+    "REBEL"
+  ],
+  "style_prompt_length": 15,
+  "lyrics_length": 9
+}

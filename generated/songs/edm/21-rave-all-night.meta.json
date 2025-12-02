@@ -1,0 +1,22 @@
+{
+  "id": "a0f31d77ae15",
+  "title": "Rave All Night",
+  "genre": "edm",
+  "file_path": "songs/edm/21-rave-all-night.md",
+  "created": "2025-10-16T17:06:04.970629",
+  "updated": "2025-10-16T17:06:04.970640",
+  "collections": [
+    "triumph-collection"
+  ],
+  "genre_detail": "Big Room House",
+  "themes": [
+    "Festival Energy",
+    "Non-Stop Party"
+  ],
+  "personas": [
+    "PHOENIX",
+    "REBEL"
+  ],
+  "style_prompt_length": 15,
+  "lyrics_length": 9
+}

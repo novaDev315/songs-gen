@@ -1,0 +1,21 @@
+{
+  "id": "936e35ebaebc",
+  "title": "Echo Chamber",
+  "genre": "pop",
+  "file_path": "songs/pop/19-echo-chamber.md",
+  "created": "2025-10-16T17:06:04.911215",
+  "updated": "2025-10-16T17:06:04.911232",
+  "collections": [],
+  "genre_detail": "Hyperpop",
+  "mood": "Frenetic, claustrophobic, cathartic",
+  "themes": [
+    "Repetitive thoughts",
+    "stuck in loop",
+    "modern anxiety"
+  ],
+  "personas": [
+    "NEON",
+    "PHOENIX",
+    "REBEL"
+  ]
+}

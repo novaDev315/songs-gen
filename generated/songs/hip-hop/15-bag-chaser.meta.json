@@ -1,0 +1,23 @@
+{
+  "id": "a0d7c1bf869a",
+  "title": "Bag Chaser",
+  "genre": "hip-hop",
+  "file_path": "songs/hip-hop/15-bag-chaser.md",
+  "created": "2025-10-16T17:06:04.615083",
+  "updated": "2025-10-16T17:06:04.615095",
+  "collections": [
+    "triumph-collection"
+  ],
+  "genre_detail": "Modern Trap",
+  "themes": [
+    "Money Chase",
+    "Hustle",
+    "Flex Energy"
+  ],
+  "personas": [
+    "NEON",
+    "REBEL"
+  ],
+  "style_prompt_length": 15,
+  "lyrics_length": 9
+}
