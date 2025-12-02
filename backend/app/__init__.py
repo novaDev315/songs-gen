@@ -1,0 +1,1 @@
+"""Song Automation API application."""

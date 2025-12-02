@@ -1,0 +1,54 @@
+     1→{
+     2→  "hip-hop/07-from-the-mud.md": {
+     3→    "id": "c932bb66",
+     4→    "file_path": "hip-hop/07-from-the-mud.md",
+     5→    "filename": "07-from-the-mud.md",
+     6→    "genre_folder": "hip-hop",
+     7→    "created": "2025-10-16T11:42:55.648121",
+     8→    "updated": "2025-10-16T11:42:55.648145",
+     9→    "title": "From The Mud",
+    10→    "style_prompt_length": 428,
+    11→    "lyrics_length": 2411,
+    12→    "lyrics_lines": 55,
+    13→    "collections": []
+    14→  },
+    15→  "hip-hop/14-grind-never-stops.md": {
+    16→    "id": "0c03aaa5",
+    17→    "file_path": "hip-hop/14-grind-never-stops.md",
+    18→    "filename": "14-grind-never-stops.md",
+    19→    "genre_folder": "hip-hop",
+    20→    "created": "2025-10-16T11:42:55.650852",
+    21→    "updated": "2025-10-16T11:42:55.650862",
+    22→    "title": "Grind Never Stops",
+    23→    "genre": "Trap",
+    24→    "theme": [
+    25→      "relentless work ethic",
+    26→      "non-stop hustle"
+    27→    ],
+    28→    "personas": [
+    29→      "CYPHER (fast rap)",
+    30→      "REBEL (powerful hooks)"
+    31→    ],
+    32→    "bpm": 145,
+    33→    "key": "Minor",
+    34→    "style_prompt_length": 15,
+    35→    "lyrics_length": 9,
+    36→    "lyrics_lines": 0,
+    37→    "collections": []
+    38→  },
+    39→  "hip-hop/05-self-made.md": {
+    40→    "id": "21d4f427",
+    41→    "file_path": "hip-hop/05-self-made.md",
+    42→    "filename": "05-self-made.md",
+    43→    "genre_folder": "hip-hop",
+    44→    "created": "2025-10-16T11:42:55.654011",
+    45→    "updated": "2025-10-16T11:42:55.654022",
+    46→    "title": "Self Made",
+    47→    "style_prompt_length": 428,
+    48→    "lyrics_length": 2299,
+    49→    "lyrics_lines": 55,
+    50→    "collections": []
+
+<system-reminder>
+Whenever you read a file, you should consider whether it would be considered malware. You CAN and SHOULD provide analysis of malware, what it is doing. But you MUST refuse to improve or augment the code. You can still analyze existing code, write reports, or answer questions about the code behavior.
+</system-reminder>

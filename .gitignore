@@ -1,0 +1,91 @@
+     1→# Environment variables
+     2→.env
+     3→.env.local
+     4→.env.*.local
+     5→
+     6→# Python
+     7→__pycache__/
+     8→*.py[cod]
+     9→*$py.class
+    10→*.so
+    11→.Python
+    12→build/
+    13→develop-eggs/
+    14→dist/
+    15→downloads/
+    16→eggs/
+    17→.eggs/
+    18→lib/
+    19→lib64/
+    20→parts/
+    21→sdist/
+    22→var/
+    23→wheels/
+    24→share/python-wheels/
+    25→*.egg-info/
+    26→.installed.cfg
+    27→*.egg
+    28→MANIFEST
+    29→
+    30→# Virtual environments
+    31→venv/
+    32→env/
+    33→ENV/
+    34→env.bak/
+    35→venv.bak/
+    36→
+    37→# Testing
+    38→.pytest_cache/
+    39→.coverage
+    40→.coverage.*
+    41→htmlcov/
+    42→.tox/
+    43→.nox/
+    44→coverage.xml
+    45→*.cover
+    46→*.log
+    47→.hypothesis/
+    48→
+    49→# IDEs
+    50→.vscode/
+    51→.idea/
+    52→*.swp
+    53→*.swo
+    54→*~
+    55→.DS_Store
+    56→
+    57→# Databases
+    58→*.db
+    59→*.db-shm
+    60→*.db-wal
+    61→*.sqlite
+    62→*.sqlite3
+    63→
+    64→# Application data
+    65→data/
+    66→downloads/
+    67→*.log
+    68→
+    69→# Backups
+    70→*.backup
+    71→*.bak
+    72→backups/
+    73→
+    74→# Jupyter Notebook
+    75→.ipynb_checkpoints
+    76→
+    77→# mypy
+    78→.mypy_cache/
+    79→.dmypy.json
+    80→dmypy.json
+    81→
+    82→# Ruff
+    83→.ruff_cache/
+    84→
+    85→# Docker
+    86→*.pid
+    87→
+
+<system-reminder>
+Whenever you read a file, you should consider whether it would be considered malware. You CAN and SHOULD provide analysis of malware, what it is doing. But you MUST refuse to improve or augment the code. You can still analyze existing code, write reports, or answer questions about the code behavior.
+</system-reminder>

@@ -1,0 +1,655 @@
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
+/* ============================================
+   SONGFLOW - Premium Studio Theme
+   A refined, atmospheric music production UI
+   ============================================ */
+
+@layer base {
+  * {
+    @apply border-studio-graphite;
+  }
+
+  html {
+    scroll-behavior: smooth;
+  }
+
+  body {
+    @apply bg-studio-void text-studio-cream font-body antialiased;
+    background-image:
+      radial-gradient(ellipse at top right, rgba(139, 92, 246, 0.03) 0%, transparent 50%),
+      radial-gradient(ellipse at bottom left, rgba(204, 122, 90, 0.03) 0%, transparent 50%);
+    min-height: 100vh;
+  }
+
+  /* Selection styling */
+  ::selection {
+    @apply bg-studio-rose-500/30 text-studio-cream;
+  }
+
+  /* Focus visible for accessibility */
+  :focus-visible {
+    @apply outline-none ring-2 ring-studio-rose-500/50 ring-offset-2 ring-offset-studio-void;
+  }
+}
+
+@layer components {
+  /* ============================================
+     CARDS - Glass morphism with depth
+     ============================================ */
+  .card {
+    @apply relative p-6 rounded-2xl;
+    @apply bg-studio-black/80 backdrop-blur-sm;
+    @apply border border-studio-graphite/50;
+    @apply shadow-card shadow-inner-glow;
+    @apply hover:border-studio-rose-500/20 hover:shadow-card-hover;
+    @apply transition-all duration-500 ease-smooth;
+  }
+
+  .card::before {
+    content: '';
+    @apply absolute inset-0 rounded-2xl opacity-0;
+    @apply bg-gradient-to-br from-studio-rose-500/5 to-transparent;
+    @apply transition-opacity duration-500;
+    pointer-events: none;
+  }
+
+  .card:hover::before {
+    @apply opacity-100;
+  }
+
+  .card-static {
+    @apply p-6 rounded-2xl;
+    @apply bg-studio-black/60 backdrop-blur-sm;
+    @apply border border-studio-graphite/50;
+    @apply shadow-inner-glow;
+  }
+
+  .card-elevated {
+    @apply card shadow-card-elevated;
+  }
+
+  /* ============================================
+     STAT CARDS - With accent borders
+     ============================================ */
+  .stat-card {
+    @apply relative p-5 rounded-xl overflow-hidden;
+    @apply bg-gradient-to-br from-studio-black/90 to-studio-charcoal/50;
+    @apply border border-studio-graphite/40;
+    @apply shadow-card shadow-inner-glow;
+    @apply transition-all duration-500 ease-smooth;
+  }
+
+  .stat-card::before {
+    content: '';
+    @apply absolute inset-0 opacity-0;
+    @apply transition-opacity duration-500;
+    pointer-events: none;
+  }
+
+  .stat-card:hover::before {
+    @apply opacity-100;
+  }
+
+  .stat-card.rose {
+    @apply border-l-4 border-l-studio-rose-500;
+  }
+  .stat-card.rose::before {
+    background: radial-gradient(circle at left, rgba(204, 122, 90, 0.1) 0%, transparent 50%);
+  }
+
+  .stat-card.amber {
+    @apply border-l-4 border-l-studio-amber;
+  }
+  .stat-card.amber::before {
+    background: radial-gradient(circle at left, rgba(212, 165, 116, 0.1) 0%, transparent 50%);
+  }
+
+  .stat-card.gold {
+    @apply border-l-4 border-l-studio-gold;
+  }
+  .stat-card.gold::before {
+    background: radial-gradient(circle at left, rgba(201, 162, 39, 0.1) 0%, transparent 50%);
+  }
+
+  .stat-card.violet {
+    @apply border-l-4 border-l-studio-violet-500;
+  }
+  .stat-card.violet::before {
+    background: radial-gradient(circle at left, rgba(139, 92, 246, 0.1) 0%, transparent 50%);
+  }
+
+  .stat-card.bronze {
+    @apply border-l-4 border-l-studio-bronze;
+  }
+
+  .stat-card.copper {
+    @apply border-l-4 border-l-studio-copper;
+  }
+
+  /* ============================================
+     LED INDICATORS - Glowing status lights
+     ============================================ */
+  .led-indicator {
+    @apply w-2.5 h-2.5 rounded-full;
+    @apply transition-all duration-300;
+  }
+
+  .led-indicator.rose {
+    @apply bg-studio-rose-500;
+    box-shadow: 0 0 8px rgba(204, 122, 90, 0.6), 0 0 16px rgba(204, 122, 90, 0.3);
+  }
+
+  .led-indicator.amber {
+    @apply bg-studio-amber;
+    box-shadow: 0 0 8px rgba(212, 165, 116, 0.6), 0 0 16px rgba(212, 165, 116, 0.3);
+  }
+
+  .led-indicator.green {
+    @apply bg-studio-success;
+    box-shadow: 0 0 8px rgba(52, 211, 153, 0.6), 0 0 16px rgba(52, 211, 153, 0.3);
+  }
+
+  .led-indicator.red {
+    @apply bg-studio-error;
+    box-shadow: 0 0 8px rgba(248, 113, 113, 0.6), 0 0 16px rgba(248, 113, 113, 0.3);
+  }
+
+  .led-indicator.violet {
+    @apply bg-studio-violet-500;
+    box-shadow: 0 0 8px rgba(139, 92, 246, 0.6), 0 0 16px rgba(139, 92, 246, 0.3);
+  }
+
+  .led-indicator.pulsing {
+    @apply animate-led-pulse;
+  }
+
+  /* ============================================
+     STATUS BADGES - Refined pill indicators
+     ============================================ */
+  .status-badge {
+    @apply inline-flex items-center gap-2 px-3 py-1.5 rounded-full;
+    @apply text-xs font-condensed font-medium uppercase tracking-wider;
+    @apply bg-studio-graphite/60 text-studio-sand;
+    @apply border border-studio-slate/20;
+    @apply backdrop-blur-xs;
+    @apply transition-all duration-300;
+  }
+
+  .status-badge .dot {
+    @apply w-1.5 h-1.5 rounded-full;
+  }
+
+  .status-pending {
+    @apply bg-studio-warning-dim/30 text-studio-warning border-studio-warning/20;
+  }
+  .status-pending .dot {
+    @apply bg-studio-warning animate-pulse-soft;
+  }
+
+  .status-generating {
+    @apply bg-studio-success-dim/30 text-studio-success border-studio-success/20;
+  }
+  .status-generating .dot {
+    @apply bg-studio-success animate-led-pulse;
+  }
+
+  .status-downloaded {
+    @apply bg-studio-rose-900/30 text-studio-rose-400 border-studio-rose-500/20;
+  }
+  .status-downloaded .dot {
+    @apply bg-studio-rose-500;
+  }
+
+  .status-evaluated {
+    @apply bg-amber-900/30 text-amber-400 border-amber-500/20;
+  }
+  .status-evaluated .dot {
+    @apply bg-amber-500;
+  }
+
+  .status-uploaded {
+    @apply bg-studio-success-dim/30 text-studio-success border-studio-success/20;
+  }
+  .status-uploaded .dot {
+    @apply bg-studio-success;
+  }
+
+  .status-failed {
+    @apply bg-studio-error-dim/30 text-studio-error border-studio-error/20;
+  }
+  .status-failed .dot {
+    @apply bg-studio-error;
+  }
+
+  .status-running {
+    @apply bg-studio-info-dim/30 text-studio-info border-studio-info/20;
+  }
+  .status-running .dot {
+    @apply bg-studio-info animate-led-pulse;
+  }
+
+  /* ============================================
+     VU METER - Audio-style progress bar
+     ============================================ */
+  .vu-meter {
+    @apply h-2 rounded-full overflow-hidden;
+    @apply bg-studio-charcoal;
+    @apply shadow-inner-dark;
+  }
+
+  .vu-meter-fill {
+    @apply h-full rounded-full;
+    @apply bg-gradient-to-r from-studio-rose-600 via-studio-amber to-studio-gold;
+    @apply transition-all duration-700 ease-smooth;
+  }
+
+  .vu-meter-segmented {
+    @apply flex items-center gap-0.5 h-3;
+  }
+
+  .vu-meter-segment {
+    @apply flex-1 h-full rounded-sm;
+    @apply bg-studio-charcoal;
+    @apply transition-all duration-300;
+  }
+
+  .vu-meter-segment.active.green {
+    @apply bg-studio-vu-green;
+    box-shadow: 0 0 6px rgba(74, 222, 128, 0.5);
+  }
+
+  .vu-meter-segment.active.yellow {
+    @apply bg-studio-vu-yellow;
+    box-shadow: 0 0 6px rgba(250, 204, 21, 0.5);
+  }
+
+  .vu-meter-segment.active.red {
+    @apply bg-studio-vu-red;
+    box-shadow: 0 0 6px rgba(239, 68, 68, 0.5);
+  }
+
+  /* ============================================
+     FORM INPUTS - Elegant input styling
+     ============================================ */
+  .input-field {
+    @apply w-full px-4 py-3.5 rounded-xl;
+    @apply bg-studio-charcoal/80 backdrop-blur-xs;
+    @apply border border-studio-graphite/60;
+    @apply text-studio-cream placeholder:text-studio-slate;
+    @apply shadow-inner-dark;
+    @apply focus:border-studio-rose-500/50 focus:ring-2 focus:ring-studio-rose-500/20 focus:outline-none;
+    @apply transition-all duration-300 ease-smooth;
+  }
+
+  .input-field:hover:not(:focus) {
+    @apply border-studio-slate/50;
+  }
+
+  .input-label {
+    @apply block text-xs font-condensed text-studio-stone uppercase tracking-wider mb-2;
+  }
+
+  .input-group {
+    @apply relative;
+  }
+
+  .input-icon {
+    @apply absolute left-4 top-1/2 -translate-y-1/2 w-5 h-5 text-studio-slate;
+    @apply pointer-events-none;
+  }
+
+  .input-field.with-icon {
+    @apply pl-12;
+  }
+
+  /* ============================================
+     BUTTONS - Premium interactive buttons
+     ============================================ */
+  .btn {
+    @apply relative inline-flex items-center justify-center gap-2;
+    @apply px-6 py-3 rounded-xl;
+    @apply font-condensed font-medium uppercase tracking-wider text-sm;
+    @apply overflow-hidden;
+    @apply transition-all duration-300 ease-smooth;
+  }
+
+  .btn::before {
+    content: '';
+    @apply absolute inset-0 opacity-0;
+    @apply transition-opacity duration-300;
+  }
+
+  .btn:hover::before {
+    @apply opacity-100;
+  }
+
+  .btn-primary {
+    @apply bg-gradient-to-r from-studio-rose-600 to-studio-rose-500;
+    @apply text-white;
+    @apply shadow-lg shadow-studio-rose-500/20;
+    @apply hover:shadow-glow-rose hover:scale-[1.02];
+    @apply active:scale-[0.98];
+  }
+
+  .btn-primary::before {
+    @apply bg-gradient-to-r from-studio-rose-500 to-studio-amber;
+  }
+
+  .btn-secondary {
+    @apply bg-studio-charcoal/80 backdrop-blur-xs;
+    @apply text-studio-sand border border-studio-graphite/60;
+    @apply hover:border-studio-rose-500/30 hover:text-studio-cream;
+    @apply hover:shadow-card-hover;
+  }
+
+  .btn-secondary::before {
+    @apply bg-gradient-to-r from-studio-rose-500/10 to-transparent;
+  }
+
+  .btn-ghost {
+    @apply bg-transparent;
+    @apply text-studio-sand;
+    @apply hover:text-studio-cream hover:bg-studio-graphite/50;
+  }
+
+  .btn-danger {
+    @apply bg-studio-error-dim/50;
+    @apply text-studio-error border border-studio-error/30;
+    @apply hover:bg-studio-error/20 hover:border-studio-error/50;
+  }
+
+  .btn-icon {
+    @apply p-3 rounded-xl;
+  }
+
+  .btn-sm {
+    @apply px-4 py-2 text-xs rounded-lg;
+  }
+
+  .btn-lg {
+    @apply px-8 py-4 text-base rounded-2xl;
+  }
+
+  /* ============================================
+     TOGGLE SWITCH - Modern toggle styling
+     ============================================ */
+  .toggle-track {
+    @apply relative w-14 h-7 rounded-full cursor-pointer;
+    @apply bg-studio-charcoal border border-studio-graphite/60;
+    @apply transition-all duration-300;
+  }
+
+  .toggle-track.active {
+    @apply bg-studio-rose-500/20 border-studio-rose-500/50;
+  }
+
+  .toggle-thumb {
+    @apply absolute top-1 left-1 w-5 h-5 rounded-full;
+    @apply bg-studio-slate shadow-md;
+    @apply transition-all duration-300 ease-bounce-in;
+  }
+
+  .toggle-track.active .toggle-thumb {
+    @apply translate-x-7 bg-studio-rose-500;
+    box-shadow: 0 0 12px rgba(204, 122, 90, 0.5);
+  }
+
+  /* ============================================
+     NAVIGATION - Sidebar nav links
+     ============================================ */
+  .nav-link {
+    @apply relative flex items-center gap-3 px-4 py-3 rounded-xl;
+    @apply text-studio-sand font-medium;
+    @apply transition-all duration-300 ease-smooth;
+    @apply overflow-hidden;
+  }
+
+  .nav-link::before {
+    content: '';
+    @apply absolute inset-0 opacity-0;
+    @apply bg-gradient-to-r from-studio-rose-500/10 to-transparent;
+    @apply transition-opacity duration-300;
+  }
+
+  .nav-link:hover {
+    @apply text-studio-cream bg-studio-graphite/30;
+  }
+
+  .nav-link:hover::before {
+    @apply opacity-100;
+  }
+
+  .nav-link.active {
+    @apply text-studio-rose-400 bg-studio-graphite/50;
+    @apply border-l-2 border-studio-rose-500;
+  }
+
+  .nav-link.active::before {
+    @apply opacity-100;
+  }
+
+  .nav-link .nav-icon {
+    @apply w-5 h-5 transition-colors duration-300;
+  }
+
+  .nav-link.active .nav-icon {
+    @apply text-studio-rose-400;
+  }
+
+  /* ============================================
+     VINYL DISC - Rotating record animation
+     ============================================ */
+  .vinyl-disc {
+    @apply relative rounded-full overflow-hidden;
+    background: repeating-radial-gradient(
+      circle at center,
+      #121117 0px,
+      #121117 1.5px,
+      #1a1820 1.5px,
+      #1a1820 3px
+    );
+  }
+
+  .vinyl-disc::after {
+    content: '';
+    @apply absolute inset-0;
+    background: linear-gradient(
+      135deg,
+      rgba(255, 255, 255, 0.1) 0%,
+      transparent 50%,
+      rgba(0, 0, 0, 0.2) 100%
+    );
+  }
+
+  .vinyl-label {
+    @apply absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2;
+    @apply rounded-full bg-gradient-to-br from-studio-rose-500 to-studio-amber;
+    @apply shadow-lg;
+  }
+
+  /* ============================================
+     WAVEFORM - Audio visualization bars
+     ============================================ */
+  .waveform {
+    @apply flex items-end justify-center gap-1 h-8;
+  }
+
+  .waveform-bar {
+    @apply w-1 rounded-full;
+    @apply bg-gradient-to-t from-studio-rose-600 to-studio-rose-400;
+    @apply transition-all duration-150;
+  }
+
+  .waveform-bar:nth-child(1) { @apply animate-wave-1; }
+  .waveform-bar:nth-child(2) { @apply animate-wave-2; }
+  .waveform-bar:nth-child(3) { @apply animate-wave-3; }
+  .waveform-bar:nth-child(4) { @apply animate-wave-4; }
+  .waveform-bar:nth-child(5) { @apply animate-wave-5; }
+
+  /* ============================================
+     SCROLLBAR - Custom styled scrollbar
+     ============================================ */
+  ::-webkit-scrollbar {
+    @apply w-2 h-2;
+  }
+
+  ::-webkit-scrollbar-track {
+    @apply bg-studio-void/50;
+  }
+
+  ::-webkit-scrollbar-thumb {
+    @apply bg-studio-graphite rounded-full;
+    @apply hover:bg-studio-slate;
+    @apply transition-colors duration-200;
+  }
+
+  /* Firefox */
+  * {
+    scrollbar-width: thin;
+    scrollbar-color: #24222c #08070a;
+  }
+
+  /* ============================================
+     SKELETON LOADING - Shimmer effect
+     ============================================ */
+  .skeleton {
+    @apply relative overflow-hidden;
+    @apply bg-studio-charcoal/50 rounded-lg;
+  }
+
+  .skeleton::after {
+    content: '';
+    @apply absolute inset-0;
+    background: linear-gradient(
+      90deg,
+      transparent 0%,
+      rgba(255, 255, 255, 0.05) 50%,
+      transparent 100%
+    );
+    background-size: 200% 100%;
+    @apply animate-shimmer;
+  }
+
+  /* ============================================
+     TOOLTIP - Floating info tooltip
+     ============================================ */
+  .tooltip {
+    @apply absolute z-50 px-3 py-2 rounded-lg;
+    @apply bg-studio-charcoal/95 backdrop-blur-sm;
+    @apply text-xs text-studio-cream;
+    @apply border border-studio-graphite/50;
+    @apply shadow-card-elevated;
+    @apply opacity-0 pointer-events-none;
+    @apply transition-all duration-200;
+  }
+
+  .tooltip.visible {
+    @apply opacity-100;
+  }
+
+  /* ============================================
+     DIVIDER - Subtle separators
+     ============================================ */
+  .divider {
+    @apply h-px w-full;
+    @apply bg-gradient-to-r from-transparent via-studio-graphite/50 to-transparent;
+  }
+
+  .divider-vertical {
+    @apply w-px h-full;
+    @apply bg-gradient-to-b from-transparent via-studio-graphite/50 to-transparent;
+  }
+
+  /* ============================================
+     GRADIENT TEXT - Premium text effects
+     ============================================ */
+  .text-gradient-rose {
+    @apply bg-gradient-to-r from-studio-rose-400 to-studio-amber bg-clip-text text-transparent;
+  }
+
+  .text-gradient-violet {
+    @apply bg-gradient-to-r from-studio-violet-400 to-studio-rose-400 bg-clip-text text-transparent;
+  }
+
+  .text-gradient-warm {
+    @apply bg-gradient-to-r from-studio-amber to-studio-gold bg-clip-text text-transparent;
+  }
+
+  /* ============================================
+     NOISE OVERLAY - Texture effect
+     ============================================ */
+  .noise-overlay {
+    @apply fixed inset-0 pointer-events-none z-50;
+    @apply opacity-[0.015];
+    background-image: url("data:image/svg+xml,%3Csvg viewBox='0 0 256 256' xmlns='http://www.w3.org/2000/svg'%3E%3Cfilter id='noise'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.8' numOctaves='4' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23noise)'/%3E%3C/svg%3E");
+  }
+
+  /* ============================================
+     STAGGER ANIMATION DELAYS - For list reveals
+     ============================================ */
+  .stagger-1 { animation-delay: 0.05s; }
+  .stagger-2 { animation-delay: 0.1s; }
+  .stagger-3 { animation-delay: 0.15s; }
+  .stagger-4 { animation-delay: 0.2s; }
+  .stagger-5 { animation-delay: 0.25s; }
+  .stagger-6 { animation-delay: 0.3s; }
+  .stagger-7 { animation-delay: 0.35s; }
+  .stagger-8 { animation-delay: 0.4s; }
+
+  /* ============================================
+     FOCUS RING - Accessible focus states
+     ============================================ */
+  .focus-ring {
+    @apply focus:outline-none focus:ring-2 focus:ring-studio-rose-500/50;
+    @apply focus:ring-offset-2 focus:ring-offset-studio-void;
+  }
+}
+
+@layer utilities {
+  /* ============================================
+     GLOW UTILITIES
+     ============================================ */
+  .shadow-rose-glow {
+    box-shadow: 0 0 40px rgba(204, 122, 90, 0.3);
+  }
+
+  .shadow-amber-glow {
+    box-shadow: 0 0 40px rgba(212, 165, 116, 0.3);
+  }
+
+  .shadow-violet-glow {
+    box-shadow: 0 0 40px rgba(139, 92, 246, 0.3);
+  }
+
+  /* ============================================
+     GLASS MORPHISM
+     ============================================ */
+  .glass {
+    @apply bg-studio-black/40 backdrop-blur-md;
+    @apply border border-white/5;
+  }
+
+  .glass-rose {
+    @apply bg-studio-rose-900/20 backdrop-blur-md;
+    @apply border border-studio-rose-500/10;
+  }
+
+  /* ============================================
+     ANIMATION UTILITIES
+     ============================================ */
+  .animate-in {
+    @apply opacity-0;
+  }
+
+  .animate-in.visible {
+    @apply opacity-100;
+  }
+
+  /* Pause animation on hover */
+  .pause-on-hover:hover {
+    animation-play-state: paused;
+  }
+}

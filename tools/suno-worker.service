@@ -1,0 +1,22 @@
+# Systemd service file for Suno Worker
+# Install: sudo cp tools/suno-worker.service /etc/systemd/system/
+# Enable:  sudo systemctl enable suno-worker
+# Start:   sudo systemctl start suno-worker
+# Logs:    journalctl -u suno-worker -f
+
+[Unit]
+Description=Suno AI Upload Worker
+After=network.target docker.service
+Wants=docker.service
+
+[Service]
+Type=simple
+User=nova
+WorkingDirectory=/mnt/coding/projects/personal/songs-gen
+Environment=DISPLAY=:0
+ExecStart=/usr/bin/python3 /mnt/coding/projects/personal/songs-gen/tools/suno_worker.py --interval 30
+Restart=on-failure
+RestartSec=30
+
+[Install]
+WantedBy=multi-user.target

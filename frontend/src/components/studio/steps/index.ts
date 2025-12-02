@@ -1,0 +1,6 @@
+export { default as SongSelectStep } from './SongSelectStep.vue'
+export { default as CoverArtStep } from './CoverArtStep.vue'
+export { default as VideoSettingsStep } from './VideoSettingsStep.vue'
+export { default as MetadataStep } from './MetadataStep.vue'
+export { default as PreviewStep } from './PreviewStep.vue'
+export { default as PublishStep } from './PublishStep.vue'
