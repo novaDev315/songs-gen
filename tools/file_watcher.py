@@ -210,7 +210,12 @@ class SongFileHandler(FileSystemEventHandler):
             self._log(f"Failed to create song: {response.text}")
 
     def parse_song_file(self, content: str) -> dict:
-        """Parse song file content to extract metadata."""
+        """Parse song file content to extract metadata.
+
+        Handles both plain text and code block formats:
+        - ## Style Prompt followed by text or ```code block```
+        - ## Lyrics followed by text or ```code block```
+        """
         lines = content.split("\n")
         metadata = {
             "title": "",
@@ -221,30 +226,38 @@ class SongFileHandler(FileSystemEventHandler):
 
         # Extract title (first # heading)
         for line in lines:
-            if line.startswith("# "):
+            if line.startswith("# ") and not line.startswith("## "):
                 metadata["title"] = line[2:].strip()
                 break
 
         # Extract style prompt and lyrics sections
         in_style = False
-        style_lines = []
         in_lyrics = False
+        in_code_block = False
+        style_lines = []
         lyrics_lines = []
 
         for line in lines:
-            # Check for section headers
-            if line.startswith("## Style Prompt"):
-                in_style = True
-                in_lyrics = False
+            # Check for code block markers
+            if line.strip().startswith("```"):
+                in_code_block = not in_code_block
                 continue
-            elif line.startswith("## Lyrics"):
-                in_lyrics = True
-                in_style = False
-                continue
-            elif line.startswith("##"):
-                in_style = False
-                in_lyrics = False
-                continue
+
+            # Check for section headers (only outside code blocks)
+            if not in_code_block:
+                # Handle various style prompt header formats
+                if line.startswith("## Style Prompt") or line.startswith("## AI Style Prompt"):
+                    in_style = True
+                    in_lyrics = False
+                    continue
+                elif line.startswith("## Lyrics"):
+                    in_lyrics = True
+                    in_style = False
+                    continue
+                elif line.startswith("## "):
+                    in_style = False
+                    in_lyrics = False
+                    continue
 
             # Collect content from active sections
             if in_style and line.strip():
@@ -260,12 +273,28 @@ class SongFileHandler(FileSystemEventHandler):
             # Preserve line breaks in lyrics
             metadata["lyrics"] = "\n".join(lyrics_lines).strip()
 
-        # Try to extract genre from style prompt or title
+        # Try to extract genre from style prompt (avoid "no <genre>" patterns)
+        import re
         style_lower = metadata["style_prompt"].lower()
-        for genre in ["pop", "rock", "jazz", "hip-hop", "edm", "country", "rap", "electronic"]:
-            if genre in style_lower:
-                metadata["genre"] = genre.title()
+
+        # Order by specificity (more specific genres first)
+        genres = [
+            "hip-hop", "r&b", "r-b", "edm", "electronic",
+            "country", "rock", "jazz", "pop", "rap", "folk", "blues"
+        ]
+
+        for genre in genres:
+            # Use word boundary to match genre, but not "no genre"
+            pattern = rf"(?<!no\s)(?<!no-)\b{re.escape(genre)}\b"
+            if re.search(pattern, style_lower):
+                # Normalize genre name
+                genre_name = genre.replace("-", " ").replace("&", " and ")
+                metadata["genre"] = genre_name.title().replace(" And ", " & ")
                 break
+
+        # Fallback: try to get from folder path if available
+        if not metadata["genre"]:
+            metadata["genre"] = "Unknown"
 
         return metadata
 
