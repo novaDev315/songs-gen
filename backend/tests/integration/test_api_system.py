@@ -28,7 +28,6 @@ class TestSystemStatusEndpoint:
 
         # Check workers section
         assert "workers" in data
-        assert "file_watcher" in data["workers"]
         assert "background_workers" in data["workers"]
         assert "backup_scheduler" in data["workers"]
 
@@ -148,7 +147,6 @@ class TestSystemStatusEndpoint:
         assert response.status_code == 200
 
         data = response.json()
-        assert data["workers"]["file_watcher"] == "running"
         assert data["workers"]["background_workers"] == "running"
         assert data["workers"]["backup_scheduler"] == "running"
 

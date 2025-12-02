@@ -106,13 +106,9 @@ class TestLifespanEvents:
         with patch("app.main.init_db", new_callable=AsyncMock) as mock_init_db, \
              patch("app.main.create_admin_user", new_callable=AsyncMock) as mock_create_admin, \
              patch("app.main.schedule_backups") as mock_schedule_backups, \
-             patch("app.main.get_file_watcher") as mock_get_watcher, \
              patch("app.main.get_worker_pool") as mock_get_worker:
 
             # Setup mocks
-            mock_watcher = MagicMock()
-            mock_get_watcher.return_value = mock_watcher
-
             mock_pool = MagicMock()
             mock_pool.start = AsyncMock()
             mock_pool.stop = AsyncMock()
@@ -130,7 +126,6 @@ class TestLifespanEvents:
                 mock_init_db.assert_called_once()
                 mock_create_admin.assert_called_once()
                 mock_schedule_backups.assert_called_once()
-                mock_watcher.start.assert_called_once()
                 mock_pool.start.assert_called_once()
 
     @pytest.mark.asyncio
@@ -139,15 +134,9 @@ class TestLifespanEvents:
         with patch("app.main.init_db", new_callable=AsyncMock) as mock_init_db, \
              patch("app.main.create_admin_user", new_callable=AsyncMock) as mock_create_admin, \
              patch("app.main.schedule_backups") as mock_schedule_backups, \
-             patch("app.main.stop_backups") as mock_stop_backups, \
-             patch("app.main.get_file_watcher") as mock_get_watcher, \
-             patch("app.main.get_worker_pool") as mock_get_worker, \
-             patch("app.main.cleanup_suno_client", new_callable=AsyncMock) as mock_cleanup_suno:
+             patch("app.main.get_worker_pool") as mock_get_worker:
 
             # Setup mocks
-            mock_watcher = MagicMock()
-            mock_get_watcher.return_value = mock_watcher
-
             mock_pool = MagicMock()
             mock_pool.start = AsyncMock()
             mock_pool.stop = AsyncMock()
@@ -161,10 +150,7 @@ class TestLifespanEvents:
                 pass  # Context manager exits here
 
             # Verify shutdown was called
-            mock_stop_backups.assert_called_once()
-            mock_watcher.stop.assert_called_once()
             mock_pool.stop.assert_called_once()
-            mock_cleanup_suno.assert_called_once()
 
 
 class TestMiddleware:

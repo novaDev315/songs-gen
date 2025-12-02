@@ -29,9 +29,7 @@ from app.config import get_settings
 from app.database import init_db
 from app.middleware.security import SecurityHeadersMiddleware
 from app.services.backup import schedule_backups
-from app.services.file_watcher import get_file_watcher
 from app.services.init_admin import create_admin_user
-from app.services.suno_client import cleanup_suno_client
 from app.services.worker import get_worker_pool
 
 settings = get_settings()
@@ -64,12 +62,8 @@ async def lifespan(app: FastAPI) -> AsyncIterator[None]:
     # Schedule backups
     schedule_backups()
 
-    # Start file watcher
-    file_watcher = get_file_watcher()
-    file_watcher.start()
-    logger.info("File watcher started")
-
-    # Start background workers
+    # Start background workers (evaluate, youtube_upload tasks only)
+    # Note: file watcher and suno tasks are handled by external tools
     worker_pool = get_worker_pool()
     await worker_pool.start()
     logger.info("Background workers started")
@@ -81,17 +75,9 @@ async def lifespan(app: FastAPI) -> AsyncIterator[None]:
     # Shutdown
     logger.info("Shutting down Song Automation API...")
 
-    # Stop file watcher
-    file_watcher.stop()
-    logger.info("File watcher stopped")
-
     # Stop background workers
     await worker_pool.stop()
     logger.info("Background workers stopped")
-
-    # Cleanup Suno client (close browser)
-    await cleanup_suno_client()
-    logger.info("Suno client cleaned up")
 
 
 app = FastAPI(

@@ -6,8 +6,10 @@ import json
 import os
 import sys
 import time
+import threading
 from datetime import datetime
 from pathlib import Path
+from queue import Queue, Empty
 
 import requests
 from watchdog.events import FileCreatedEvent, FileSystemEventHandler
@@ -21,14 +23,38 @@ DEFAULT_PASSWORD = "pass123"
 
 
 class SongFileHandler(FileSystemEventHandler):
-    """Handler for new song files."""
+    """Handler for new song files with queue-based batch processing."""
 
-    def __init__(self, backend_url: str, token: str, auto_upload: bool = True):
+    def __init__(self, backend_url: str, token: str, auto_upload: bool = True, data_dir: Path = None):
         super().__init__()
         self.backend_url = backend_url
         self.token = token
         self.auto_upload = auto_upload
-        self.processed_files: set[str] = set()
+        self.data_dir = data_dir or Path(__file__).parent.parent / "data"
+        self.processed_file = self.data_dir / "processed_songs.json"
+        self.processed_files: set[str] = self._load_processed_files()
+
+        # Queue for batch processing
+        self.file_queue: Queue[Path] = Queue()
+        self.worker_running = True
+        self.worker_thread = threading.Thread(target=self._process_queue, daemon=True)
+        self.worker_thread.start()
+
+    def _load_processed_files(self) -> set[str]:
+        """Load processed files from persistent storage."""
+        if self.processed_file.exists():
+            try:
+                with open(self.processed_file, "r") as f:
+                    return set(json.load(f))
+            except Exception:
+                pass
+        return set()
+
+    def _save_processed_files(self) -> None:
+        """Save processed files to persistent storage."""
+        self.data_dir.mkdir(parents=True, exist_ok=True)
+        with open(self.processed_file, "w") as f:
+            json.dump(list(self.processed_files), f, indent=2)
 
     def _timestamp(self) -> str:
         return datetime.now().strftime("%H:%M:%S")
@@ -36,8 +62,85 @@ class SongFileHandler(FileSystemEventHandler):
     def _log(self, msg: str) -> None:
         print(f"[{self._timestamp()}] {msg}")
 
+    def _check_song_exists(self, file_path: Path) -> bool:
+        """Check if song already exists in backend by file path."""
+        try:
+            headers = {"Authorization": f"Bearer {self.token}"}
+            response = requests.get(
+                f"{self.backend_url}/api/v1/songs",
+                params={"file_path": str(file_path.absolute()), "limit": 1},
+                headers=headers,
+                timeout=10,
+            )
+            if response.status_code == 200:
+                items = response.json().get("items", [])
+                return len(items) > 0
+        except Exception as e:
+            self._log(f"Error checking if song exists: {e}")
+        return False
+
+    def _process_queue(self) -> None:
+        """Worker thread that processes files from the queue."""
+        batch_save_count = 0
+
+        while self.worker_running:
+            try:
+                # Wait for file with timeout (allows clean shutdown)
+                file_path = self.file_queue.get(timeout=1)
+            except Empty:
+                # Save periodically even if no new files
+                if batch_save_count > 0:
+                    self._save_processed_files()
+                    batch_save_count = 0
+                continue
+
+            try:
+                abs_path = str(file_path.absolute())
+
+                # Skip if already processed
+                if abs_path in self.processed_files:
+                    self.file_queue.task_done()
+                    continue
+
+                # Check backend
+                if self._check_song_exists(file_path):
+                    self._log(f"Already in backend: {file_path.name}")
+                    self.processed_files.add(abs_path)
+                    batch_save_count += 1
+                    self.file_queue.task_done()
+                    continue
+
+                # Wait for file to be fully written
+                time.sleep(0.5)
+
+                # Process the file
+                self._log(f"Processing: {file_path.name}")
+                self.process_song_file(file_path)
+                self.processed_files.add(abs_path)
+                batch_save_count += 1
+
+                # Batch save every 5 files
+                if batch_save_count >= 5:
+                    self._save_processed_files()
+                    batch_save_count = 0
+
+                self.file_queue.task_done()
+
+            except Exception as e:
+                self._log(f"Error processing {file_path.name}: {e}")
+                self.file_queue.task_done()
+
+        # Final save on shutdown
+        if batch_save_count > 0:
+            self._save_processed_files()
+
+    def stop(self) -> None:
+        """Stop the worker thread."""
+        self.worker_running = False
+        self.worker_thread.join(timeout=5)
+
     def on_created(self, event: FileCreatedEvent) -> None:
-        """Handle new file creation."""
+        """Handle new file creation - adds to queue for processing."""
         if event.is_directory:
             return
 
@@ -47,20 +150,12 @@ class SongFileHandler(FileSystemEventHandler):
         if file_path.suffix != ".md":
             return
 
-        # Skip if already processed
-        if str(file_path) in self.processed_files:
+        # Quick check - skip if already processed locally
+        if str(file_path.absolute()) in self.processed_files:
             return
 
-        self._log(f"New song file detected: {file_path.name}")
-
-        # Wait for file to be fully written
-        time.sleep(1)
-
-        try:
-            self.process_song_file(file_path)
-            self.processed_files.add(str(file_path))
-        except Exception as e:
-            self._log(f"Error processing {file_path.name}: {e}")
+        self._log(f"Queued: {file_path.name} (queue size: {self.file_queue.qsize() + 1})")
+        self.file_queue.put(file_path)
 
     def process_song_file(self, file_path: Path) -> None:
         """Process new song file and create via API."""
@@ -194,35 +289,27 @@ def login(backend_url: str, username: str, password: str) -> str | None:
 
 
 def scan_existing_files(watch_folder: Path, handler: SongFileHandler) -> None:
-    """Scan and process existing .md files that haven't been processed."""
+    """Scan and queue existing .md files that haven't been processed."""
     print(f"Scanning existing files in {watch_folder}...")
+    queued_count = 0
+    skipped_count = 0
 
     for md_file in watch_folder.rglob("*.md"):
-        if str(md_file) not in handler.processed_files:
-            # Check if song already exists in backend
-            try:
-                headers = {"Authorization": f"Bearer {handler.token}"}
-                # Search by file path
-                response = requests.get(
-                    f"{handler.backend_url}/api/v1/songs",
-                    params={"limit": 100},
-                    headers=headers,
-                    timeout=30,
-                )
-                if response.status_code == 200:
-                    songs = response.json().get("items", [])
-                    existing_paths = {s.get("file_path") for s in songs}
+        abs_path = str(md_file.absolute())
 
-                    if str(md_file.absolute()) in existing_paths:
-                        handler.processed_files.add(str(md_file))
-                        continue
+        # Skip if already in local processed list
+        if abs_path in handler.processed_files:
+            skipped_count += 1
+            continue
 
-                    # Process new file
-                    print(f"[{datetime.now().strftime('%H:%M:%S')}] Processing existing file: {md_file.name}")
-                    handler.process_song_file(md_file)
-                    handler.processed_files.add(str(md_file))
-            except Exception as e:
-                print(f"Error checking/processing {md_file.name}: {e}")
+        # Queue for processing (worker thread will check backend)
+        handler.file_queue.put(md_file)
+        queued_count += 1
+
+    print(f"Scan complete: {queued_count} queued, {skipped_count} already processed")
+
+    if queued_count > 0:
+        print(f"Processing {queued_count} files in background...")
 
 
 def main():
@@ -307,14 +394,24 @@ def main():
     observer.start()
 
     print(f"[{datetime.now().strftime('%H:%M:%S')}] Watching for new files...")
+    print(f"[{datetime.now().strftime('%H:%M:%S')}] Previously processed: {len(handler.processed_files)} files")
 
     try:
         while True:
-            time.sleep(1)
+            # Show queue status periodically
+            queue_size = handler.file_queue.qsize()
+            if queue_size > 0:
+                print(f"[{datetime.now().strftime('%H:%M:%S')}] Queue: {queue_size} files pending")
+            time.sleep(5)
     except KeyboardInterrupt:
         print("\nStopping file watcher...")
-        observer.stop()
 
+    # Stop handler (waits for queue to drain)
+    print("Waiting for queue to finish...")
+    handler.file_queue.join()  # Wait for all queued items
+    handler.stop()
+
+    observer.stop()
     observer.join()
     print("File watcher stopped")
 

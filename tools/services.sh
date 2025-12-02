@@ -62,10 +62,10 @@ start_service() {
     # Add service-specific args
     case $service in
         suno)
-            cmd="$cmd --interval 30"
+            cmd="$cmd --interval 30 --batch-size 5"
             ;;
         watcher)
-            # No extra args needed
+            cmd="$cmd --scan-existing"
             ;;
     esac
 

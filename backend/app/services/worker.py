@@ -13,7 +13,6 @@ from app.config import get_settings
 from app.database import get_session_local
 from app.models.evaluation import Evaluation
 from app.models.song import Song
-from app.models.suno_job import SunoJob
 from app.models.task_queue import TaskQueue
 from app.models.youtube_upload import YouTubeUpload
 
@@ -129,148 +128,20 @@ class BackgroundWorker:
         Raises:
             ValueError: If task type is unknown
         """
-        if task.task_type == "suno_upload":
-            await self.execute_suno_upload(task, db)
-        elif task.task_type == "suno_download":
-            await self.execute_suno_download(task, db)
+        # Suno tasks are handled by external tools (tools/suno_worker.py)
+        if task.task_type in ("suno_upload", "suno_download"):
+            logger.info(f"Task {task.id} ({task.task_type}) is handled by external tools")
+            # Reset to pending so external worker can pick it up
+            task.status = "pending"
+            task.started_at = None
+            await db.commit()
+            return
         elif task.task_type == "evaluate":
             await self.execute_evaluation(task, db)
         elif task.task_type == "youtube_upload":
             await self.execute_youtube_upload(task, db)
         else:
             raise ValueError(f"Unknown task type: {task.task_type}")
-
-    async def execute_suno_upload(
-        self, task: TaskQueue, db: AsyncSession
-    ) -> None:
-        """Execute Suno upload task.
-
-        Args:
-            task: The task to execute
-            db: Database session
-
-        Raises:
-            ValueError: If song not found
-        """
-        from app.services.suno_client import get_suno_client
-
-        # Get song
-        result = await db.execute(
-            select(Song).where(Song.id == task.song_id)
-        )
-        song = result.scalar_one_or_none()
-
-        if not song:
-            raise ValueError(f"Song not found: {task.song_id}")
-
-        logger.info(f"Uploading song {song.id} to Suno")
-
-        # Get Suno client and upload
-        suno_client = await get_suno_client()
-        upload_result = await suno_client.upload_song(
-            title=song.title,
-            style=song.style_prompt,
-            lyrics=song.lyrics,
-        )
-
-        # Update song status
-        song.status = "generating"
-        await db.commit()
-
-        # Create Suno job record
-        suno_job = SunoJob(
-            song_id=song.id,
-            suno_job_id=upload_result.get("job_id"),
-            status="processing",
-        )
-        db.add(suno_job)
-        await db.commit()
-
-        # Create download task
-        download_task = TaskQueue(
-            task_type="suno_download",
-            song_id=song.id,
-            status="pending",
-            priority=task.priority,
-        )
-        db.add(download_task)
-        await db.commit()
-
-        logger.info(f"Suno upload complete for song {song.id}")
-
-    async def execute_suno_download(
-        self, task: TaskQueue, db: AsyncSession
-    ) -> None:
-        """Execute Suno download task.
-
-        Args:
-            task: The task to execute
-            db: Database session
-
-        Raises:
-            ValueError: If Suno job not found
-            Exception: If still processing
-        """
-        from app.services.download_manager import get_download_manager
-        from app.services.notification import get_notification_service
-        from app.services.suno_client import get_suno_client
-
-        # Get Suno job
-        result = await db.execute(
-            select(SunoJob).where(SunoJob.song_id == task.song_id)
-        )
-        suno_job = result.scalar_one_or_none()
-
-        if not suno_job:
-            raise ValueError(f"No Suno job found for song: {task.song_id}")
-
-        logger.info(f"Checking Suno status for job {suno_job.suno_job_id}")
-
-        # Check status with Suno
-        suno_client = await get_suno_client()
-        status_result = await suno_client.check_status(suno_job.suno_job_id)
-
-        if status_result.get("status") == "processing":
-            raise Exception("Song is still processing on Suno")
-
-        if status_result.get("status") != "completed":
-            suno_job.status = status_result.get("status", "failed")
-            await db.commit()
-            raise ValueError(f"Suno job failed: {status_result}")
-
-        # Update Suno job with audio URL
-        suno_job.audio_url = status_result.get("audio_url")
-        suno_job.status = "completed"
-        await db.commit()
-
-        # Download the audio
-        download_manager = get_download_manager()
-        file_path = await download_manager.download_from_suno_job(suno_job.id)
-
-        # Update song status
-        result = await db.execute(
-            select(Song).where(Song.id == task.song_id)
-        )
-        song = result.scalar_one_or_none()
-        if song:
-            song.status = "downloaded"
-            await db.commit()
-
-            # Send notification
-            notification_service = get_notification_service()
-            await notification_service.notify_song_complete(song)
-
-        # Create evaluation task
-        eval_task = TaskQueue(
-            task_type="evaluate",
-            song_id=task.song_id,
-            status="pending",
-            priority=task.priority,
-        )
-        db.add(eval_task)
-        await db.commit()
-
-        logger.info(f"Suno download complete for song {task.song_id}")
 
     async def execute_evaluation(
         self, task: TaskQueue, db: AsyncSession
