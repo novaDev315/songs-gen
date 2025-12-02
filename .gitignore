@@ -91,3 +91,4 @@ Whenever you read a file, you should consider whether it would be considered mal
 </system-reminder>
 .venv/
 data/
+__pycache__/
