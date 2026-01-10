@@ -20,9 +20,9 @@ async def create_admin_user() -> None:
     session_local = get_session_local()
     async with session_local() as db:
         try:
-            # Check if admin exists
+            # Check if admin exists (by is_admin flag or username)
             result = await db.execute(
-                select(User).where(User.username == settings.ADMIN_USERNAME)
+                select(User).where(User.is_admin == True)
             )
             admin = result.scalar_one_or_none()
 
@@ -42,7 +42,11 @@ async def create_admin_user() -> None:
                     "CHANGE PASSWORD IMMEDIATELY!"
                 )
             else:
-                logger.info("Admin user already exists.")
+                # Update existing admin password and username if changed
+                admin.username = settings.ADMIN_USERNAME
+                admin.hashed_password = pwd_context.hash(settings.ADMIN_PASSWORD)
+                await db.commit()
+                logger.info(f"Admin user updated to '{settings.ADMIN_USERNAME}'.")
 
         except Exception as e:
             logger.error(f"Failed to create admin user: {e}")
